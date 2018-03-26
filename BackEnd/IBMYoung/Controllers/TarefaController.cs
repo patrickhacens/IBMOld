@@ -14,8 +14,8 @@ namespace IBMYoung.Controllers
     [Route("api/Tarefa")]
     public class TarefaController : Controller
     {
-        ProjectContext _Db;
-        public TarefaController(ProjectContext Db)
+        Db _Db;
+        public TarefaController(Db Db)
         {
             _Db = Db;
 

@@ -14,8 +14,8 @@ namespace IBMYoung.Controllers
     [Route("api/Replica")]
     public class ReplicaController : Controller
     {
-        ProjectContext _Db;
-        public ReplicaController(ProjectContext Db)
+        Db _Db;
+        public ReplicaController(Db Db)
         {
             _Db = Db;
         }

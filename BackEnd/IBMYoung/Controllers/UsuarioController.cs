@@ -20,9 +20,9 @@ namespace IBMYoung.Controllers
     [Route("api/Usuario")]
     public class UsuarioController : Controller
     {
-        ProjectContext _Db;
+        Db _Db;
         IConfiguration _configuration;
-        public UsuarioController(ProjectContext Db, IConfiguration configuration)
+        public UsuarioController(Db Db, IConfiguration configuration)
         {
             _Db = Db;
             _configuration = configuration;

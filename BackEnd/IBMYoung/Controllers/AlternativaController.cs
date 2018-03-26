@@ -14,9 +14,9 @@ namespace IBMYoung.Controllers
     [Route("api/Alternativa")]
     public class AlternativaController : Controller
     {
-        ProjectContext _Db;
+        Db _Db;
 
-        public AlternativaController(ProjectContext Db)
+        public AlternativaController(Db Db)
         {
             _Db = Db;
         }

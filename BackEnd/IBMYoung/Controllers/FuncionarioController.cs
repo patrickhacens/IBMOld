@@ -14,8 +14,8 @@ namespace IBMYoung.Controllers
     [Route("api/Funcionario")]
     public class FuncionarioController : Controller
     {
-        ProjectContext _Db;
-        public FuncionarioController(ProjectContext Db)
+        Db _Db;
+        public FuncionarioController(Db Db)
         {
             _Db = Db;
 

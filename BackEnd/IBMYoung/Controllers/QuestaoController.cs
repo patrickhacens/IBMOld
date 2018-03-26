@@ -14,9 +14,9 @@ namespace IBMYoung.Controllers
     [Route("api/Questao")]
     public class QuestaoController : Controller
     {
-        ProjectContext _Db;
+        Db _Db;
 
-        public QuestaoController(ProjectContext Db)
+        public QuestaoController(Db Db)
         {
             _Db = Db;
         }

@@ -14,8 +14,8 @@ namespace IBMYoung.Controllers
     [Route("api/Topico")]
     public class TopicoController : Controller
     {
-        ProjectContext _Db;
-        public TopicoController(ProjectContext Db)
+        Db _Db;
+        public TopicoController(Db Db)
         {
             _Db = Db;
         }

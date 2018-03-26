@@ -10,7 +10,7 @@ using System;
 
 namespace IBMYoung.Migrations
 {
-    [DbContext(typeof(ProjectContext))]
+    [DbContext(typeof(Infrastructure.Db))]
     partial class ProjectContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -10,7 +10,7 @@ using System;
 
 namespace IBMYoung.Migrations
 {
-    [DbContext(typeof(ProjectContext))]
+    [DbContext(typeof(Infrastructure.Db))]
     [Migration("20180326222734_refat_namings")]
     partial class refat_namings
     {

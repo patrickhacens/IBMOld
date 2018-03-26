@@ -11,8 +11,8 @@ namespace IBMYoung.Controllers
 {
     public class BoletimController
     {
-        ProjectContext _Db;
-        public BoletimController(ProjectContext Db)
+        Db _Db;
+        public BoletimController(Db Db)
         {
             _Db = Db;
         }

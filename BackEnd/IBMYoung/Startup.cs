@@ -32,10 +32,7 @@ namespace IBMYoung
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProjectContext>(options =>
-            {
-                options.UseSqlServer(@"Server=LOCALHOST;Database=ibmaprendiz;Trusted_Connection=True;");
-            });
+            services.AddDbContext<Db>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Configurando o serviço de documentação do Swagger
             services.AddSwaggerGen(c =>

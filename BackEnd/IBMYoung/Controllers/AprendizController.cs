@@ -14,8 +14,8 @@ namespace IBMYoung.Controllers
     [Route("api/Aprendiz")]
     public class AprendizController : Controller
     {
-        ProjectContext _Db;
-        public AprendizController(ProjectContext Db)
+        Db _Db;
+        public AprendizController(Db Db)
         {
             _Db = Db;
         }

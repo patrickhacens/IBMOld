@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace IBMYoung.Infrastructure
 {
-    public class ProjectContext : DbContext
+    public class Db : DbContext
     {
-        public ProjectContext(DbContextOptions<ProjectContext> options) : base(options)
+        public Db(DbContextOptions<Db> options) : base(options)
         {
             
         }

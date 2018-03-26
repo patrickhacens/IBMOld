@@ -10,7 +10,7 @@ using System;
 
 namespace IBMYoung.Migrations
 {
-    [DbContext(typeof(ProjectContext))]
+    [DbContext(typeof(Infrastructure.Db))]
     [Migration("20180323235248_23.03.18")]
     partial class _230318
     {

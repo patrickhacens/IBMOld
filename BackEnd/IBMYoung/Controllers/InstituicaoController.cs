@@ -14,8 +14,8 @@ namespace IBMYoung.Controllers
     [Route("api/Instituicao")]
     public class InstituicaoController : Controller
     {
-        ProjectContext _Db;
-        public InstituicaoController(ProjectContext Db)
+        Db _Db;
+        public InstituicaoController(Db Db)
         {
             _Db = Db;
         }
