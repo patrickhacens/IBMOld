@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">IBM Young</string>
+
+    <string name="login">Login</string>
+    <string name="senha">Senha</string>
+    <string name="bem_vindo">Bem Vindo</string>
+    <string name="enviar">Entrar</string>
+    <string name="title_main">Desafios</string>
+    <string name="sucesso">Sucesso</string>
+    <string name="title_activity_tarefa">TarefaActivity</string>
+    <string name="tarefa_activity">Missão</string>
+
+</resources>

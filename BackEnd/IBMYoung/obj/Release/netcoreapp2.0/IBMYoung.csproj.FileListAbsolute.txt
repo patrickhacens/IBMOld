@@ -1,0 +1,11 @@
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\bin\Release\netcoreapp2.0\IBMYoung.deps.json
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\bin\Release\netcoreapp2.0\IBMYoung.runtimeconfig.json
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\bin\Release\netcoreapp2.0\IBMYoung.runtimeconfig.dev.json
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\bin\Release\netcoreapp2.0\IBMYoung.dll
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\bin\Release\netcoreapp2.0\IBMYoung.pdb
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\obj\Release\netcoreapp2.0\IBMYoung.csprojResolveAssemblyReference.cache
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\obj\Release\netcoreapp2.0\IBMYoung.csproj.CoreCompileInputs.cache
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\obj\Release\netcoreapp2.0\IBMYoung.AssemblyInfoInputs.cache
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\obj\Release\netcoreapp2.0\IBMYoung.AssemblyInfo.cs
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\obj\Release\netcoreapp2.0\IBMYoung.dll
+C:\Users\CodeXP\source\repos\IBMYoung\IBMYoung\obj\Release\netcoreapp2.0\IBMYoung.pdb
