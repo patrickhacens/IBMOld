@@ -76,8 +76,8 @@ namespace IBMYoung.Controllers
         {
             Usuario usuario = new Usuario();
             usuario.Active = true;
-            usuario.Password = model.password;
-            usuario.Username = model.username;
+            usuario.Password = model.Password;
+            usuario.Username = model.Username;
 
             _Db.Usuarios.Add(usuario);
             _Db.SaveChanges();

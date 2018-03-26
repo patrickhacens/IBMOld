@@ -7,6 +7,6 @@ namespace IBMYoung.Infrastructure.ViewModel
 {
     public class InstituicaoCadastroViewModel
     {
-        public string nome { get; set; }
+        public string Nome { get; set; }
     }
 }

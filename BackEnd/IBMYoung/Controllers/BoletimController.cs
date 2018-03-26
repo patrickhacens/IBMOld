@@ -21,10 +21,10 @@ namespace IBMYoung.Controllers
         public Boletim Post([FromBody] BoletimCadastroViewModel model)
         {
             Boletim boletim = new Boletim();
-            boletim.Nota = model.nota;
-            boletim.Frequencia = model.frequencia;
-            boletim.MesReferencia = model.mesReferencia;
-            boletim.AnoReferencia = model.anoReferencia;
+            boletim.Nota = model.Nota;
+            boletim.Frequencia = model.Frequencia;
+            boletim.MesReferencia = model.MesReferencia;
+            boletim.AnoReferencia = model.AnoReferencia;
 
             _Db.Boletins.Add(boletim);
             _Db.SaveChanges();

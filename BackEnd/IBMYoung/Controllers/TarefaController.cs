@@ -25,10 +25,10 @@ namespace IBMYoung.Controllers
         public Tarefa Post([FromBody] TarefaCadastroViewModel model)
         {
             Tarefa tarefa = new Tarefa();
-            tarefa.Titulo = model.titulo;
-            tarefa.Conteudo = model.conteudo;
-            tarefa.Entregavel = model.entregavel;
-            tarefa.Nivel = model.nivel;
+            tarefa.Titulo = model.Titulo;
+            tarefa.Conteudo = model.Conteudo;
+            tarefa.Entregavel = model.Entregavel;
+            tarefa.Nivel = model.Nivel;
             tarefa.DataCriacao = DateTime.Now;
             tarefa.Active = true;
 

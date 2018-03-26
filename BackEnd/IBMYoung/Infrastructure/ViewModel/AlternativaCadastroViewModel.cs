@@ -7,7 +7,7 @@ namespace IBMYoung.Infrastructure.ViewModel
 {
     public class AlternativaCadastroViewModel
     {
-        public string alternativaTexto { get; set; }
-        public bool correta { get; set; }
+        public string AlternativaTexto { get; set; }
+        public bool Correta { get; set; }
     }
 }

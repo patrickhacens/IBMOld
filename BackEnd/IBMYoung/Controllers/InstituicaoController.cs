@@ -24,7 +24,7 @@ namespace IBMYoung.Controllers
         public Instituicao Post([FromBody] InstituicaoCadastroViewModel model)
         {
             Instituicao instituicao = new Instituicao();
-            instituicao.Nome = model.nome;
+            instituicao.Nome = model.Nome;
 
             _Db.Instituicoes.Add(instituicao);
             _Db.SaveChanges();

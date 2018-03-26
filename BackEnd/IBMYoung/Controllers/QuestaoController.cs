@@ -25,8 +25,8 @@ namespace IBMYoung.Controllers
         public Questao Post([FromBody] QuestaoCadastroViewModel model)
         {
             Questao questao = new Questao();
-            questao.Titulo = model.titulo;
-            questao.Conteudo = model.conteudo;
+            questao.Titulo = model.Titulo;
+            questao.Conteudo = model.Conteudo;
 
             _Db.Questoes.Add(questao);
             _Db.SaveChanges();

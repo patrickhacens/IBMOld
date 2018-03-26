@@ -7,6 +7,6 @@ namespace IBMYoung.Infrastructure.ViewModel
 {
     public class ReplicaCadastroViewModel
     {
-        public string texto { get; set; }
+        public string Texto { get; set; }
     }
 }

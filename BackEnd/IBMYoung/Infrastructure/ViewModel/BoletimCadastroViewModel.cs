@@ -7,10 +7,10 @@ namespace IBMYoung.Infrastructure.ViewModel
 {
     public class BoletimCadastroViewModel
     {
-        public float nota { get; set; }
-        public float frequencia { get; set; }
-        public string mesReferencia { get; set; }
-        public string observacao { get; set; }
-        public int anoReferencia { get; set; }
+        public float Nota { get; set; }
+        public float Frequencia { get; set; }
+        public string MesReferencia { get; set; }
+        public string Observacao { get; set; }
+        public int AnoReferencia { get; set; }
     }
 }

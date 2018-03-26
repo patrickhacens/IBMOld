@@ -8,13 +8,13 @@ namespace IBMYoung.Infrastructure.ViewModel
 {
     public class AprendizCadastroViewModel
     {
-        public string nome { get; set; }
-        public string sobrenome { get; set; }
+        public string Nome { get; set; }
+        public string Sobrenome { get; set; }
         //public UnidadeIbm unidade { get; set; }
         //public Departamento departamento { get; set; }
         //public int nivel { get; set; }
-        public DateTime dataEntrada { get; set; }
-        public Instituicao instituicao { get; set; }
+        public DateTime DataEntrada { get; set; }
+        public Instituicao Instituicao { get; set; }
 
     }
 }

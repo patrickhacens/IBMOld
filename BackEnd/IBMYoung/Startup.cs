@@ -32,7 +32,7 @@ namespace IBMYoung
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Db>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<Db>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             // Configurando o serviço de documentação do Swagger
             services.AddSwaggerGen(c =>
@@ -62,22 +62,21 @@ namespace IBMYoung
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = "yourdomain.com",
                     ValidAudience = "yourdomain.com",
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))
                 };
             });
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
-            else app.UseExceptionHandler();
+            else
+                app.UseExceptionHandler();
 
             // Ativando middlewares para uso do Swagger
             app.UseSwagger();

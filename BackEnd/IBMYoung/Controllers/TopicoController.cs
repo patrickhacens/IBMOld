@@ -24,8 +24,8 @@ namespace IBMYoung.Controllers
         public Topico Post([FromBody] TopicoCadastroViewModel model)
         {
             Topico topico = new Topico();
-            model.titulo = topico.Titulo;
-            model.texto = topico.Texto;
+            model.Titulo = topico.Titulo;
+            model.Texto = topico.Texto;
             topico.DataCriacao = DateTime.Now;
 
             _Db.Topicos.Add(topico);

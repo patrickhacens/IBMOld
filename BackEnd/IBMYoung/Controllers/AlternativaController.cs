@@ -26,8 +26,8 @@ namespace IBMYoung.Controllers
         {
             Alternativa alternativa = new Alternativa();
 
-            alternativa.TextoAlternativa = model.alternativaTexto;
-            alternativa.Correta = model.correta;
+            alternativa.TextoAlternativa = model.AlternativaTexto;
+            alternativa.Correta = model.Correta;
 
             _Db.Alternativas.Add(alternativa);
             _Db.SaveChanges();

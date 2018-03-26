@@ -7,7 +7,7 @@ namespace IBMYoung.Infrastructure.ViewModel
 {
     public class TopicoCadastroViewModel
     {
-        public string titulo { get; set; }
-        public string texto { get; set; }
+        public string Titulo { get; set; }
+        public string Texto { get; set; }
     }
 }

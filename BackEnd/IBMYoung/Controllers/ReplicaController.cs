@@ -23,7 +23,7 @@ namespace IBMYoung.Controllers
         public Replica Post([FromBody] ReplicaCadastroViewModel model)
         {
             Replica replica = new Replica();
-            replica.Texto = model.texto;
+            replica.Texto = model.Texto;
 
             return replica;
 
