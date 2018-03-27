@@ -34,57 +34,6 @@ namespace IBMYoung.Controllers
             public string Username { get; set; }
         }
      
-        [AllowAnonymous]
-        [HttpPost("login")]
-        public IActionResult Login([FromBody]   TokenRequest request)
-        {
-            //if (request.Username == "teste" && request.Password == "teste")
-
-            Usuario objeto = _Db.Usuarios.Where(x => x.Username == request.Username && x.Password == request.Password).FirstOrDefault();
-
-            if (objeto != null)
-            {
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.Name, request.Username)
-                };
-
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecurityKey"]));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                var token = new JwtSecurityToken(
-                    issuer: "yourdomain.com",
-                    audience: "yourdomain.com",
-                    claims: claims,
-                    expires: DateTime.Now.AddMinutes(30),
-                    signingCredentials: creds);
-
-                HttpContext.Response.Headers.Add("token", token.ToString());
-
-                return Ok(new
-                {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    //tipo = objeto.tipo
-                });
-            }
-
-            return BadRequest("Usuário ou senha inválidos");
-        }
-
-        [HttpPost]
-        public Usuario Post([FromBody] UsuarioCadastroViewModel model)
-        {
-            Usuario usuario = new Usuario();
-            usuario.Active = true;
-            usuario.Password = model.Password;
-            usuario.Username = model.Username;
-
-            _Db.Usuarios.Add(usuario);
-            _Db.SaveChanges();
-
-            return usuario;
-        }
-
         [Authorize]
         [HttpGet]
         public List<Usuario> Get()

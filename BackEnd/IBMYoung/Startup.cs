@@ -52,19 +52,24 @@ namespace IBMYoung
             });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = "yourdomain.com",
-                    ValidAudience = "yourdomain.com",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SecurityKey"]))
-                };
-            });
+                 .AddJwtBearer(o =>
+                 {
+                     o.RequireHttpsMetadata = false;
+                     o.SaveToken = true;
+                     o.TokenValidationParameters = new TokenValidationParameters
+                     {
+                         ValidateIssuerSigningKey = true,
+                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
+                         ValidateAudience = true,
+                         ValidAudience = Configuration["Tokens:Audience"],
+
+                         ValidateIssuer = true,
+                         ValidIssuer = Configuration["Tokens:Issuer"],
+
+                         ValidateLifetime = true,
+                         ClockSkew = TimeSpan.Zero
+                     };
+                 });
 
             services.AddMvc()
                 .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -77,6 +82,15 @@ namespace IBMYoung
                 app.UseDeveloperExceptionPage();
             else
                 app.UseExceptionHandler();
+
+            app.UseStaticFiles();
+
+            app.UseCors(conf =>
+            {
+                conf.AllowAnyHeader();
+                conf.AllowAnyMethod();
+                conf.AllowAnyOrigin();
+            });
 
             // Ativando middlewares para uso do Swagger
             app.UseSwagger();

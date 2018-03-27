@@ -7,16 +7,8 @@ using System.Threading.Tasks;
 
 namespace IBMYoung.Model
 {
-    public class Aprendiz
+    public class Aprendiz : Usuario
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        public string Nome { get; set; }
-
-        public string Sobrenome { get; set; }
-
         public int Nivel { get; set; }
 
         public DateTime DataEntrada { get; set; }
@@ -28,13 +20,6 @@ namespace IBMYoung.Model
 
         public int InstituicaoId { get; set; }
 
-        [ForeignKey(nameof(UsuarioId))]
-        public virtual Usuario Usuario { get; set; }
-
-        public int UsuarioId { get; set; }
-
         public virtual ICollection<Boletim> Boletins { get; set; }
-
-        public virtual ICollection<Tarefa> Tarefas { get; set; }
     }
 }

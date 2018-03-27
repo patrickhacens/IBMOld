@@ -30,10 +30,6 @@ namespace IBMYoung.Infrastructure
 
         public DbSet<Replica> Replicas { get; set; }
 
-        public DbSet<Funcionario> Funcionarios { get; set; }
-
-        public DbSet<Aprendiz> Aprendizes { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Usuario>().ToTable("Usuarios");
@@ -44,7 +40,6 @@ namespace IBMYoung.Infrastructure
             modelBuilder.Entity<Boletim>().ToTable("Boletins");
             modelBuilder.Entity<Topico>().ToTable("Topicos");
             modelBuilder.Entity<Replica>().ToTable("Replicas");
-            modelBuilder.Entity<Funcionario>().ToTable("Funcionarios");
             modelBuilder.Entity<Aprendiz>().ToTable("Aprendizes");
 
             base.OnModelCreating(modelBuilder);
