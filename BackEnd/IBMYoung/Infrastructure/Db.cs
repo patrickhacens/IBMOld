@@ -42,6 +42,11 @@ namespace IBMYoung.Infrastructure
             modelBuilder.Entity<Replica>().ToTable("Replicas");
             modelBuilder.Entity<Aprendiz>().ToTable("Aprendizes");
 
+            modelBuilder.Entity<RecursosHumano>();
+            modelBuilder.Entity<Aprendiz>();
+            modelBuilder.Entity<Gestor>();
+            modelBuilder.Entity<Instituicao>();
+
             base.OnModelCreating(modelBuilder);
         }
         

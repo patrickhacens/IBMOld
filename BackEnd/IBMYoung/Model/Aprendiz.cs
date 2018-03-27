@@ -11,6 +11,7 @@ namespace IBMYoung.Model
     {
         public int Nivel { get; set; }
 
+        [Column(nameof(DataNascimento))]
         public DateTime DataNascimento { get; set; }
 
         public DateTime DataEntrada { get; set; }

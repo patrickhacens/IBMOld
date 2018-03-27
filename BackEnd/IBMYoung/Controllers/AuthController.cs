@@ -30,12 +30,19 @@ namespace IBMYoung.Controllers
             this.configuration = configuration;
         }
 
-        [HttpPost]
-        public async Task<AuthResultViewModel> Login([FromBody]string username, [FromBody]string password)
+        public class LoginViewModel
         {
-            Usuario user = await db.Usuarios.SingleOrDefaultAsync(usern => usern.Email == username);
+            public string Username { get; set; }
 
-            if (user == null || !user.IsPasswordEqualsTo(password)) throw new HttpException(401);
+            public string Password { get; set; }
+        }
+
+        [HttpPost]
+        public async Task<AuthResultViewModel> Login([FromBody]LoginViewModel login)
+        {
+            Usuario user = await db.Usuarios.SingleOrDefaultAsync(usern => usern.Email == login.Username);
+
+            if (user == null || !user.IsPasswordEqualsTo(login.Password)) throw new HttpException(401);
 
             var claims = new[]
             {
@@ -56,6 +63,8 @@ namespace IBMYoung.Controllers
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 Expiration = token.ValidTo,
+                Id = user.Id,
+                Discriminator = user.GetType().Name
             };
         }
     }

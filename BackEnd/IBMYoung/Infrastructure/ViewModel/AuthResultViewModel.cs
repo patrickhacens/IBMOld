@@ -10,5 +10,9 @@ namespace IBMYoung.Infrastructure.ViewModel
         public string Token { get; set; }
 
         public DateTime Expiration { get; set; }
+
+        public string Discriminator { get; set; }
+
+        public int Id { get; set; }
     }
 }

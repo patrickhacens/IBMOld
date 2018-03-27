@@ -13,7 +13,7 @@ namespace IBMYoung.Infrastructure
 
             await ClearDb(db);
 
-            var user1 = new Usuario()
+            var user1 = new RecursosHumano()
             {
                 Nome = "Patrick",
                 Email = "patrick@gmail.com",
@@ -21,6 +21,8 @@ namespace IBMYoung.Infrastructure
             };
             user1.SetPassword("teste1234%");
             db.Usuarios.Add(user1);
+
+            await db.SaveChangesAsync();
         }
 
         private static async Task ClearDb(Db db)
