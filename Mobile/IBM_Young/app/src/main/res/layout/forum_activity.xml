@@ -26,13 +26,13 @@
         android:layout_width="62dp"
         android:layout_height="67dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/nomeUsuario"
+        app:layout_constraintEnd_toStartOf="@+id/tvNome"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nomeUsuario"
+        app:layout_constraintTop_toTopOf="@+id/tvNome"
         app:srcCompat="@drawable/menina" />
 
     <TextView
-        android:id="@+id/nomeUsuario"
+        android:id="@+id/tvNome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -55,8 +55,8 @@
         android:text="Level 2"
         android:textColor="@android:color/black"
         android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/nomeUsuario"
-        app:layout_constraintTop_toBottomOf="@+id/nomeUsuario" />
+        app:layout_constraintStart_toStartOf="@+id/tvNome"
+        app:layout_constraintTop_toBottomOf="@+id/tvNome" />
 
     <TextView
         android:id="@+id/comentarioUsuario1"

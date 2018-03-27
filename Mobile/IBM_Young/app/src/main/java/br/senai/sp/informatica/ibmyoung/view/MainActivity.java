@@ -61,4 +61,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+    public void consultarNivel(int nivel) {
+        //TODO: Obter as Tarefas do nivel correspondente
+        //TODO: determiar com base na resposta qual tela será apresentada
+        // Perguntas - Missão
+    }
 }
