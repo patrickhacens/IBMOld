@@ -19,12 +19,12 @@ using IBMYoung.Infrastructure.ViewModel;
 namespace IBMYoung.Controllers
 {
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    public class AuthController : Controller
     {
         private readonly Db db;
         private readonly IConfiguration configuration;
 
-        public LoginController(Db db, IConfiguration configuration)
+        public AuthController(Db db, IConfiguration configuration)
         {
             this.db = db;
             this.configuration = configuration;
