@@ -25,11 +25,17 @@ namespace IBMYoung.Model
             return Encrypt(password, this.PasswordSalt) == this.PasswordHash;
         }
 
-        public void SetPassword(string password)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns>Returns the user for method chaining</returns>
+        public Usuario SetPassword(string password)
         {
             var salt = GenerateSalt();
             this.PasswordSalt = salt.ToBase64();
             this.PasswordHash = Encrypt(password, PasswordSalt);
+            return this;
         }
 
         private static string Encrypt(string password, string salt)

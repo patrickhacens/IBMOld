@@ -13,5 +13,11 @@ namespace IBMYoung.Model
 
         public virtual ICollection<Aprendiz> Aprendizes { get; set; }
 
+        public Instituicao() { /*as is*/ }
+
+        public Instituicao(DateTime fundacao)
+        {
+            this.DataFundacao = fundacao;
+        }
     }
 }

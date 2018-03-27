@@ -51,6 +51,11 @@ namespace IBMYoung
                     });
             });
 
+            services.AddSingleton<CsvHelper.Configuration.Configuration>(new CsvHelper.Configuration.Configuration
+            {
+                Delimiter = ";"
+            });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                  .AddJwtBearer(o =>
                  {
@@ -72,7 +77,11 @@ namespace IBMYoung
                  });
 
             services.AddMvc()
-                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

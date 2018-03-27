@@ -23,5 +23,16 @@ namespace IBMYoung.Model
         public virtual ICollection<Boletim> Boletins { get; set; }
 
         public virtual Gestor Responsavel { get; set; }
+
+        public Aprendiz(){ /*as is*/ }
+        public Aprendiz(DateTime nascimento, DateTime entrada, DateTime saida, Instituicao instituicao, Gestor gestor)
+        {
+            this.DataNascimento = nascimento;
+            this.DataEntrada = entrada;
+            this.DataSaida = saida;
+            this.Instituicao = instituicao;
+            this.Responsavel = gestor;
+        }
+
     }
 }
