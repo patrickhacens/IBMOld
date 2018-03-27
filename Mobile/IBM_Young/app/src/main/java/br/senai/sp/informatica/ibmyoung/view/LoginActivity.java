@@ -52,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
                 if(resposta.isSuccessful()) {
 //                    LoginRepo.dao.salvarToken(resposta.headers().get("authorization"));
                     LoginRepo.dao.salvarToken(resposta.body().getToken());
+
+                    //TODO: obter do backend o userID e o Nível para o usuário logado, além do token
                     Log.e("LoginActivity",  "Token: " + resposta.body().getToken());
                     abreTelaPrincipal();
                 }

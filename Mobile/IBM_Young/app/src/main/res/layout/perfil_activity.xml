@@ -4,10 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".view.PerfilActivity">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/ivFoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -15,26 +16,11 @@
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeUsuario"
+        app:layout_constraintTop_toBottomOf="@+id/tvNome"
         app:srcCompat="@drawable/menina" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="Confirme seus dados antes de continuar"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
-
-    <TextView
-        android:id="@+id/nomeUsuarioConf"
+        android:id="@+id/tvNomeCompleto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -45,10 +31,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/ivFoto" />
 
     <TextView
-        android:id="@+id/idadeUsuario"
+        android:id="@+id/tvIdade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -57,10 +43,10 @@
         android:text="16 anos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeUsuarioConf" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNomeCompleto" />
 
     <TextView
-        android:id="@+id/funcaoUsuario"
+        android:id="@+id/tvFucao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -71,10 +57,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/idadeUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/tvIdade" />
 
     <TextView
-        android:id="@+id/instituicaoUsuario"
+        android:id="@+id/tvInstituicao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -83,7 +69,7 @@
         android:text="Fundação Bradesco"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/funcaoUsuario" />
+        app:layout_constraintTop_toBottomOf="@+id/tvFucao" />
 
     <Button
         android:id="@+id/confirmarDados"
@@ -93,6 +79,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:background="#FF7500C8"
+        android:onClick="voltarClick"
         android:text="Voltar"
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -100,7 +87,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/nomeUsuario"
+        android:id="@+id/tvNome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
