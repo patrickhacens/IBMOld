@@ -9,7 +9,7 @@
     tools:context=".view.MainActivity">
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/btPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/config" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/btRanking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -35,7 +35,7 @@
         app:srcCompat="@drawable/perfil" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/btNivel1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -51,7 +51,7 @@
         app:srcCompat="@drawable/laranja" />
 
     <ImageView
-        android:id="@+id/imageView8"
+        android:id="@+id/btNivel2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -67,7 +67,7 @@
         app:srcCompat="@drawable/ciano" />
 
     <ImageView
-        android:id="@+id/imageView9"
+        android:id="@+id/btNivel3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
