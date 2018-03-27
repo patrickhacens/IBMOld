@@ -11,15 +11,16 @@ namespace IBMYoung.Model
     {
         public int Nivel { get; set; }
 
+        public DateTime DataNascimento { get; set; }
+
         public DateTime DataEntrada { get; set; }
 
         public DateTime DataSaida { get; set; }
 
-        [ForeignKey(nameof(InstituicaoId))]
         public virtual Instituicao Instituicao { get; set; }
 
-        public int InstituicaoId { get; set; }
-
         public virtual ICollection<Boletim> Boletins { get; set; }
+
+        public virtual Gestor Responsavel { get; set; }
     }
 }

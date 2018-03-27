@@ -12,9 +12,10 @@ using System;
 namespace IBMYoung.Migrations
 {
     [DbContext(typeof(Db))]
-    partial class ProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20180327004120_reinit")]
+    partial class reinit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,18 +64,6 @@ namespace IBMYoung.Migrations
                     b.HasIndex("AprendizId");
 
                     b.ToTable("Boletins");
-                });
-
-            modelBuilder.Entity("IBMYoung.Model.Instituicao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Nome");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Instituicoes");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Questao", b =>
@@ -214,17 +203,46 @@ namespace IBMYoung.Migrations
 
                     b.Property<DateTime>("DataEntrada");
 
+                    b.Property<DateTime>("DataNascimento");
+
                     b.Property<DateTime>("DataSaida");
 
-                    b.Property<int>("InstituicaoId");
+                    b.Property<int?>("InstituicaoId");
 
                     b.Property<int>("Nivel");
 
+                    b.Property<int?>("ResponsavelId");
+
                     b.HasIndex("InstituicaoId");
+
+                    b.HasIndex("ResponsavelId");
 
                     b.ToTable("Aprendizes");
 
                     b.HasDiscriminator().HasValue("Aprendiz");
+                });
+
+            modelBuilder.Entity("IBMYoung.Model.Gestor", b =>
+                {
+                    b.HasBaseType("IBMYoung.Model.Usuario");
+
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnName("Gestor_DataNascimento");
+
+                    b.ToTable("Gestor");
+
+                    b.HasDiscriminator().HasValue("Gestor");
+                });
+
+            modelBuilder.Entity("IBMYoung.Model.Instituicao", b =>
+                {
+                    b.HasBaseType("IBMYoung.Model.Usuario");
+
+                    b.Property<DateTime>("DataFundacao");
+
+                    b.ToTable("Instituicoes");
+
+                    b.HasDiscriminator().HasValue("Instituicao");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Alternativa", b =>
@@ -270,8 +288,11 @@ namespace IBMYoung.Migrations
                 {
                     b.HasOne("IBMYoung.Model.Instituicao", "Instituicao")
                         .WithMany("Aprendizes")
-                        .HasForeignKey("InstituicaoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("InstituicaoId");
+
+                    b.HasOne("IBMYoung.Model.Gestor", "Responsavel")
+                        .WithMany("Aprendizes")
+                        .HasForeignKey("ResponsavelId");
                 });
 #pragma warning restore 612, 618
         }

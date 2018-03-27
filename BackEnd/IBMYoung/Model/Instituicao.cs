@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace IBMYoung.Model
 {
-    public class Instituicao
+    public class Instituicao : Usuario
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
-        public string Nome { get; set; }
+        public DateTime DataFundacao { get; set; }
 
         public virtual ICollection<Aprendiz> Aprendizes { get; set; }
 

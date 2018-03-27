@@ -40,13 +40,13 @@ namespace IBMYoung
                 c.SwaggerDoc("v1",
                     new Info
                     {
-                        Title = "Conversor de Temperaturas",
+                        Title = "IBM Young",
                         Version = "v1",
-                        Description = "Exemplo de API REST criada com o ASP.NET Core",
+                        Description = "IMBYoung Swagger",
                         Contact = new Contact
                         {
-                            Name = "Renato Groffe",
-                            Url = "https://github.com/renatogroffe"
+                            Name = "None",
+                            Url = ""
                         }
                     });
             });
@@ -94,15 +94,18 @@ namespace IBMYoung
 
             // Ativando middlewares para uso do Swagger
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                    "Conversor de Temperaturas");
-            });
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IBM Young"));
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

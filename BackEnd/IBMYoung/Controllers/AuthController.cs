@@ -31,7 +31,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpPost]
-        public async Task<AuthResultViewModel> Login([FromBody] string username, [FromBody] string password)
+        public async Task<AuthResultViewModel> Login([FromBody]string username, [FromBody]string password)
         {
             Usuario user = await db.Usuarios.SingleOrDefaultAsync(usern => usern.Email == username);
 
