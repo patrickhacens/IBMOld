@@ -7,11 +7,12 @@ using IBMYoung.Infrastructure.ViewModel;
 using IBMYoung.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Topico")]
+    [Route("api")]
     public class TopicoController : Controller
     {
         Db _Db;
@@ -21,12 +22,14 @@ namespace IBMYoung.Controllers
         }
 
         [HttpPost]
+        [Route("topicos")]
         public Topico Post([FromBody] TopicoCadastroViewModel model)
         {
             Topico topico = new Topico();
-            model.Titulo = topico.Titulo;
-            model.Texto = topico.Texto;
+            topico.Titulo = model.Titulo;
+            topico.Texto = model.Texto;
             topico.DataCriacao = DateTime.Now;
+            topico.Usuario = _Db.Usuarios.First();
 
             _Db.Topicos.Add(topico);
             _Db.SaveChanges();
@@ -35,9 +38,10 @@ namespace IBMYoung.Controllers
         }
 
         [HttpGet]
+        [Route("topicos")]
         public List<Topico> Get()
         {
-            return _Db.Topicos.ToList();
+            return _Db.Topicos.Include(a => a.Replicas.Select(b => b.Usuario)).Include(a => a.Usuario).ToList();
         }
     }
 }

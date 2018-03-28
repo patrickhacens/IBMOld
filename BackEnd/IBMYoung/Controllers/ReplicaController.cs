@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace IBMYoung.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Replica")]
+    [Route("api")]
     public class ReplicaController : Controller
     {
         Db _Db;
@@ -19,22 +19,21 @@ namespace IBMYoung.Controllers
         {
             _Db = Db;
         }
+
         [HttpPost]
+        [Route("replicas")]
         public Replica Post([FromBody] ReplicaCadastroViewModel model)
         {
             Replica replica = new Replica();
             replica.Texto = model.Texto;
-
-            return replica;
+            replica.TopicoId = model.TopicoId;
+            replica.DataCriacao = DateTime.Now;
+            replica.Usuario = _Db.Usuarios.First();//mudar isso
 
             _Db.Replicas.Add(replica);
             _Db.SaveChanges();
-        }
 
-        [HttpGet]
-        public List<Replica> Get()
-        {
-            return _Db.Replicas.ToList();
+            return replica;
         }
     }
 }

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace IBMYoung.Infrastructure.ViewModel
 {
-    public class ReplicaCadastroViewModel
+    public class ListagemDeTopicosViewModel
     {
-        public string Texto { get; set; }
-        public int TopicoId { get; set; }
+
+
     }
 }
