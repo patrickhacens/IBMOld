@@ -20,6 +20,9 @@ namespace IBMYoung.Model
 
         public string PasswordSalt { get; set; }
 
+        public ICollection<Topico> Topicos { get; set; }
+        public ICollection<Replica> Replicas { get; set; }
+
         public bool IsPasswordEqualsTo(string password)
         {
             return Encrypt(password, this.PasswordSalt) == this.PasswordHash;

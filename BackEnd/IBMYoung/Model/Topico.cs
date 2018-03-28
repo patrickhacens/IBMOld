@@ -20,5 +20,7 @@ namespace IBMYoung.Model
         public DateTime DataCriacao { get; set; }
 
         public virtual ICollection<Replica> Replicas { get; set; }
+        
+        public Usuario Usuario { get; set; }
     }
 }

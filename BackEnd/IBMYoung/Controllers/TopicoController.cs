@@ -6,27 +6,33 @@ using IBMYoung.Infrastructure;
 using IBMYoung.Infrastructure.ViewModel;
 using IBMYoung.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Topico")]
+    [Route("api")]
     public class TopicoController : Controller
     {
         Db _Db;
-        public TopicoController(Db Db)
+        private readonly UserManager<Usuario> userManager;
+        public TopicoController(Db Db, UserManager<Usuario> userManager)
         {
             _Db = Db;
+            this.userManager = userManager;
         }
 
         [HttpPost]
-        public Topico Post([FromBody] TopicoCadastroViewModel model)
+        [Route("topicos")]
+        public async Task<Topico> Post([FromBody] TopicoCadastroViewModel model)
         {
             Topico topico = new Topico();
-            model.Titulo = topico.Titulo;
-            model.Texto = topico.Texto;
+            topico.Titulo = model.Titulo;
+            topico.Texto = model.Texto;
             topico.DataCriacao = DateTime.Now;
+            topico.Usuario = await userManager.GetUserAsync(this.User);
 
             _Db.Topicos.Add(topico);
             _Db.SaveChanges();
@@ -35,9 +41,10 @@ namespace IBMYoung.Controllers
         }
 
         [HttpGet]
+        [Route("topicos")]
         public List<Topico> Get()
         {
-            return _Db.Topicos.ToList();
+            return _Db.Topicos.Include(a => a.Replicas).Include(a => a.Usuario).ToList();
         }
     }
 }

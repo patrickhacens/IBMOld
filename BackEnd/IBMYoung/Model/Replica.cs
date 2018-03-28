@@ -21,5 +21,7 @@ namespace IBMYoung.Model
         public virtual Topico Topico { get; set; }
 
         public int TopicoId { get; set; }
+        
+        public Usuario Usuario { get; set; }
     }
 }

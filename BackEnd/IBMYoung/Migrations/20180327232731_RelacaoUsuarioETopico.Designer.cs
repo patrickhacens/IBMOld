@@ -12,9 +12,10 @@ using System;
 namespace IBMYoung.Migrations
 {
     [DbContext(typeof(Db))]
-    partial class DbModelSnapshot : ModelSnapshot
+    [Migration("20180327232731_RelacaoUsuarioETopico")]
+    partial class RelacaoUsuarioETopico
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,15 +29,13 @@ namespace IBMYoung.Migrations
 
                     b.Property<bool>("Correta");
 
-                    b.Property<int?>("QuestaoOrdem");
-
-                    b.Property<int?>("QuestaoTarefaId");
+                    b.Property<int>("QuestaoId");
 
                     b.Property<string>("TextoAlternativa");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestaoTarefaId", "QuestaoOrdem");
+                    b.HasIndex("QuestaoId");
 
                     b.ToTable("Alternativas");
                 });
@@ -69,16 +68,18 @@ namespace IBMYoung.Migrations
 
             modelBuilder.Entity("IBMYoung.Model.Questao", b =>
                 {
-                    b.Property<int>("TarefaId");
-
-                    b.Property<int>("Ordem");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Conteudo");
 
+                    b.Property<int>("TarefaId");
+
                     b.Property<string>("Titulo");
 
-                    b.HasKey("TarefaId", "Ordem")
-                        .HasAnnotation("SqlServer:Clustered", true);
+                    b.HasKey("Id");
+
+                    b.HasIndex("TarefaId");
 
                     b.ToTable("Questoes");
                 });
@@ -105,38 +106,6 @@ namespace IBMYoung.Migrations
                     b.ToTable("Replicas");
                 });
 
-            modelBuilder.Entity("IBMYoung.Model.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ConcurrencyStamp");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("NormalizedName");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("IBMYoung.Model.RoleClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ClaimType");
-
-                    b.Property<string>("ClaimValue");
-
-                    b.Property<int>("RoleId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RoleClaims");
-                });
-
             modelBuilder.Entity("IBMYoung.Model.Tarefa", b =>
                 {
                     b.Property<int>("Id")
@@ -149,6 +118,10 @@ namespace IBMYoung.Migrations
                     b.Property<DateTime>("DataCriacao");
 
                     b.Property<DateTime>("DataExclusao");
+
+                    b.Property<bool>("Entregavel");
+
+                    b.Property<bool>("MultiEscolha");
 
                     b.Property<int>("Nivel");
 
@@ -181,34 +154,6 @@ namespace IBMYoung.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Topicos");
-                });
-
-            modelBuilder.Entity("IBMYoung.Model.User_Role", b =>
-                {
-                    b.Property<int>("UserId");
-
-                    b.Property<int>("RoleId");
-
-                    b.HasKey("UserId", "RoleId")
-                        .HasAnnotation("SqlServer:Clustered", true);
-
-                    b.ToTable("User_Roles");
-                });
-
-            modelBuilder.Entity("IBMYoung.Model.UserClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ClaimType");
-
-                    b.Property<string>("ClaimValue");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Usuario", b =>
@@ -325,7 +270,8 @@ namespace IBMYoung.Migrations
                 {
                     b.HasOne("IBMYoung.Model.Questao", "Questao")
                         .WithMany("Alternativas")
-                        .HasForeignKey("QuestaoTarefaId", "QuestaoOrdem");
+                        .HasForeignKey("QuestaoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Boletim", b =>
