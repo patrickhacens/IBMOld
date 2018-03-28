@@ -54,8 +54,10 @@ namespace IBMYoung.Controllers
         public async Task<Tarefa> GetById(int id)
         {
             var tarefa = await db.Tarefas
-                .Include(d => d.Questoes.Select(f => f.Alternativas))
+                .Include(d => d.Questoes)
+                .Include(d => d.Usuario)
                 .FirstOrDefaultAsync(d => d.Id == id);
+
             if (tarefa == null) throw new HttpException(404);
 
             return tarefa;

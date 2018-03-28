@@ -23,7 +23,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpPost]
-        [Route("/questao/{tarefaId}/{ordem}")]
+        [Route("/api/questao/{tarefaId}/{ordem}")]
         public async Task<Alternativa> PostAlternativa(int tarefaId, int ordem, [FromBody] AlternativaCadastroViewModel model)
         {
             var questao = await db.Questoes

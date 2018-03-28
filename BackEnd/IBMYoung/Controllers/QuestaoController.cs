@@ -27,10 +27,13 @@ namespace IBMYoung.Controllers
         }
 
         [HttpPost]
-        [Route("/tarefa/{tarefaId}")]
+        [Route("/api/tarefa/{tarefaId}")]
         public async Task<Questao> Post(int tarefaId, [FromBody] QuestaoCadastroViewModel model)
         {
-            var tarefa = await db.Tarefas.FindAsync(tarefaId);
+            var tarefa = await db.Tarefas
+                .Include(d => d.Questoes)
+                .FirstOrDefaultAsync(d => d.Id == tarefaId);
+
             if (tarefa == null) throw new HttpException(404);
 
             var questao = new Questao()
@@ -42,6 +45,8 @@ namespace IBMYoung.Controllers
             };
 
             tarefa.Questoes.Add(questao);
+
+            await db.SaveChangesAsync();
 
             return questao;
         }
