@@ -12,9 +12,10 @@ using System;
 namespace IBMYoung.Migrations
 {
     [DbContext(typeof(Db))]
-    partial class DbModelSnapshot : ModelSnapshot
+    [Migration("20180327234847_roles")]
+    partial class roles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,13 +95,9 @@ namespace IBMYoung.Migrations
 
                     b.Property<int>("TopicoId");
 
-                    b.Property<int?>("UsuarioId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TopicoId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Replicas");
                 });
@@ -178,11 +175,7 @@ namespace IBMYoung.Migrations
 
                     b.Property<string>("Titulo");
 
-                    b.Property<int?>("UsuarioId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Topicos");
                 });
@@ -354,10 +347,6 @@ namespace IBMYoung.Migrations
                         .WithMany("Replicas")
                         .HasForeignKey("TopicoId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("IBMYoung.Model.Usuario", "Usuario")
-                        .WithMany("Replicas")
-                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Tarefa", b =>
@@ -366,13 +355,6 @@ namespace IBMYoung.Migrations
                         .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("IBMYoung.Model.Topico", b =>
-                {
-                    b.HasOne("IBMYoung.Model.Usuario", "Usuario")
-                        .WithMany("Topicos")
-                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Aprendiz", b =>

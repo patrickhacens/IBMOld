@@ -13,6 +13,7 @@ using IBMYoung.Infrastructure.ViewModel;
 using IBMYoung.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,15 +23,17 @@ namespace IBMYoung.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
-    [Authorize]
+    [JWTAuth]
     public class UsuarioController : Controller
     {
         private readonly Db db;
         private readonly Configuration config;
-        public UsuarioController(Db db, Configuration config)
+        private readonly UserManager<Usuario> userManager;
+        public UsuarioController(Db db, Configuration config, UserManager<Usuario> userManager)
         {
             this.db = db;
             this.config = config;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -113,6 +116,13 @@ namespace IBMYoung.Controllers
             ms.Position = 0;
 
             return File(ms, "text/csv", "template.csv");
+        }
+
+        [HttpGet]
+        [Route("me")]
+        public async Task<Usuario> Me()
+        {
+            return await userManager.GetUserAsync(this.User);
         }
     }
 }
