@@ -17,7 +17,9 @@ namespace IBMYoung.Infrastructure
             {
                 Nome = "Patrick",
                 Email = "patrick@gmail.com",
-                Sobrenome = "Ens"
+                Sobrenome = "Ens",
+                DataNascimento = new DateTime(1994, 12, 15),
+
             };
             user1.SetPassword("teste1234%");
             db.Usuarios.Add(user1);
