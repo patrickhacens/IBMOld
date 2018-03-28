@@ -6,6 +6,7 @@ using IBMYoung.Infrastructure;
 using IBMYoung.Infrastructure.ViewModel;
 using IBMYoung.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IBMYoung.Controllers
@@ -15,20 +16,22 @@ namespace IBMYoung.Controllers
     public class ReplicaController : Controller
     {
         Db _Db;
-        public ReplicaController(Db Db)
+        private readonly UserManager<Usuario> userManager;
+        public ReplicaController(Db Db, UserManager<Usuario> userManager)
         {
             _Db = Db;
+            this.userManager = userManager;
         }
 
         [HttpPost]
         [Route("replicas")]
-        public Replica Post([FromBody] ReplicaCadastroViewModel model)
+        public async Task<Replica> Post([FromBody] ReplicaCadastroViewModel model)
         {
             Replica replica = new Replica();
             replica.Texto = model.Texto;
             replica.TopicoId = model.TopicoId;
             replica.DataCriacao = DateTime.Now;
-            replica.Usuario = _Db.Usuarios.First();//mudar isso
+            replica.Usuario = await userManager.GetUserAsync(this.User);
 
             _Db.Replicas.Add(replica);
             _Db.SaveChanges();
