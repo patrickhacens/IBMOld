@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBMYoung.Infrastructure;
+using IBMYoung.Model;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,6 +57,15 @@ namespace IBMYoung
             {
                 Delimiter = ";"
             });
+
+            services.AddIdentityCore<Usuario>(options =>
+            {
+                options.Password = new PasswordOptions() { RequiredLength = 8 };
+                options.User = new UserOptions() { RequireUniqueEmail = true };
+            })
+            .AddRoles<Role>()
+            .AddEntityFrameworkStores<Db>()
+            .AddDefaultTokenProviders();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                  .AddJwtBearer(o =>

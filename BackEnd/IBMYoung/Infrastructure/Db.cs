@@ -30,24 +30,32 @@ namespace IBMYoung.Infrastructure
 
         public DbSet<Replica> Replicas { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        public DbSet<RoleClaim> RoleClaims { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<User_Role> User_Roles { get; set; }
+        public DbSet<UserClaim> UserClaims { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder m)
         {
-            modelBuilder.Entity<Usuario>().ToTable("Usuarios");
-            modelBuilder.Entity<Tarefa>().ToTable("Tarefas");
-            modelBuilder.Entity<Instituicao>().ToTable("Instituicoes");
-            modelBuilder.Entity<Questao>().ToTable("Questoes");
-            modelBuilder.Entity<Alternativa>().ToTable("Alternativas");
-            modelBuilder.Entity<Boletim>().ToTable("Boletins");
-            modelBuilder.Entity<Topico>().ToTable("Topicos");
-            modelBuilder.Entity<Replica>().ToTable("Replicas");
-            modelBuilder.Entity<Aprendiz>().ToTable("Aprendizes");
+            m.Entity<Usuario>().ToTable("Usuarios");
+            m.Entity<Tarefa>().ToTable("Tarefas");
+            m.Entity<Instituicao>().ToTable("Instituicoes");
+            m.Entity<Questao>().ToTable("Questoes");
+            m.Entity<Alternativa>().ToTable("Alternativas");
+            m.Entity<Boletim>().ToTable("Boletins");
+            m.Entity<Topico>().ToTable("Topicos");
+            m.Entity<Replica>().ToTable("Replicas");
+            m.Entity<Aprendiz>().ToTable("Aprendizes");
 
-            modelBuilder.Entity<RecursosHumano>();
-            modelBuilder.Entity<Aprendiz>();
-            modelBuilder.Entity<Gestor>();
-            modelBuilder.Entity<Instituicao>();
+            m.Entity<RecursosHumano>();
+            m.Entity<Aprendiz>();
+            m.Entity<Gestor>();
+            m.Entity<Instituicao>();
 
-            base.OnModelCreating(modelBuilder);
+            m.Entity<User_Role>().HasKey(r => new { r.UserId, r.RoleId }).ForSqlServerIsClustered(true);
+
+            base.OnModelCreating(m);
         }
         
     }
