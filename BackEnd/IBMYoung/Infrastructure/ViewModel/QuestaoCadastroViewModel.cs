@@ -9,5 +9,6 @@ namespace IBMYoung.Infrastructure.ViewModel
     {
         public string Titulo { get; set; }
         public string Conteudo { get; set; }
+        public int Ordem { get; set; }
     }
 }

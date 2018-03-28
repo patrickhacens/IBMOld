@@ -6,38 +6,53 @@ using IBMYoung.Infrastructure;
 using IBMYoung.Infrastructure.ViewModel;
 using IBMYoung.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
+    [JWTAuth]
     [Produces("application/json")]
     [Route("api/Questao")]
     public class QuestaoController : Controller
     {
-        Db _Db;
+        private readonly Db db;
+        private readonly UserManager<Usuario> userManager;
 
-        public QuestaoController(Db Db)
+        public QuestaoController(Db db, UserManager<Usuario> userManager)
         {
-            _Db = Db;
+            this.db = db;
+            this.userManager = userManager;
         }
 
         [HttpPost]
-        public Questao Post([FromBody] QuestaoCadastroViewModel model)
+        [Route("/tarefa/{tarefaId}")]
+        public async Task<Questao> Post(int tarefaId, [FromBody] QuestaoCadastroViewModel model)
         {
-            Questao questao = new Questao();
-            questao.Titulo = model.Titulo;
-            questao.Conteudo = model.Conteudo;
+            var tarefa = await db.Tarefas.FindAsync(tarefaId);
+            if (tarefa == null) throw new HttpException(404);
 
-            _Db.Questoes.Add(questao);
-            _Db.SaveChanges();
+            var questao = new Questao()
+            {
+                Conteudo = model.Conteudo,
+                Ordem = model.Ordem,
+                Titulo = model.Titulo,
+                Tarefa = tarefa
+            };
+
+            tarefa.Questoes.Add(questao);
 
             return questao;
         }
 
         [HttpGet]
-        public List<Questao> Get()
+        [Route("{tarefaId}/{ordem}")]
+        public async Task<Questao> Get(int tarefaId, int ordem)
         {
-            return _Db.Questoes.ToList();
+            var result = await db.Questoes.Include(d => d.Alternativas).FirstOrDefaultAsync(d => d.TarefaId == tarefaId && ordem == ordem);
+            if (result == null) throw new HttpException(404);
+            return result;
         }
     }
 }

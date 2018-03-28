@@ -6,23 +6,27 @@ using IBMYoung.Infrastructure;
 using IBMYoung.Infrastructure.ViewModel;
 using IBMYoung.Model;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
+    [JWTAuth]
     [Produces("application/json")]
-    [Route("api/Tarefa")]
+    [Route("api/[controller]")]
     public class TarefaController : Controller
     {
-        Db _Db;
-        public TarefaController(Db Db)
+        private readonly Db db;
+        private readonly UserManager<Usuario> userManager;
+        public TarefaController(Db db, UserManager<Usuario> userManager)
         {
-            _Db = Db;
-
+            this.db = db;
+            this.userManager = userManager;
         }
 
         [HttpPost]
-        public Tarefa Post([FromBody] TarefaCadastroViewModel model)
+        public async Task<Tarefa> Post([FromBody] TarefaCadastroViewModel model)
         {
             Tarefa tarefa = new Tarefa();
             tarefa.Titulo = model.Titulo;
@@ -30,18 +34,29 @@ namespace IBMYoung.Controllers
             tarefa.Nivel = model.Nivel;
             tarefa.DataCriacao = DateTime.Now;
             tarefa.Active = true;
+            tarefa.Usuario = await userManager.GetUserAsync(this.User);
 
-            _Db.Tarefas.Add(tarefa);
-            _Db.SaveChanges();
+            db.Tarefas.Add(tarefa);
+
+            await db.SaveChangesAsync();
 
             return tarefa;
         }
 
         [HttpGet]
-        public List<Tarefa> Get()
-        {
-            return _Db.Tarefas.ToList();
-        }
+        public async Task<IEnumerable<Tarefa>> Get() => await db.Tarefas.ToListAsync();
 
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<Tarefa> GetById(int id)
+        {
+            var tarefa = await db.Tarefas
+                .Include(d => d.Questoes.Select(f => f.Alternativas))
+                .FirstOrDefaultAsync(d => d.Id == id);
+            if (tarefa == null) throw new HttpException(404);
+
+            return tarefa;
+        }
     }
 }
