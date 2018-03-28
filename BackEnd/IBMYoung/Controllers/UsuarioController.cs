@@ -42,7 +42,7 @@ namespace IBMYoung.Controllers
         [HttpPost]
         public async Task<Usuario> Post([FromBody]UsuarioCadastroViewModel model)
         {
-            Usuario user = default;
+            Usuario user = default(Usuario);
             switch (model.Discriminator)
             {
                 case nameof(Instituicao):
@@ -85,13 +85,14 @@ namespace IBMYoung.Controllers
             using (StreamReader sr = new StreamReader(stream))
             using (CsvReader reader = new CsvReader(sr, config))
             {
-                Usuario[] aprendizes = reader.GetRecords<AprendizViewModel>().Select(d => new Aprendiz(d.Nascimento, d.Entrada, d.Saida, instituicao, gestor)
-                {
-                    Email = d.Email,
-                    UserName = d.Username,
-                    Nome = d.Nome,
-                    Sobrenome = d.Sobrenome
-                }.SetPassword(d.Nascimento.ToShortDateString())).ToArray();
+                Usuario[] aprendizes = reader.GetRecords<AprendizViewModel>()
+                    .Select(d => new Aprendiz(d.Nascimento, d.Entrada, d.Saida, instituicao, gestor)
+                    {
+                        Email = d.Email,
+                        UserName = d.Username,
+                        Nome = d.Nome,
+                        Sobrenome = d.Sobrenome
+                    }.SetPassword(d.Nascimento.ToShortDateString())).ToArray();
 
                 db.Usuarios.AddRange(aprendizes);
                 await db.SaveChangesAsync();

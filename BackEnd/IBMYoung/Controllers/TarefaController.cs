@@ -28,13 +28,15 @@ namespace IBMYoung.Controllers
         [HttpPost]
         public async Task<Tarefa> Post([FromBody] TarefaCadastroViewModel model)
         {
-            Tarefa tarefa = new Tarefa();
-            tarefa.Titulo = model.Titulo;
-            tarefa.Conteudo = model.Conteudo;
-            tarefa.Nivel = model.Nivel;
-            tarefa.DataCriacao = DateTime.Now;
-            tarefa.Active = true;
-            tarefa.Usuario = await userManager.GetUserAsync(this.User);
+            Tarefa tarefa = new Tarefa()
+            {
+                Titulo = model.Titulo,
+                Conteudo = model.Conteudo,
+                Nivel = model.Nivel,
+                DataCriacao = DateTime.Now,
+                Active = true,
+                Usuario = await userManager.GetUserAsync(this.User)
+            };
 
             db.Tarefas.Add(tarefa);
 
@@ -55,6 +57,26 @@ namespace IBMYoung.Controllers
                 .Include(d => d.Questoes.Select(f => f.Alternativas))
                 .FirstOrDefaultAsync(d => d.Id == id);
             if (tarefa == null) throw new HttpException(404);
+
+            return tarefa;
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<Tarefa> Put(int id, TarefaCadastroViewModel model)
+        {
+            var tarefa = await db.Tarefas
+                .FirstOrDefaultAsync(d => d.Id == id);
+            if (tarefa == null) throw new HttpException(404);
+
+            tarefa.Titulo = model.Titulo;
+            tarefa.Conteudo = model.Conteudo;
+            tarefa.Nivel = model.Nivel;
+            tarefa.DataCriacao = DateTime.Now;
+            tarefa.Active = true;
+            tarefa.Usuario = await userManager.GetUserAsync(this.User);
+
+            await db.SaveChangesAsync();
 
             return tarefa;
         }

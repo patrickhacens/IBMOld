@@ -7,6 +7,7 @@ using IBMYoung.Infrastructure.ViewModel;
 using IBMYoung.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
@@ -14,30 +15,70 @@ namespace IBMYoung.Controllers
     [Route("api/Alternativa")]
     public class AlternativaController : Controller
     {
-        Db _Db;
+        private readonly Db db;
 
-        public AlternativaController(Db Db)
+        public AlternativaController(Db db)
         {
-            _Db = Db;
+            this.db = db;
         }
 
         [HttpPost]
-        public Alternativa Post([FromBody] AlternativaCadastroViewModel model)
+        [Route("/questao/{tarefaId}/{ordem}")]
+        public async Task<Alternativa> PostAlternativa(int tarefaId, int ordem, [FromBody] AlternativaCadastroViewModel model)
         {
-            Alternativa alternativa = new Alternativa();
+            var questao = await db.Questoes
+                .Include(d => d.Alternativas)
+                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && d.Ordem == ordem);
+            if (questao == null) throw new HttpException(404);
 
-            alternativa.TextoAlternativa = model.AlternativaTexto;
-            alternativa.Correta = model.Correta;
+            if (model.Correta && questao.Alternativas.Any(d => d.Correta))
+                foreach (var alternativa in questao.Alternativas)
+                    alternativa.Correta = false;
 
-            _Db.Alternativas.Add(alternativa);
-            _Db.SaveChanges();
+            var result = new Alternativa()
+            {
+                Correta = model.Correta,
+                Questao = questao,
+                TextoAlternativa = model.TextoAlternativa
+            };
+
+            questao.Alternativas.Add(result);
+
+            await db.SaveChangesAsync();
+            return result;
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<Alternativa> Get(int id)
+        {
+            var alternativa = await db.Alternativas
+                .Include(d => d.Questao.Tarefa)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
+            if (alternativa == null) throw new HttpException(404);
 
             return alternativa;
         }
-        [HttpGet]
-        public List<Alternativa> Get()
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<Alternativa> Put(int id, AlternativaCadastroViewModel model)
         {
-            return _Db.Alternativas.ToList();
+            var alternativa = await db.Alternativas
+                .Include(d => d.Questao.Tarefa)
+                .FirstOrDefaultAsync(d => d.Id == id);
+            if (alternativa == null) throw new HttpException(404);
+
+            alternativa.TextoAlternativa = model.TextoAlternativa;
+            alternativa.Correta = model.Correta;
+
+            if (alternativa.Correta && alternativa.Questao.Alternativas.Any(d => d.Correta && d != alternativa))
+                foreach (var alt in alternativa.Questao.Alternativas.Where(d => d.Correta && d != alternativa).ToArray())
+                    alt.Correta = false;
+
+            await db.SaveChangesAsync();
+            return alternativa;
         }
     }
 }

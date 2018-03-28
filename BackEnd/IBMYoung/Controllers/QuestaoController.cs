@@ -46,11 +46,29 @@ namespace IBMYoung.Controllers
             return questao;
         }
 
+        [HttpPut]
+        [Route("{tarefaId}/{ordem}")]
+        public async Task<Questao> Put(int tarefaId, int ordem, [FromBody] QuestaoCadastroViewModel model)
+        {
+            var questao = await db.Questoes
+                .Include(d => d.Tarefa)
+                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && ordem == ordem);
+            if (questao == null) throw new HttpException(404);
+
+            questao.Conteudo = model.Conteudo;
+            questao.Titulo = model.Titulo;
+
+            await db.SaveChangesAsync();
+            return questao;
+        }
+
         [HttpGet]
         [Route("{tarefaId}/{ordem}")]
         public async Task<Questao> Get(int tarefaId, int ordem)
         {
-            var result = await db.Questoes.Include(d => d.Alternativas).FirstOrDefaultAsync(d => d.TarefaId == tarefaId && ordem == ordem);
+            var result = await db.Questoes
+                .Include(d => d.Alternativas)
+                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && ordem == ordem);
             if (result == null) throw new HttpException(404);
             return result;
         }

@@ -17,6 +17,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20180328140851_boletim-aprendiz.cs" />
+    <Compile Remove="Migrations\20180328140851_boletim-aprendiz.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 
@@ -94,13 +92,9 @@ namespace IBMYoung.Migrations
 
                     b.Property<int>("TopicoId");
 
-                    b.Property<int?>("UsuarioId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("TopicoId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Replicas");
                 });
@@ -174,11 +168,7 @@ namespace IBMYoung.Migrations
 
                     b.Property<string>("Titulo");
 
-                    b.Property<int?>("UsuarioId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Topicos");
                 });
@@ -349,10 +339,6 @@ namespace IBMYoung.Migrations
                         .WithMany("Replicas")
                         .HasForeignKey("TopicoId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("IBMYoung.Model.Usuario", "Usuario")
-                        .WithMany("Replicas")
-                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Tarefa", b =>
@@ -361,13 +347,6 @@ namespace IBMYoung.Migrations
                         .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("IBMYoung.Model.Topico", b =>
-                {
-                    b.HasOne("IBMYoung.Model.Usuario", "Usuario")
-                        .WithMany("Topicos")
-                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Aprendiz", b =>

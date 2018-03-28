@@ -18,6 +18,7 @@ namespace IBMYoung.Model
         public string MesReferencia { get; set; }
         public string Observacao { get; set; }
         public int AnoReferencia { get; set; }
+        public virtual Aprendiz Aprendiz { get; set; }
 
     }
 }
