@@ -19,19 +19,15 @@ namespace IBMYoung.Model
 
         public DateTime DataExclusao { get; set; }
 
-        public bool Entregavel { get; set; }
-
         public int Nivel { get; set; }
 
         public string Conteudo { get; set; }
 
         public bool Active { get; set; }
-                
+
         [ForeignKey(nameof(UsuarioId))]
         public virtual Usuario Usuario { get; set; }
         public int UsuarioId { get; set; }
-
-        public bool MultiEscolha { get; set; }
 
         public virtual ICollection<Questao> Questoes { get; set; }
 

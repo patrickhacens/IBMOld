@@ -11,7 +11,7 @@ namespace IBMYoung.Infrastructure
     {
         public Db(DbContextOptions<Db> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
@@ -55,8 +55,10 @@ namespace IBMYoung.Infrastructure
 
             m.Entity<User_Role>().HasKey(r => new { r.UserId, r.RoleId }).ForSqlServerIsClustered(true);
 
+            m.Entity<Questao>().HasKey(r => new { r.TarefaId, r.Ordem }).ForSqlServerIsClustered(true);
+
             base.OnModelCreating(m);
         }
-        
+
     }
 }

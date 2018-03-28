@@ -17,9 +17,6 @@ namespace IBMYoung.Model
 
         public bool Correta { get; set; }
 
-        [ForeignKey(nameof(QuestaoId))]
         public virtual Questao Questao { get; set; }
-
-        public int QuestaoId { get; set; }
     }
 }

@@ -27,7 +27,6 @@ namespace IBMYoung.Controllers
             Tarefa tarefa = new Tarefa();
             tarefa.Titulo = model.Titulo;
             tarefa.Conteudo = model.Conteudo;
-            tarefa.Entregavel = model.Entregavel;
             tarefa.Nivel = model.Nivel;
             tarefa.DataCriacao = DateTime.Now;
             tarefa.Active = true;

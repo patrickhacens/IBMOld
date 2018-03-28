@@ -9,9 +9,7 @@ namespace IBMYoung.Model
 {
     public class Questao
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int Ordem { get; set; }
 
         public string Titulo { get; set; }
 
