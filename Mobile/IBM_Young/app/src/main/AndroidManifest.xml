@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.ClassificacaoActivity"/>
+        <activity android:name=".view.ClassificacaoActivity" />
 
         <activity android:name=".view.ForumActivity"/>
 

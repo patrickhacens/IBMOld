@@ -35,17 +35,15 @@ public class PerguntasActivity extends AppCompatActivity implements AdapterView.
     @Override
     public void onItemClick(AdapterView<?> viewGroup, View view, int linha, long id) {
         Integer questaoId = ((Questao)adapter.getItem(linha)).getId();
-        Intent intent = new Intent(this, PerguntasAdapter.class);
+        Intent intent = new Intent(this, PerguntaActivity.class);
         intent.putExtra("id", questaoId);
         startActivityForResult(intent, RESPONDE_QUESTAO);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO: verificar como identificar se a questão foi respondida para que o item da lista seja pintado com outra cor e/ou bloqueado de edição
-
         // URI: /api/Tarefa/current
-        // será construido um endpoint que retornará a tarefa e uma listas de questoes e cada questao indicará se já foi respondida
+        // TODO: será construido um endpoint que retornará a tarefa e uma listas de questoes e cada questao indicará se já foi respondida
 
         super.onActivityResult(requestCode, resultCode, data);
     }

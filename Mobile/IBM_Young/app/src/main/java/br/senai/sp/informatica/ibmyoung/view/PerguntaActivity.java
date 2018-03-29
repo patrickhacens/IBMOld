@@ -57,6 +57,7 @@ public class PerguntaActivity extends AppCompatActivity {
     }
 
     public void enviarClick(View view) {
-        // TODO: determinar qual questão foi selecionada e mandar a resposta para o BackEnd
+        // TODO: salvar a resposta e retornar para a lista de questões
+        finish();
     }
 }
