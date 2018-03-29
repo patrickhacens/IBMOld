@@ -12,8 +12,8 @@ using System;
 namespace IBMYoung.Migrations
 {
     [DbContext(typeof(Db))]
-    [Migration("20180327232731_RelacaoUsuarioETopico")]
-    partial class RelacaoUsuarioETopico
+    [Migration("20180328233558_reinit")]
+    partial class reinit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,13 +29,15 @@ namespace IBMYoung.Migrations
 
                     b.Property<bool>("Correta");
 
-                    b.Property<int>("QuestaoId");
+                    b.Property<int?>("QuestaoOrdem");
+
+                    b.Property<int?>("QuestaoTarefaId");
 
                     b.Property<string>("TextoAlternativa");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestaoId");
+                    b.HasIndex("QuestaoTarefaId", "QuestaoOrdem");
 
                     b.ToTable("Alternativas");
                 });
@@ -68,18 +70,16 @@ namespace IBMYoung.Migrations
 
             modelBuilder.Entity("IBMYoung.Model.Questao", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("TarefaId");
+
+                    b.Property<int>("Ordem");
 
                     b.Property<string>("Conteudo");
 
-                    b.Property<int>("TarefaId");
-
                     b.Property<string>("Titulo");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("TarefaId");
+                    b.HasKey("TarefaId", "Ordem")
+                        .HasAnnotation("SqlServer:Clustered", true);
 
                     b.ToTable("Questoes");
                 });
@@ -106,6 +106,58 @@ namespace IBMYoung.Migrations
                     b.ToTable("Replicas");
                 });
 
+            modelBuilder.Entity("IBMYoung.Model.Resposta", b =>
+                {
+                    b.Property<int>("AprendizId");
+
+                    b.Property<int>("TarefaId");
+
+                    b.Property<int>("Ordem");
+
+                    b.Property<int>("AlternativaId");
+
+                    b.HasKey("AprendizId", "TarefaId", "Ordem")
+                        .HasAnnotation("SqlServer:Clustered", true);
+
+                    b.HasIndex("AlternativaId");
+
+                    b.HasIndex("TarefaId", "Ordem");
+
+                    b.ToTable("Resposta");
+                });
+
+            modelBuilder.Entity("IBMYoung.Model.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("NormalizedName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("IBMYoung.Model.RoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<int>("RoleId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleClaims");
+                });
+
             modelBuilder.Entity("IBMYoung.Model.Tarefa", b =>
                 {
                     b.Property<int>("Id")
@@ -118,10 +170,6 @@ namespace IBMYoung.Migrations
                     b.Property<DateTime>("DataCriacao");
 
                     b.Property<DateTime>("DataExclusao");
-
-                    b.Property<bool>("Entregavel");
-
-                    b.Property<bool>("MultiEscolha");
 
                     b.Property<int>("Nivel");
 
@@ -154,6 +202,34 @@ namespace IBMYoung.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Topicos");
+                });
+
+            modelBuilder.Entity("IBMYoung.Model.User_Role", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("RoleId");
+
+                    b.HasKey("UserId", "RoleId")
+                        .HasAnnotation("SqlServer:Clustered", true);
+
+                    b.ToTable("User_Roles");
+                });
+
+            modelBuilder.Entity("IBMYoung.Model.UserClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserClaims");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Usuario", b =>
@@ -270,13 +346,12 @@ namespace IBMYoung.Migrations
                 {
                     b.HasOne("IBMYoung.Model.Questao", "Questao")
                         .WithMany("Alternativas")
-                        .HasForeignKey("QuestaoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("QuestaoTarefaId", "QuestaoOrdem");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Boletim", b =>
                 {
-                    b.HasOne("IBMYoung.Model.Aprendiz")
+                    b.HasOne("IBMYoung.Model.Aprendiz", "Aprendiz")
                         .WithMany("Boletins")
                         .HasForeignKey("AprendizId");
                 });
@@ -299,6 +374,24 @@ namespace IBMYoung.Migrations
                     b.HasOne("IBMYoung.Model.Usuario", "Usuario")
                         .WithMany("Replicas")
                         .HasForeignKey("UsuarioId");
+                });
+
+            modelBuilder.Entity("IBMYoung.Model.Resposta", b =>
+                {
+                    b.HasOne("IBMYoung.Model.Alternativa", "Alternativa")
+                        .WithMany("Respostas")
+                        .HasForeignKey("AlternativaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IBMYoung.Model.Aprendiz", "Aprendiz")
+                        .WithMany("Respostas")
+                        .HasForeignKey("AprendizId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IBMYoung.Model.Questao", "Questao")
+                        .WithMany("Respostas")
+                        .HasForeignKey("TarefaId", "Ordem")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Tarefa", b =>

@@ -21,5 +21,7 @@ namespace IBMYoung.Model
         public int TarefaId { get; set; }
 
         public virtual List<Alternativa> Alternativas { get; set; }
+
+        public virtual ICollection<Resposta> Respostas { get; set; }
     }
 }

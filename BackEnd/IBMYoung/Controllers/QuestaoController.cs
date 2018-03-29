@@ -77,5 +77,51 @@ namespace IBMYoung.Controllers
             if (result == null) throw new HttpException(404);
             return result;
         }
+
+
+        public class RespostaViewModel
+        {
+            public int AlternativaId { get; set; }
+        }
+
+        [HttpGet]
+        [Route("{tarefaId}/{ordem}/responder")]
+        public async Task<Resposta> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model)
+        {
+            var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
+            if (aprendiz == null) throw new HttpException(401, new { Mensagem = "Não é aprendiz" });
+
+            Questao questao = await db.Questoes
+                .Include(d => d.Alternativas)
+                .Include(d => d.Respostas)
+                .Include(d => d.Tarefa)
+                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && d.Ordem == ordem);
+
+            if (questao.Respostas.Any(d => d.Aprendiz == aprendiz))
+                throw new HttpException(401, new { Mensagem = "Já respondido" });
+
+            if (questao == null)
+                throw new HttpException(404, new { Mensagem = "Questao não encontrada" });
+
+            var alternativa = questao.Alternativas.FirstOrDefault(d => d.Id == model.AlternativaId);
+
+            if (alternativa == null)
+                throw new HttpException(404, new { Mensagem = "Alternativa não encontrada" });
+
+            aprendiz.Respostas.Add(new Resposta()
+            {
+                Alternativa = alternativa,
+                Questao = questao
+            });
+
+
+            //TODO Verify completion of answers
+            //await db.Tarefas
+            //    .Include(d => d.Questoes)
+            //    .ThenInclude(d => d.Respostas)
+            //    .All(d=>d.Questoes.All(f=>f.Respostas.Any(g=>g.Aprendiz == aprendiz)))
+
+            await db.SaveChangesAsync();
+        }
     }
 }

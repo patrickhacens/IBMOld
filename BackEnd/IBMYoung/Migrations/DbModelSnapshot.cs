@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 
@@ -92,11 +94,35 @@ namespace IBMYoung.Migrations
 
                     b.Property<int>("TopicoId");
 
+                    b.Property<int?>("UsuarioId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("TopicoId");
 
+                    b.HasIndex("UsuarioId");
+
                     b.ToTable("Replicas");
+                });
+
+            modelBuilder.Entity("IBMYoung.Model.Resposta", b =>
+                {
+                    b.Property<int>("AprendizId");
+
+                    b.Property<int>("TarefaId");
+
+                    b.Property<int>("Ordem");
+
+                    b.Property<int>("AlternativaId");
+
+                    b.HasKey("AprendizId", "TarefaId", "Ordem")
+                        .HasAnnotation("SqlServer:Clustered", true);
+
+                    b.HasIndex("AlternativaId");
+
+                    b.HasIndex("TarefaId", "Ordem");
+
+                    b.ToTable("Resposta");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Role", b =>
@@ -168,7 +194,11 @@ namespace IBMYoung.Migrations
 
                     b.Property<string>("Titulo");
 
+                    b.Property<int?>("UsuarioId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Topicos");
                 });
@@ -320,7 +350,7 @@ namespace IBMYoung.Migrations
 
             modelBuilder.Entity("IBMYoung.Model.Boletim", b =>
                 {
-                    b.HasOne("IBMYoung.Model.Aprendiz")
+                    b.HasOne("IBMYoung.Model.Aprendiz", "Aprendiz")
                         .WithMany("Boletins")
                         .HasForeignKey("AprendizId");
                 });
@@ -339,6 +369,28 @@ namespace IBMYoung.Migrations
                         .WithMany("Replicas")
                         .HasForeignKey("TopicoId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IBMYoung.Model.Usuario", "Usuario")
+                        .WithMany("Replicas")
+                        .HasForeignKey("UsuarioId");
+                });
+
+            modelBuilder.Entity("IBMYoung.Model.Resposta", b =>
+                {
+                    b.HasOne("IBMYoung.Model.Alternativa", "Alternativa")
+                        .WithMany("Respostas")
+                        .HasForeignKey("AlternativaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IBMYoung.Model.Aprendiz", "Aprendiz")
+                        .WithMany("Respostas")
+                        .HasForeignKey("AprendizId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("IBMYoung.Model.Questao", "Questao")
+                        .WithMany("Respostas")
+                        .HasForeignKey("TarefaId", "Ordem")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Tarefa", b =>
@@ -347,6 +399,13 @@ namespace IBMYoung.Migrations
                         .WithMany()
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("IBMYoung.Model.Topico", b =>
+                {
+                    b.HasOne("IBMYoung.Model.Usuario", "Usuario")
+                        .WithMany("Topicos")
+                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Aprendiz", b =>

@@ -18,5 +18,7 @@ namespace IBMYoung.Model
         public bool Correta { get; set; }
 
         public virtual Questao Questao { get; set; }
+
+        public virtual ICollection<Resposta> Respostas { get; set; }
     }
 }

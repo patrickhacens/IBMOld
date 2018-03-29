@@ -63,6 +63,47 @@ namespace IBMYoung.Controllers
             return tarefa;
         }
 
+
+        [HttpGet]
+        [Route("current")]
+        public async Task<TarefaViewModel> GetCurrent()
+        {
+            var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
+
+            if (aprendiz == null) throw new HttpException(401, new { Message = "Não é um aprendiz" });
+
+            var tarefa = await db.Tarefas
+                .Include(d => d.Questoes)
+                .ThenInclude(d => d.Respostas)
+                .Include(d => d.Questoes)
+                .ThenInclude(d => d.Alternativas)
+                .Include(d => d.Usuario)
+                .Where(d => d.Nivel >= aprendiz.Nivel)
+                .Where(d => d.Questoes.Any(f => f.Respostas.All(g => g.Aprendiz != aprendiz)))
+                .OrderBy(d => d.Nivel)
+                .FirstOrDefaultAsync();
+
+            if (tarefa == null) throw new HttpException(404, new { Message = "Nenhuma tarefa disponivel" });
+
+            return new TarefaViewModel()
+            {
+                Nivel = tarefa.Nivel,
+                Questoes = tarefa.Questoes.OrderBy(d => d.Ordem).Select(d => new QuestaoViewModel()
+                {
+                    TarefaId = tarefa.Id,
+                    Descricao = d.Titulo,
+                    Ordem = d.Ordem,
+                    Respondida = d.Respostas.Any(g => g.Aprendiz == aprendiz),
+                    Alternativas = d.Alternativas.OrderBy(f => Guid.NewGuid()).Select(f => new AlternativaViewModel()
+                    {
+                        Descricao = f.TextoAlternativa,
+                        Id = f.Id
+                    }).ToArray()
+                }).ToArray()
+            };
+        }
+
+
         [HttpPut]
         [Route("{id}")]
         public async Task<Tarefa> Put(int id, TarefaCadastroViewModel model)

@@ -16,11 +16,11 @@ namespace IBMYoung.Controllers
     [Route("api")]
     public class TopicoController : Controller
     {
-        Db _Db;
+        private readonly Db db;
         private readonly UserManager<Usuario> userManager;
-        public TopicoController(Db Db, UserManager<Usuario> userManager)
+        public TopicoController(Db db, UserManager<Usuario> userManager)
         {
-            _Db = Db;
+            this.db = db;
             this.userManager = userManager;
         }
 
@@ -34,8 +34,8 @@ namespace IBMYoung.Controllers
             topico.DataCriacao = DateTime.Now;
             topico.Usuario = await userManager.GetUserAsync(this.User);
 
-            _Db.Topicos.Add(topico);
-            _Db.SaveChanges();
+            db.Topicos.Add(topico);
+            await db.SaveChangesAsync();
 
             return topico;
         }
@@ -44,7 +44,7 @@ namespace IBMYoung.Controllers
         [Route("topicos")]
         public List<Topico> Get()
         {
-            return _Db.Topicos.Include(a => a.Replicas).Include(a => a.Usuario).ToList();
+            return db.Topicos.Include(a => a.Replicas).Include(a => a.Usuario).ToList();
         }
     }
 }

@@ -57,8 +57,16 @@ namespace IBMYoung.Infrastructure
 
             m.Entity<Questao>().HasKey(r => new { r.TarefaId, r.Ordem }).ForSqlServerIsClustered(true);
 
+            m.Entity<Resposta>().HasKey(r => new { r.AprendizId, r.TarefaId, r.Ordem }).ForSqlServerIsClustered(true);
+
+            
             base.OnModelCreating(m);
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }

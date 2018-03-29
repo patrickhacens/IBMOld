@@ -15,11 +15,11 @@ namespace IBMYoung.Controllers
     [Route("api")]
     public class ReplicaController : Controller
     {
-        Db _Db;
+        private readonly Db db;
         private readonly UserManager<Usuario> userManager;
-        public ReplicaController(Db Db, UserManager<Usuario> userManager)
+        public ReplicaController(Db db, UserManager<Usuario> userManager)
         {
-            _Db = Db;
+            this.db = db;
             this.userManager = userManager;
         }
 
@@ -33,8 +33,8 @@ namespace IBMYoung.Controllers
             replica.DataCriacao = DateTime.Now;
             replica.Usuario = await userManager.GetUserAsync(this.User);
 
-            _Db.Replicas.Add(replica);
-            _Db.SaveChanges();
+            db.Replicas.Add(replica);
+            await db.SaveChangesAsync();
 
             return replica;
         }

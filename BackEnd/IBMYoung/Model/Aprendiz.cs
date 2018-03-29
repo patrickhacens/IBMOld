@@ -24,6 +24,8 @@ namespace IBMYoung.Model
 
         public virtual Gestor Responsavel { get; set; }
 
+        public virtual ICollection<Resposta> Respostas { get; set; }
+
         public Aprendiz(){ /*as is*/ }
         public Aprendiz(DateTime nascimento, DateTime entrada, DateTime saida, Instituicao instituicao, Gestor gestor)
         {
