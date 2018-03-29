@@ -4,18 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import br.senai.sp.informatica.ibmyoung.R;
+import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.model.Autorizacao;
 import br.senai.sp.informatica.ibmyoung.model.Usuario;
 import br.senai.sp.informatica.ibmyoung.repository.LoginRepo;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import br.senai.sp.informatica.ibmyoung.view.old.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText edLogin;
@@ -28,9 +26,6 @@ public class LoginActivity extends AppCompatActivity {
 
         edLogin = findViewById(R.id.edLogin);
         edSenha = findViewById(R.id.edSenha);
-
-//        if(LoginRepo.dao.obterToken() != null)
-//            abreTelaPrincipal();
     }
 
     public void abreTelaPrincipal() {
@@ -43,24 +38,19 @@ public class LoginActivity extends AppCompatActivity {
         String senha = edSenha.getText().toString();
 
         Usuario usuario = new Usuario();
-        usuario.setLogin(login);
-        usuario.setSenha(senha);
+        usuario.setUsername(login);
+        usuario.setPassword(senha);
 
-        LoginRepo.dao.efetuaLogin(usuario, new Callback<Autorizacao>() {
+        LoginRepo.dao.efetuaLogin(usuario, new WebServiceData<Autorizacao>() {
             @Override
-            public void onResponse(Call<Autorizacao> requisicao, Response<Autorizacao> resposta) {
-                if(resposta.isSuccessful()) {
-//                    LoginRepo.dao.salvarToken(resposta.headers().get("authorization"));
-                    LoginRepo.dao.salvarToken(resposta.body().getToken());
+            public void processaDados(Autorizacao dados) {
+                LoginRepo.dao.salvarAutorizacao(dados);
 
-                    //TODO: obter do backend o userID e o Nível para o usuário logado, além do token
-                    Log.e("LoginActivity",  "Token: " + resposta.body().getToken());
-                    abreTelaPrincipal();
-                }
+                abreTelaPrincipal();
             }
 
             @Override
-            public void onFailure(Call<Autorizacao> requisicao, Throwable erro) {
+            public void houveErro() {
                 Toast.makeText(LoginActivity.this, "Falha na Autenticação", Toast.LENGTH_LONG).show();
             }
         });

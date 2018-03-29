@@ -9,7 +9,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ibm_young"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -22,16 +22,13 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".view.MainActivity"
-            android:label="@string/title_main"/>
+        <activity android:name=".view.ClassificacaoActivity"/>
 
-        <activity android:name=".view.TarefaActivity"/>
+        <activity android:name=".view.ForumActivity"/>
 
-        <activity android:name=".view.PerfilActivity" />
+        <activity android:name=".view.PerguntasActivity"/>
 
-        <activity android:name=".view.MissaoActivity" />
-
+        <activity android:name=".view.PerguntaActivity"/>
     </application>
 
 </manifest>
