@@ -3,33 +3,59 @@ package br.senai.sp.informatica.ibmyoung.repository;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.Date;
+
 import br.senai.sp.informatica.ibmyoung.Main;
 import br.senai.sp.informatica.ibmyoung.config.RetrofitConfig;
+import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.model.Autorizacao;
+import br.senai.sp.informatica.ibmyoung.model.Nivel;
 import br.senai.sp.informatica.ibmyoung.model.Usuario;
 import br.senai.sp.informatica.ibmyoung.service.LoginService;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginRepo {
     public static LoginRepo dao = new LoginRepo();
     private LoginService svc = RetrofitConfig.getInstance().getLoginService();
 
-    public void efetuaLogin(Usuario usuario, Callback<Autorizacao> callback) {
+    public void efetuaLogin(Usuario usuario, final WebServiceData<Autorizacao> data) {
         Call<Autorizacao> call = svc.efetuarLogin(usuario);
-        call.enqueue(callback);
+        call.enqueue(new Callback<Autorizacao>() {
+            @Override
+            public void onResponse(Call<Autorizacao> requisicao, Response<Autorizacao> resposta) {
+                if(resposta.isSuccessful()) {
+                   data.processaDados(resposta.body());
+                } else {
+                   data.houveErro();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Autorizacao> requisicao, Throwable erro) {
+                data.houveErro();
+            }
+        });
     }
 
-    public void salvarToken(String token) {
+    public void salvarAutorizacao(Autorizacao dados) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Main.context);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("TOKEN", token);
+        editor.putString("TOKEN", dados.getToken());
+        editor.putLong("EXPIRATION", dados.getExpitation().getTime());
+        editor.putString("DISCRIMINATOR", dados.getDiscriminator());
+        editor.putInt("ID", dados.getId());
         editor.apply();
     }
 
-    public String obterToken() {
+    public Autorizacao obterAutorizacao() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Main.context);
-        String token = preferences.getString("TOKEN", null);
-        return token;
+        Autorizacao auth = new Autorizacao();
+        auth.setToken(preferences.getString("TOKEN", null));
+        auth.setExpitation(new Date(preferences.getLong("EXPIRATION", new Date().getTime())));
+        auth.setDiscriminator(preferences.getString("DISCRIMINATOR", null));
+        auth.setId(preferences.getInt("ID", -1));
+        return auth;
     }
 }
