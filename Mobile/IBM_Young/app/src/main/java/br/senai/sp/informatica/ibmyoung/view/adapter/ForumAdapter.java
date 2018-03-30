@@ -9,19 +9,24 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import br.senai.sp.informatica.ibmyoung.R;
-import br.senai.sp.informatica.ibmyoung.model.Questao;
+import br.senai.sp.informatica.ibmyoung.model.Replica;
+import br.senai.sp.informatica.ibmyoung.model.Topico;
 import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
+import br.senai.sp.informatica.ibmyoung.repository.TopicoRepo;
 
 /**
  * Created by pena on 27/03/2018.
  */
 
 public class ForumAdapter extends BaseAdapter {
-    private QuestaoRepo dao = QuestaoRepo.dao;
+    private TopicoRepo dao = TopicoRepo.dao;
     private SparseLongArray mapa;
+    private static final DateFormat fmt = DateFormat.getDateInstance(DateFormat.LONG);
 
     public ForumAdapter() {
         criarMapa();
@@ -64,14 +69,16 @@ public class ForumAdapter extends BaseAdapter {
             Context ctx = viewGroup.getContext();
             LayoutInflater svc = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             layout = new LinearLayout(ctx);
-            svc.inflate(R.layout.perguntas_adapter, layout);
+            svc.inflate(R.layout.forum_adapter, layout);
         } else {
             layout = (LinearLayout)view;
         }
 
-        Questao obj = dao.localizar(mapa.get(linha));
+        Topico obj = dao.localizar(mapa.get(linha));
         TextView tvTitulo = layout.findViewById(R.id.tvTitulo);
         tvTitulo.setText(obj.getTitulo());
+        TextView tvCriacao = layout.findViewById(R.id.tvCriacao);
+        tvCriacao.setText(fmt.format(obj.getDataCriacao()));
 
         return layout;
     }

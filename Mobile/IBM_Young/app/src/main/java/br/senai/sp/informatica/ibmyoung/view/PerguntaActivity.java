@@ -1,7 +1,6 @@
 package br.senai.sp.informatica.ibmyoung.view;
 
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.senai.sp.informatica.ibmyoung.R;
-import br.senai.sp.informatica.ibmyoung.model.Questao;
+import br.senai.sp.informatica.ibmyoung.model.Replica;
 import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 
 /**
@@ -45,7 +44,7 @@ public class PerguntaActivity extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
         if(extra != null) {
             int id = extra.getInt("id");
-            Questao obj = dao.localizar(id);
+            Replica obj = dao.localizar(id);
             tvQuestao.setText(obj.getTitulo());
             for(int i = 0;i < questoes.length;i++) {
                 String alternativa = obj.getAlternativas().get(i).getTextoAlternativa();

@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import br.senai.sp.informatica.ibmyoung.R;
-import br.senai.sp.informatica.ibmyoung.model.Questao;
+import br.senai.sp.informatica.ibmyoung.model.Replica;
 import br.senai.sp.informatica.ibmyoung.view.adapter.PerguntasAdapter;
 
 /**
@@ -34,7 +34,7 @@ public class PerguntasActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onItemClick(AdapterView<?> viewGroup, View view, int linha, long id) {
-        Integer questaoId = ((Questao)adapter.getItem(linha)).getId();
+        Integer questaoId = ((Replica)adapter.getItem(linha)).getId();
         Intent intent = new Intent(this, PerguntaActivity.class);
         intent.putExtra("id", questaoId);
         startActivityForResult(intent, RESPONDE_QUESTAO);
