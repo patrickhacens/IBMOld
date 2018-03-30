@@ -35,6 +35,7 @@ namespace IBMYoung.Infrastructure
         public DbSet<Role> Roles { get; set; }
         public DbSet<User_Role> User_Roles { get; set; }
         public DbSet<UserClaim> UserClaims { get; set; }
+        public DbSet<Aprendiz> Aprendizes { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder m)
         {

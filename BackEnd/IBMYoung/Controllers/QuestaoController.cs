@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -108,11 +109,12 @@ namespace IBMYoung.Controllers
             if (alternativa == null)
                 throw new HttpException(404, new { Mensagem = "Alternativa não encontrada" });
 
-            aprendiz.Respostas.Add(new Resposta()
+            Resposta resposta = new Resposta()
             {
                 Alternativa = alternativa,
                 Questao = questao
-            });
+            };
+            aprendiz.Respostas.Add(resposta);
 
 
             //TODO Verify completion of answers
@@ -122,6 +124,8 @@ namespace IBMYoung.Controllers
             //    .All(d=>d.Questoes.All(f=>f.Respostas.Any(g=>g.Aprendiz == aprendiz)))
 
             await db.SaveChangesAsync();
+            
+            return resposta;
         }
     }
 }
