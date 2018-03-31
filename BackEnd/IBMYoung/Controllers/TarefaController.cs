@@ -12,9 +12,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
-    [JWTAuth]
+    //[JWTAuth]
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/Tarefa")]
     public class TarefaController : Controller
     {
         private readonly Db db;

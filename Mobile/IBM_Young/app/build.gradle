@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "br.senai.sp.informatica.exemplologin"
+        applicationId "br.senai.sp.informatica.ibmyoung"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1

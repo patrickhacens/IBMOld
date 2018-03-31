@@ -7,6 +7,6 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface LoginService {
-    @POST("Usuario/login")
+    @POST("Auth")
     Call<Autorizacao> efetuarLogin(@Body Usuario usuario);
 }

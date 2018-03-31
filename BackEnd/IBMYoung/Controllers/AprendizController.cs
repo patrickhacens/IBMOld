@@ -52,5 +52,23 @@ namespace IBMYoung.Controllers
         public  Aprendiz Aprendiz(int id) {
             return db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == id);
         }
+
+        [HttpPost]
+        public async Task<Aprendiz> Post([FromBody]AprendizCadastroViewModel model)
+        {
+            Aprendiz aprendiz = default(Aprendiz);
+            aprendiz = new Aprendiz(model.Nascimento, model.Entrada);
+
+            aprendiz.Email = model.Email;
+            aprendiz.SetPassword(model.Password);
+            aprendiz.UserName = model.Username;
+            aprendiz.Nome = model.Nome;
+            aprendiz.Sobrenome = model.Sobrenome;
+
+            db.Aprendizes.Add(aprendiz);
+            await db.SaveChangesAsync();
+
+            return aprendiz;
+        }
     }
 }

@@ -15,22 +15,13 @@ namespace IBMYoung.Infrastructure
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
-
         public DbSet<Tarefa> Tarefas { get; set; }
-
         public DbSet<Instituicao> Instituicoes { get; set; }
-
         public DbSet<Questao> Questoes { get; set; }
-
         public DbSet<Alternativa> Alternativas { get; set; }
-
         public DbSet<Boletim> Boletins { get; set; }
-
         public DbSet<Topico> Topicos { get; set; }
-
         public DbSet<Replica> Replicas { get; set; }
-
-
         public DbSet<RoleClaim> RoleClaims { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<User_Role> User_Roles { get; set; }

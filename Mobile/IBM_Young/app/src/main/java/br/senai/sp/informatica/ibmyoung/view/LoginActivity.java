@@ -13,7 +13,6 @@ import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.model.Autorizacao;
 import br.senai.sp.informatica.ibmyoung.model.Usuario;
 import br.senai.sp.informatica.ibmyoung.repository.LoginRepo;
-import br.senai.sp.informatica.ibmyoung.view.old.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText edLogin;
@@ -29,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void abreTelaPrincipal() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ClassificacaoActivity.class);
         startActivity(intent);
     }
 

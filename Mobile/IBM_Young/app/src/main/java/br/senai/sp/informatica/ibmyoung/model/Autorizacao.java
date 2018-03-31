@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Autorizacao {
     private String token;
-    private Date expitation;
+    private Date expiration;
     private String discriminator;
     private int id;
 
@@ -17,12 +17,12 @@ public class Autorizacao {
         this.token = token;
     }
 
-    public Date getExpitation() {
-        return expitation;
+    public Date getExpiration() {
+        return expiration;
     }
 
-    public void setExpitation(Date expitation) {
-        this.expitation = expitation;
+    public void setExpiration(Date expiration) {
+        this.expiration = expiration;
     }
 
     public String getDiscriminator() {

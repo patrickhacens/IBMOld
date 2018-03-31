@@ -56,7 +56,7 @@ namespace IBMYoung.Controllers
                     break;
                 default:
                     throw new HttpException(422);
-                    break;
+                    //break;
             }
 
             user.Email = model.Email;

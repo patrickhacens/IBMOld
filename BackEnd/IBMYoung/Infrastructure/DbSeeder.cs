@@ -47,6 +47,7 @@ namespace IBMYoung.Infrastructure
             var aprendiz1 = new Aprendiz(DateTime.Now, DateTime.Now, DateTime.Now.AddDays(90), inst1, gestor1)
             {
                 Nome = "aprendiz",
+                UserName = "aprendiz",
                 Sobrenome = "a",
                 Email = "aprendiz@gmail.com",
             };

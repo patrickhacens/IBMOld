@@ -30,4 +30,5 @@ public class Replica {
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
+
 }

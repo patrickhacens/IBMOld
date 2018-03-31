@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.senai.sp.informatica.ibmyoung.R;
+import br.senai.sp.informatica.ibmyoung.model.Questao;
 import br.senai.sp.informatica.ibmyoung.model.Replica;
 import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 
@@ -44,7 +45,7 @@ public class PerguntaActivity extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
         if(extra != null) {
             int id = extra.getInt("id");
-            Replica obj = dao.localizar(id);
+            Questao obj = dao.localizar(id);
             tvQuestao.setText(obj.getTitulo());
             for(int i = 0;i < questoes.length;i++) {
                 String alternativa = obj.getAlternativas().get(i).getTextoAlternativa();

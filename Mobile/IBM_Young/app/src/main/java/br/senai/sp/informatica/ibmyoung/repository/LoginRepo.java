@@ -2,6 +2,7 @@ package br.senai.sp.informatica.ibmyoung.repository;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -43,7 +44,7 @@ public class LoginRepo {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Main.context);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("TOKEN", dados.getToken());
-        editor.putLong("EXPIRATION", dados.getExpitation().getTime());
+        editor.putLong("EXPIRATION", dados.getExpiration().getTime());
         editor.putString("DISCRIMINATOR", dados.getDiscriminator());
         editor.putInt("ID", dados.getId());
         editor.apply();
@@ -53,7 +54,7 @@ public class LoginRepo {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Main.context);
         Autorizacao auth = new Autorizacao();
         auth.setToken(preferences.getString("TOKEN", null));
-        auth.setExpitation(new Date(preferences.getLong("EXPIRATION", new Date().getTime())));
+        auth.setExpiration(new Date(preferences.getLong("EXPIRATION", new Date().getTime())));
         auth.setDiscriminator(preferences.getString("DISCRIMINATOR", null));
         auth.setId(preferences.getInt("ID", -1));
         return auth;
