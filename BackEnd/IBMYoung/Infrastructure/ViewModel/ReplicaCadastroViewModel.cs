@@ -10,4 +10,11 @@ namespace IBMYoung.Infrastructure.ViewModel
         public string Texto { get; set; }
         public int TopicoId { get; set; }
     }
+
+    public class ReplicaViewModel {
+        public int Id { get; set; }
+        public string Texto { get; set; }
+        public DateTime DataCriacao { get; set; }
+        public AprendizViewModel Aprendiz { get; set; }
+    }
 }

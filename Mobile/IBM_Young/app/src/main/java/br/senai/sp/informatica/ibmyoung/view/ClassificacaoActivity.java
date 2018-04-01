@@ -78,11 +78,9 @@ public class ClassificacaoActivity extends AppCompatActivity implements View.OnC
         int id = item.getItemId();
         switch (id) {
             case R.id.forum_action:
-                // TODO: chamar o ForumActivity;
                 startActivity(new Intent(this, ForumActivity.class));
                 break;
             case R.id.logout_action:
-                // TODO: executar o Logout e chamar o LoginActivity seguido
                 startActivity(new Intent(this, LoginActivity.class));
                 fileList();
                 break;
@@ -93,8 +91,6 @@ public class ClassificacaoActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View view) {
-        // TODO: chamar o PerguntasActivity
         startActivity(new Intent(this, PerguntasActivity.class));
-
     }
 }

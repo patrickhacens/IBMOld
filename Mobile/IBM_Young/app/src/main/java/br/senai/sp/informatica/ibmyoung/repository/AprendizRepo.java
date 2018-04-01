@@ -20,7 +20,7 @@ public class AprendizRepo {
     public static AprendizRepo dao = new AprendizRepo();
     private AprendizService svc = RetrofitConfig.getInstance().getAprendizService();
 
-    public void getIds(WebServiceData<List<Aprendiz>> data) {
+    public void getAprendizes(WebServiceData<List<Aprendiz>> data) {
         Call<List<Aprendiz>> call = svc.listaAprendizes();
         call.enqueue(new CallBackImpl<List<Aprendiz>>(data));
     }

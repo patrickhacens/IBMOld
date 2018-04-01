@@ -1,6 +1,7 @@
 package br.senai.sp.informatica.ibmyoung.view.adapter;
 
 import android.content.Context;
+import android.util.SparseArray;
 import android.util.SparseLongArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import java.text.DateFormat;
 import java.util.List;
 
 import br.senai.sp.informatica.ibmyoung.R;
+import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
+import br.senai.sp.informatica.ibmyoung.lib.Alerta;
+import br.senai.sp.informatica.ibmyoung.model.Aprendiz;
 import br.senai.sp.informatica.ibmyoung.model.Topico;
 import br.senai.sp.informatica.ibmyoung.repository.TopicoRepo;
 
@@ -22,7 +26,7 @@ import br.senai.sp.informatica.ibmyoung.repository.TopicoRepo;
 
 public class ForumAdapter extends BaseAdapter {
     private TopicoRepo dao = TopicoRepo.dao;
-    private SparseLongArray mapa;
+    private SparseArray<Topico> mapa;
     private static final DateFormat fmt = DateFormat.getDateInstance(DateFormat.LONG);
 
     public ForumAdapter() {
@@ -30,11 +34,22 @@ public class ForumAdapter extends BaseAdapter {
     }
 
     private void criarMapa() {
-        mapa = new SparseLongArray();
-        List<Long> ids = dao.getIds();
-        for (int linha = 0; linha < ids.size(); linha++) {
-            mapa.put(linha, ids.get(linha));
-        }
+        mapa = new SparseArray<>();
+        dao.getTopicos(new WebServiceData<List<Topico>>() {
+            @Override
+            public void processaDados(List<Topico> dados) {
+                List<Topico> ids = dados;
+                for (int linha = 0; linha < ids.size(); linha++) {
+                    mapa.put(linha, ids.get(linha));
+                }
+                ForumAdapter.this.notifyDataSetChanged();
+            }
+
+            @Override
+            public void houveErro() {
+                Alerta.showToast("Falha ao carregar a lista dos Tópicos");
+            }
+        });
     }
 
     @Override
@@ -50,12 +65,12 @@ public class ForumAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int linha) {
-        return dao.localizar(mapa.get(linha));
+        return mapa.get(linha);
     }
 
     @Override
     public long getItemId(int linha) {
-        return mapa.get(linha);
+        return mapa.get(linha).getId();
     }
 
     @Override
@@ -71,7 +86,7 @@ public class ForumAdapter extends BaseAdapter {
             layout = (LinearLayout)view;
         }
 
-        Topico obj = dao.localizar(mapa.get(linha));
+        Topico obj = mapa.get(linha);
         TextView tvTitulo = layout.findViewById(R.id.tvNome);
         tvTitulo.setText(obj.getTitulo());
         TextView tvCriacao = layout.findViewById(R.id.tvCriacao);

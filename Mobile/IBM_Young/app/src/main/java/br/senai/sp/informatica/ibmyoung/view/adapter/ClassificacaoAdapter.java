@@ -38,7 +38,7 @@ public class ClassificacaoAdapter extends BaseAdapter {
 
     private void criarMapa() {
         mapa = new SparseArray<>();
-        dao.getIds(new WebServiceData<List<Aprendiz>>() {
+        dao.getAprendizes(new WebServiceData<List<Aprendiz>>() {
             @Override
             public void processaDados(List<Aprendiz> dados) {
                 List<Aprendiz> ids = dados;
