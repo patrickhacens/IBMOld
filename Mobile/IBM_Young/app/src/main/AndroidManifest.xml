@@ -24,11 +24,29 @@
 
         <activity android:name=".view.ClassificacaoActivity" />
 
-        <activity android:name=".view.ForumActivity"/>
+        <activity android:name=".view.ForumActivity"
+            android:parentActivityName=".view.ClassificacaoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.ClassificacaoActivity" />
+        </activity>
 
-        <activity android:name=".view.PerguntasActivity"/>
 
-        <activity android:name=".view.PerguntaActivity"/>
+        <activity android:name=".view.PerguntasActivity"
+            android:parentActivityName=".view.ClassificacaoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.ClassificacaoActivity" />
+        </activity>
+
+
+        <activity android:name=".view.PerguntaActivity"
+            android:parentActivityName=".view.PerguntasActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.PerguntasActivity" />
+        </activity>
+
     </application>
 
 </manifest>

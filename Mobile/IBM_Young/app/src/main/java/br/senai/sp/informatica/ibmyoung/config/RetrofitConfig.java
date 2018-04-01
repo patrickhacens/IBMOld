@@ -1,5 +1,6 @@
 package br.senai.sp.informatica.ibmyoung.config;
 
+import br.senai.sp.informatica.ibmyoung.service.AprendizService;
 import br.senai.sp.informatica.ibmyoung.service.LoginService;
 import br.senai.sp.informatica.ibmyoung.service.TarefaService;
 import retrofit2.Retrofit;
@@ -24,6 +25,10 @@ public class RetrofitConfig {
 
     public LoginService getLoginService() {
         return this.retrofit.create(LoginService.class);
+    }
+
+    public AprendizService getAprendizService() {
+        return this.retrofit.create(AprendizService.class);
     }
 
     public TarefaService getTarefaService() {

@@ -23,34 +23,51 @@ using Microsoft.IdentityModel.Tokens;
 namespace IBMYoung.Controllers
 {
     [Produces("application/json")]
-    [Route("api/[controller]")]
-    [JWTAuth]
+    [Route("api/Aprendiz")]
+    //[JWTAuth]
     public class AprendizController : Controller {
         private readonly Db db;
         private readonly Configuration config;
-        private readonly UserManager<Aprendiz> userManager;
-        public AprendizController(Db db, Configuration config, UserManager<Aprendiz> userManager) {
+        private readonly UserManager<Usuario> userManager;
+        public AprendizController(Db db, Configuration config, UserManager<Usuario> userManager) {
             this.db = db;
             this.config = config;
             this.userManager = userManager;
         }
 
-        public class ClassificacaoViewModel {
-            public string Username { get; set; }
-            public int Nivel { get; set; }
-        }
-
         [HttpGet]
-        public List<Aprendiz> Get() {
-            List<Aprendiz> lista = db.Aprendizes.ToList();
+        public List<AprendizViewModel> Get() {
+            List<AprendizViewModel> lista = new List<AprendizViewModel>();
+            db.Aprendizes.ToList().ForEach(aprendiz => lista.Add(new AprendizViewModel {
+                Id = aprendiz.Id,
+                Email = aprendiz.Email,
+                Username = aprendiz.UserName,
+                Nome = aprendiz.Nome,
+                Sobrenome = aprendiz.Sobrenome,
+                Nascimento = aprendiz.DataNascimento,
+                Entrada = aprendiz.DataEntrada,
+                Saida = aprendiz.DataSaida,
+                Nivel = aprendiz.Nivel
+            }));
 
             return lista;
         }
 
         [HttpGet]
         [Route("{id}")]
-        public  Aprendiz Aprendiz(int id) {
-            return db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == id);
+        public  AprendizViewModel Aprendiz(int id) {
+            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == id);
+            return new AprendizViewModel() {
+               Id = aprendiz.Id,
+                Email = aprendiz.Email,
+                Username = aprendiz.UserName,
+                Nome = aprendiz.Nome,
+                Sobrenome = aprendiz.Sobrenome,
+                Nascimento = aprendiz.DataNascimento,
+                Entrada = aprendiz.DataEntrada,
+                Saida = aprendiz.DataSaida,
+                Nivel = aprendiz.Nivel
+            };
         }
 
         [HttpPost]

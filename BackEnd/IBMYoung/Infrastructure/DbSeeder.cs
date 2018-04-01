@@ -46,12 +46,12 @@ namespace IBMYoung.Infrastructure
 
             var aprendiz1 = new Aprendiz(DateTime.Now, DateTime.Now, DateTime.Now.AddDays(90), inst1, gestor1)
             {
-                Nome = "aprendiz",
-                UserName = "aprendiz",
-                Sobrenome = "a",
-                Email = "aprendiz@gmail.com",
+                Nome = "Antonio",
+                UserName = "adealmeida",
+                Sobrenome = "de Almeida",
+                Email = "adealmeida@gmail.com",
             };
-            aprendiz1.SetPassword("teste1234%");
+            aprendiz1.SetPassword("teste$132");
             db.Usuarios.Add(aprendiz1);
 
             var tarefa = new Tarefa()

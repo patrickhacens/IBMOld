@@ -13,7 +13,6 @@ import java.util.List;
 
 import br.senai.sp.informatica.ibmyoung.R;
 import br.senai.sp.informatica.ibmyoung.model.Questao;
-import br.senai.sp.informatica.ibmyoung.model.Replica;
 import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 
 /**
@@ -71,7 +70,7 @@ public class PerguntasAdapter extends BaseAdapter {
         }
 
         Questao obj = dao.localizar(mapa.get(linha));
-        TextView tvTitulo = layout.findViewById(R.id.tvTitulo);
+        TextView tvTitulo = layout.findViewById(R.id.tvNome);
         tvTitulo.setText(obj.getTitulo());
 
         return layout;

@@ -1,6 +1,7 @@
 package br.senai.sp.informatica.ibmyoung.view;
 
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import br.senai.sp.informatica.ibmyoung.R;
@@ -14,5 +15,11 @@ public class ForumActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forum_chat_activity);
+
+        ActionBar bar = getActionBar();
+        if(bar != null) {
+            bar.setHomeButtonEnabled(true);
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 }

@@ -10,9 +10,7 @@ namespace IBMYoung.Infrastructure
     public class Db : DbContext
     {
         public Db(DbContextOptions<Db> options) : base(options)
-        {
-
-        }
+        {  }
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Tarefa> Tarefas { get; set; }
@@ -26,7 +24,7 @@ namespace IBMYoung.Infrastructure
         public DbSet<Role> Roles { get; set; }
         public DbSet<User_Role> User_Roles { get; set; }
         public DbSet<UserClaim> UserClaims { get; set; }
-        public DbSet<Aprendiz> Aprendizes { get; internal set; }
+        public DbSet<Aprendiz> Aprendizes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder m)
         {
@@ -38,7 +36,7 @@ namespace IBMYoung.Infrastructure
             m.Entity<Boletim>().ToTable("Boletins");
             m.Entity<Topico>().ToTable("Topicos");
             m.Entity<Replica>().ToTable("Replicas");
-            m.Entity<Aprendiz>().ToTable("Aprendizes");
+            m.Entity<Aprendiz>().ToTable("Apredizes");
 
             m.Entity<RecursosHumano>();
             m.Entity<Aprendiz>();

@@ -2,7 +2,6 @@ package br.senai.sp.informatica.ibmyoung.repository;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.Date;
 
@@ -10,7 +9,6 @@ import br.senai.sp.informatica.ibmyoung.Main;
 import br.senai.sp.informatica.ibmyoung.config.RetrofitConfig;
 import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.model.Autorizacao;
-import br.senai.sp.informatica.ibmyoung.model.Nivel;
 import br.senai.sp.informatica.ibmyoung.model.Usuario;
 import br.senai.sp.informatica.ibmyoung.service.LoginService;
 import retrofit2.Call;

@@ -1,5 +1,6 @@
 package br.senai.sp.informatica.ibmyoung.view;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,12 @@ public class PerguntasActivity extends AppCompatActivity implements AdapterView.
         listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+
+        ActionBar bar = getActionBar();
+        if(bar != null) {
+            bar.setHomeButtonEnabled(true);
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override

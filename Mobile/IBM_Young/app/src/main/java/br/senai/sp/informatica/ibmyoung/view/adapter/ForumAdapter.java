@@ -10,13 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import br.senai.sp.informatica.ibmyoung.R;
-import br.senai.sp.informatica.ibmyoung.model.Replica;
 import br.senai.sp.informatica.ibmyoung.model.Topico;
-import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 import br.senai.sp.informatica.ibmyoung.repository.TopicoRepo;
 
 /**
@@ -75,7 +72,7 @@ public class ForumAdapter extends BaseAdapter {
         }
 
         Topico obj = dao.localizar(mapa.get(linha));
-        TextView tvTitulo = layout.findViewById(R.id.tvTitulo);
+        TextView tvTitulo = layout.findViewById(R.id.tvNome);
         tvTitulo.setText(obj.getTitulo());
         TextView tvCriacao = layout.findViewById(R.id.tvCriacao);
         tvCriacao.setText(fmt.format(obj.getDataCriacao()));

@@ -1,20 +1,26 @@
 package br.senai.sp.informatica.ibmyoung.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.SparseLongArray;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
+import br.senai.sp.informatica.ibmyoung.Main;
 import br.senai.sp.informatica.ibmyoung.R;
+import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
+import br.senai.sp.informatica.ibmyoung.lib.Alerta;
 import br.senai.sp.informatica.ibmyoung.model.Aprendiz;
 import br.senai.sp.informatica.ibmyoung.repository.AprendizRepo;
+import br.senai.sp.informatica.ibmyoung.repository.LoginRepo;
 
 /**
  * Created by pena on 27/03/2018.
@@ -22,24 +28,31 @@ import br.senai.sp.informatica.ibmyoung.repository.AprendizRepo;
 
 public class ClassificacaoAdapter extends BaseAdapter {
     private AprendizRepo dao = AprendizRepo.dao;
-    private SparseLongArray mapa;
+    private SparseArray<Aprendiz> mapa;
+    private int aprendizId;
 
     public ClassificacaoAdapter() {
+        aprendizId = LoginRepo.dao.obterAutorizacao().getId();
         criarMapa();
     }
 
     private void criarMapa() {
-        mapa = new SparseLongArray();
-        List<Long> ids = dao.getIds();
-        for (int linha = 0; linha < ids.size(); linha++) {
-            mapa.put(linha, ids.get(linha));
-        }
-    }
+        mapa = new SparseArray<>();
+        dao.getIds(new WebServiceData<List<Aprendiz>>() {
+            @Override
+            public void processaDados(List<Aprendiz> dados) {
+                List<Aprendiz> ids = dados;
+                for (int linha = 0; linha < ids.size(); linha++) {
+                    mapa.put(linha, ids.get(linha));
+                }
+                ClassificacaoAdapter.this.notifyDataSetChanged();
+            }
 
-    @Override
-    public void notifyDataSetChanged() {
-        criarMapa();
-        super.notifyDataSetChanged();
+            @Override
+            public void houveErro() {
+                Alerta.showToast("Falha ao carregar a lista dos Aprendizes");
+            }
+        });
     }
 
     @Override
@@ -49,14 +62,15 @@ public class ClassificacaoAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int linha) {
-        return dao.localizar(mapa.get(linha));
+        return mapa.get(linha);
     }
 
     @Override
     public long getItemId(int linha) {
-        return mapa.get(linha);
+        return mapa.get(linha).getId();
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public View getView(int linha, View view, ViewGroup viewGroup) {
         LinearLayout layout;
@@ -70,15 +84,21 @@ public class ClassificacaoAdapter extends BaseAdapter {
             layout = (LinearLayout)view;
         }
 
-        Aprendiz obj = dao.localizar(mapa.get(linha));
-        ImageView ivFoto = layout.findViewById(R.id.ivFoto);
-    //TODO: Implementar a conversão da foto com Glide
-    // https://opensource.googleblog.com/2014/09/glide-30-media-management-library-for.html
-    // https://inthecheesefactory.com/blog/get-to-know-glide-recommended-by-google/en
-        TextView tvNome = layout.findViewById(R.id.tvTitulo);
-        tvNome.setText(obj.getNome());
+        Aprendiz obj = mapa.get(linha);
+
+        if(obj.getId() == aprendizId) {
+            CardView cardView = layout.findViewById(R.id.cardView);
+            cardView.setCardBackgroundColor(ContextCompat.getColor(Main.context, R.color.cardCurrent));
+        }
+
+        //  Para implementar a conversão da foto com Glide
+        //  https://opensource.googleblog.com/2014/09/glide-30-media-management-library-for.html
+        //  https://inthecheesefactory.com/blog/get-to-know-glide-recommended-by-google/en
+        //  ImageView ivFoto = layout.findViewById(R.id.ivFoto);
+        TextView tvNome = layout.findViewById(R.id.tvNome);
+        tvNome.setText(String.format("%s %s", obj.getNome(), obj.getSobrenome()));
         TextView tvNivel = layout.findViewById(R.id.tvNivel);
-        tvNivel.setText(obj.getNivel().toString());
+        tvNivel.setText(String.format("Nível %d", obj.getNivel()));
 
         return layout;
     }

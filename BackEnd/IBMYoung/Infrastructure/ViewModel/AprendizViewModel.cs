@@ -7,6 +7,7 @@ namespace IBMYoung.Infrastructure.ViewModel
 {
     public class AprendizViewModel
     {
+        public int Id { get; set; }
         public string Email { get; set; }
         public string Username { get; set; }
         public string Nome { get; set; }
@@ -14,5 +15,6 @@ namespace IBMYoung.Infrastructure.ViewModel
         public DateTime Nascimento { get; set; }
         public DateTime Entrada { get; set; }
         public DateTime Saida { get; set; }
+        public int Nivel { get; set; }
     }
 }
