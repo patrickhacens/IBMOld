@@ -12,8 +12,7 @@ public class Topico {
     private String titulo;
     private String texto;
     private Date dataCriacao;
-    private Aprendiz criador;
-    private List<Replica> replicas;
+    private String nomeAprendiz;
 
     public Integer getId() {
         return id;
@@ -47,19 +46,11 @@ public class Topico {
         this.dataCriacao = dataCriacao;
     }
 
-    public Aprendiz getCriador() {
-        return criador;
+    public String getNomeAprendiz() {
+        return nomeAprendiz;
     }
 
-    public void setCriador(Aprendiz criador) {
-        this.criador = criador;
-    }
-
-    public List<Replica> getReplicas() {
-        return replicas;
-    }
-
-    public void setReplicas(List<Replica> replicas) {
-        this.replicas = replicas;
+    public void setNomeAprendiz(String nomeAprendiz) {
+        this.nomeAprendiz = nomeAprendiz;
     }
 }

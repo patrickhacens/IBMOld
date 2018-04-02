@@ -17,7 +17,7 @@ public class TopicoRepo {
     private TopicoService svc = RetrofitConfig.getInstance().getTopicoService();
 
     public void getTopicos(WebServiceData<List<Topico>> data) {
-        Call<List<Topico>> call = svc.listaAprendizes();
+        Call<List<Topico>> call = svc.listaTopicos();
         call.enqueue(new CallBackImpl<List<Topico>>(data));
     }
 

@@ -13,20 +13,18 @@ using Microsoft.EntityFrameworkCore;
 namespace IBMYoung.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Topico")]
-    public class TopicoController : Controller
-    {
+    [Route("api")]
+    public class TopicoController : Controller {
         private readonly Db db;
         private readonly UserManager<Usuario> userManager;
-        public TopicoController(Db db, UserManager<Usuario> userManager)
-        {
+        public TopicoController(Db db, UserManager<Usuario> userManager) {
             this.db = db;
             this.userManager = userManager;
         }
 
         [HttpPost]
-        public async Task<Topico> Post([FromBody] TopicoCadastroViewModel model)
-        {
+        [Route("Topico")]
+        public async Task<Topico> Post([FromBody] TopicoCadastroViewModel model){
             Topico topico = new Topico();
             topico.Titulo = model.Titulo;
             topico.Texto = model.Texto;
@@ -40,48 +38,51 @@ namespace IBMYoung.Controllers
         }
 
         [HttpGet]
-        public List<TopicoViewModel> Get() {
+        [Route("Topicos")]
+        public List<TopicoViewModel> List() {
             List<TopicoViewModel> lista = new List<TopicoViewModel>();
-            db.Topicos.ToList().ForEach(topico => lista.Add( new TopicoViewModel {
-                Id = topico.Id,
-                Titulo = topico.Titulo,
-                Texto = topico.Texto,
-                DataCriacao = topico.DataCriacao,
-                Criador = Aprendiz(topico.Usuario.Id),
-                Replicas = Replicas(topico.Replicas)
-
+            db.Topicos
+                .Join(db.Aprendizes, r => r.Usuario.Id, a => a.Id, (r, a) => new {r, a})
+                .Select(s => new {
+                    s.r.Id,
+                    s.r.Titulo,
+                    s.r.Texto,
+                    s.r.DataCriacao,
+                    s.a.Nome,
+                    s.a.Sobrenome
+                })
+                .ToList().ForEach(select => lista.Add( new TopicoViewModel {
+                    Id = select.Id,
+                    Titulo = select.Titulo,
+                    Texto = select.Texto,
+                    DataCriacao = select.DataCriacao,
+                    NomeAprendiz = select.Nome + " " + select.Sobrenome
             }));
 
             return lista;
         }
 
-        private AprendizViewModel Aprendiz(int id) {
-            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == id);
-            return new AprendizViewModel() {
-               Id = aprendiz.Id,
-                Email = aprendiz.Email,
-                Username = aprendiz.UserName,
-                Nome = aprendiz.Nome,
-                Sobrenome = aprendiz.Sobrenome,
-                Nascimento = aprendiz.DataNascimento,
-                Entrada = aprendiz.DataEntrada,
-                Saida = aprendiz.DataSaida,
-                Nivel = aprendiz.Nivel
+        [HttpGet]
+        [Route("Topico/{id}")]
+        public TopicoViewModel Get(int id) {
+            var topico = db.Topicos.Where(t => t.Id == id)
+                .Join(db.Aprendizes, r => r.Usuario.Id, a => a.Id, (r, a) => new {r, a})
+                .Select(s => new {
+                    s.r.Id,
+                    s.r.Titulo,
+                    s.r.Texto,
+                    s.r.DataCriacao,
+                    s.a.Nome,
+                    s.a.Sobrenome
+                })
+                .FirstOrDefault();
+            return new TopicoViewModel {
+                    Id = topico.Id,
+                    Titulo = topico.Titulo,
+                    Texto = topico.Texto,
+                    DataCriacao = topico.DataCriacao,
+                    NomeAprendiz = topico.Nome + " " + topico.Sobrenome
             };
-        }
-
-        private ICollection<ReplicaViewModel> Replicas(ICollection<Replica> replicas) {
-            List<ReplicaViewModel> lista = new List<ReplicaViewModel>();
-            foreach (Replica item in replicas) {
-                lista.Add(new ReplicaViewModel {
-                    Id = item.Id,
-                    Texto = item.Texto,
-                    DataCriacao = item.DataCriacao,
-                    Aprendiz = Aprendiz(item.Usuario.Id)
-                });
-            }
-         
-            return lista;
         }
     }
 }

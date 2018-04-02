@@ -1,5 +1,7 @@
 package br.senai.sp.informatica.ibmyoung.config;
 
+import android.util.Log;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -9,7 +11,7 @@ import retrofit2.Response;
  */
 
 public class CallBackImpl<T> implements Callback<T> {
-    private WebServiceData<T> data;
+    protected WebServiceData<T> data;
 
     public CallBackImpl(WebServiceData<T> data) {
         this.data = data;

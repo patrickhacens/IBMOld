@@ -2,7 +2,6 @@ package br.senai.sp.informatica.ibmyoung.view.adapter;
 
 import android.content.Context;
 import android.util.SparseArray;
-import android.util.SparseLongArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,40 +15,45 @@ import java.util.List;
 import br.senai.sp.informatica.ibmyoung.R;
 import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.lib.Alerta;
-import br.senai.sp.informatica.ibmyoung.model.Aprendiz;
-import br.senai.sp.informatica.ibmyoung.model.Topico;
-import br.senai.sp.informatica.ibmyoung.repository.TopicoRepo;
+import br.senai.sp.informatica.ibmyoung.model.Replica;
+import br.senai.sp.informatica.ibmyoung.repository.ReplicaRepo;
 
 /**
  * Created by pena on 27/03/2018.
  */
 
-public class ForumAdapter extends BaseAdapter {
-    private TopicoRepo dao = TopicoRepo.dao;
-    private SparseArray<Topico> mapa;
+public class ForumChatAdapter extends BaseAdapter {
+    private int topicoId;
+    private ReplicaRepo dao = ReplicaRepo.dao;
+    private SparseArray<Replica> mapa;
     private static final DateFormat fmt = DateFormat.getDateInstance(DateFormat.LONG);
 
-    public ForumAdapter() {
-        criarMapa();
+    public ForumChatAdapter(int topicoId) {
+        this.topicoId = topicoId;
+        criarMapa(topicoId);
     }
 
-    private void criarMapa() {
+    private void criarMapa(int topicoId) {
         mapa = new SparseArray<>();
-        dao.getTopicos(new WebServiceData<List<Topico>>() {
+        dao.getReplicas(topicoId, new WebServiceData<List<Replica>>() {
             @Override
-            public void processaDados(List<Topico> dados) {
-                List<Topico> ids = dados;
+            public void processaDados(List<Replica> dados) {
+                List<Replica> ids = dados;
                 for (int linha = 0; linha < ids.size(); linha++) {
                     mapa.put(linha, ids.get(linha));
                 }
-                ForumAdapter.this.notifyDataSetChanged();
+                ForumChatAdapter.this.notifyDataSetChanged();
             }
 
             @Override
             public void houveErro() {
-                Alerta.showToast("Falha ao carregar a lista dos Tópicos");
+                Alerta.showToast("Falha ao carregar a lista das Réplicas");
             }
         });
+    }
+
+    public void recarrega() {
+        criarMapa(topicoId);
     }
 
     @Override
@@ -75,16 +79,18 @@ public class ForumAdapter extends BaseAdapter {
             Context ctx = viewGroup.getContext();
             LayoutInflater svc = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             layout = new LinearLayout(ctx);
-            svc.inflate(R.layout.forum_adapter, layout);
+            svc.inflate(R.layout.forum_chat_adapter, layout);
         } else {
             layout = (LinearLayout)view;
         }
 
-        Topico obj = mapa.get(linha);
-        TextView tvTitulo = layout.findViewById(R.id.tvNome);
-        tvTitulo.setText(obj.getTitulo());
-        TextView tvCriacao = layout.findViewById(R.id.tvCriacao);
-        tvCriacao.setText(fmt.format(obj.getDataCriacao()));
+        Replica obj = mapa.get(linha);
+        TextView tvReplica = layout.findViewById(R.id.tvReplica);
+        tvReplica.setText(obj.getTexto());
+        TextView tvData = layout.findViewById(R.id.tvData);
+        tvData.setText(fmt.format(obj.getDataCriacao()));
+        TextView tvNome = layout.findViewById(R.id.tvNome);
+        tvNome.setText(obj.getNomeAprendiz());
 
         return layout;
     }

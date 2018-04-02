@@ -6,7 +6,7 @@ public class Replica {
     private Integer Id;
     private String texto;
     private Date dataCriacao;
-    private Aprendiz aprendiz;
+    private String nomeAprendiz;
 
     public Integer getId() {
         return Id;
@@ -32,11 +32,11 @@ public class Replica {
         this.dataCriacao = dataCriacao;
     }
 
-    public Aprendiz getAprendiz() {
-        return aprendiz;
+    public String getNomeAprendiz() {
+        return nomeAprendiz;
     }
 
-    public void setAprendiz(Aprendiz aprendiz) {
-        this.aprendiz = aprendiz;
+    public void setNomeAprendiz(String nomeAprendiz) {
+        this.nomeAprendiz = nomeAprendiz;
     }
 }

@@ -9,8 +9,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface TopicoService {
-    @GET("Topico")
-    Call<List<Topico>> listaAprendizes();
+    @GET("Topicos")
+    Call<List<Topico>> listaTopicos();
 
     @GET("Topico/{id}")
     Call<Topico> localizar(@Path("id") int id);

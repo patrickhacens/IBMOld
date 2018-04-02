@@ -2,6 +2,7 @@ package br.senai.sp.informatica.ibmyoung.repository;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -20,6 +21,7 @@ public class LoginRepo {
     private LoginService svc = RetrofitConfig.getInstance().getLoginService();
 
     public void efetuaLogin(Usuario usuario, final WebServiceData<Autorizacao> data) {
+        Log.e("LoginRepo", "User: " + usuario.getUsername() + " Pass: " + usuario.getPassword());
         Call<Autorizacao> call = svc.efetuarLogin(usuario);
         call.enqueue(new Callback<Autorizacao>() {
             @Override
@@ -27,12 +29,14 @@ public class LoginRepo {
                 if(resposta.isSuccessful()) {
                    data.processaDados(resposta.body());
                 } else {
+                    Log.e("LoginRepo", "Sucesso? " + resposta.isSuccessful());
                    data.houveErro();
                 }
             }
 
             @Override
             public void onFailure(Call<Autorizacao> requisicao, Throwable erro) {
+                Log.e("LoginRepo", "Erro: " + erro.getMessage());
                 data.houveErro();
             }
         });
