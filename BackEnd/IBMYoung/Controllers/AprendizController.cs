@@ -35,6 +35,9 @@ namespace IBMYoung.Controllers
             this.userManager = userManager;
         }
 
+        /*
+            End Point utilizado pelo App Mobile na ClassificacaoActivity
+        */
         [HttpGet]
         public List<AprendizViewModel> Get() {
             List<AprendizViewModel> lista = new List<AprendizViewModel>();
@@ -53,12 +56,15 @@ namespace IBMYoung.Controllers
             return lista;
         }
 
+        /*
+            End Point utilizado pelo App Mobile na ClassificacaoActivity
+        */
         [HttpGet]
         [Route("{id}")]
         public  AprendizViewModel Aprendiz(int id) {
             Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == id);
             return new AprendizViewModel() {
-               Id = aprendiz.Id,
+                Id = aprendiz.Id,
                 Email = aprendiz.Email,
                 Username = aprendiz.UserName,
                 Nome = aprendiz.Nome,

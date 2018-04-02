@@ -37,6 +37,9 @@ namespace IBMYoung.Controllers
             return topico;
         }
 
+        /*
+            End point utilizado pelo App Mobile na ForunActivity
+         */
         [HttpGet]
         [Route("Topicos")]
         public List<TopicoViewModel> List() {
@@ -62,6 +65,9 @@ namespace IBMYoung.Controllers
             return lista;
         }
 
+        /*
+            End point utilizado pelo App Mobile na ForunActivity
+         */
         [HttpGet]
         [Route("Topico/{id}")]
         public TopicoViewModel Get(int id) {

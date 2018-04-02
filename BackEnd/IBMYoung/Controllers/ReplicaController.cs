@@ -20,6 +20,9 @@ namespace IBMYoung.Controllers {
             this.userManager = userManager;
         }
 
+        /*
+            End point utilizado pelo App Mobile na ForunChatActivity
+         */
         [HttpPost]
         [Route("Replica")]
         public async Task<IActionResult> Post([FromBody] ReplicaCadastroViewModel model) {
@@ -39,6 +42,9 @@ namespace IBMYoung.Controllers {
             return Ok();
         }
 
+        /*
+            End point utilizado pelo App Mobile na ForunChatActivity
+         */
         [HttpGet]
         [Route("Replicas/{id}")]
         public List<ReplicaViewModel> List(int id) {

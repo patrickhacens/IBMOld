@@ -10,6 +10,9 @@ namespace IBMYoung.Infrastructure.ViewModel {
         public int AprendizId { get; set; }
     }
 
+    /*
+        View Model utilizado pelo App Mobile na ForunChatActivity
+    */
     public class ReplicaViewModel {
         public int Id { get; set; }
         public string Texto { get; set; }

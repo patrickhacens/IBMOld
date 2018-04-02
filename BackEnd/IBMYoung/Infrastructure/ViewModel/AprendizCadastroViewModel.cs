@@ -17,6 +17,9 @@ namespace IBMYoung.Infrastructure.ViewModel
         
     }
 
+    /*
+        View Model utilizado pelo App Mobile na ClassificacaoActivity
+    */
     public class AprendizViewModel {
         public int Id { get; set; }
         public string Email { get; set; }

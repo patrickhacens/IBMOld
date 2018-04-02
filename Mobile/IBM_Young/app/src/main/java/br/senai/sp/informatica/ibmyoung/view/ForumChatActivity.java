@@ -48,8 +48,6 @@ public class ForumChatActivity extends AppCompatActivity implements View.OnClick
         edMsg = findViewById(R.id.edMsg);
         ivEnviar = findViewById(R.id.ivEnviar);
         ivEnviar.setOnClickListener(this);
-
-        //TODO: configurar o ListView para sempre posicionar na base (ultimo item presente)
         listView = findViewById(R.id.listView);
 
         ActionBar bar = getActionBar();

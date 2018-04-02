@@ -11,6 +11,9 @@ namespace IBMYoung.Infrastructure.ViewModel {
         public DateTime DataCriacao { get; set; }
     }
 
+    /*
+        View Model utilizado pelo App Mobile na TopicoActivity
+    */
     public class TopicoViewModel {
         public int Id { get; set; }
         public string Titulo { get; set; }
