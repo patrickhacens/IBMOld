@@ -138,13 +138,17 @@ namespace IBMYoung.Controllers {
             if (alternativa == null)
                 throw new HttpException(404, new { Mensagem = "Alternativa não encontrada" });
 
-            Resposta resposta = new Resposta()
-            {
+            Resposta resposta = new Resposta() {
+                Aprendiz = aprendiz,
+                AprendizId = aprendiz.Id,
+                Questao = questao,
+                TarefaId = tarefaId,
+                Ordem = ordem,
                 Alternativa = alternativa,
-                Questao = questao
+                AlternativaId = alternativa.Id
             };
             aprendiz.Respostas.Add(resposta);
-
+            db.Aprendizes.Update(aprendiz);
 
             //TODO Verify completion of answers
             //await db.Tarefas
