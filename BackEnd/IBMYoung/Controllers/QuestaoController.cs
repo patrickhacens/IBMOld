@@ -15,7 +15,7 @@ namespace IBMYoung.Controllers
 {
     //[JWTAuth]
     [Produces("application/json")]
-    [Route("api/Questao")]
+    [Route("api")]
     public class QuestaoController : Controller
     {
         private readonly Db db;
@@ -28,7 +28,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpPost]
-        [Route("/api/tarefa/{tarefaId}")]
+        [Route("Questao/{tarefaId}")]
         public async Task<Questao> Post(int tarefaId, [FromBody] QuestaoCadastroViewModel model)
         {
             var tarefa = await db.Tarefas
@@ -53,7 +53,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpPut]
-        [Route("{tarefaId}/{ordem}")]
+        [Route("Questao/{tarefaId}/{ordem}")]
         public async Task<Questao> Put(int tarefaId, int ordem, [FromBody] QuestaoCadastroViewModel model)
         {
             var questao = await db.Questoes
@@ -69,7 +69,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpGet]
-        [Route("{tarefaId}/{ordem}")]
+        [Route("Questao/{tarefaId}/{ordem}")]
         public async Task<Questao> Get(int tarefaId, int ordem)
         {
             var result = await db.Questoes
@@ -79,6 +79,24 @@ namespace IBMYoung.Controllers
             return result;
         }
 
+        [HttpGet]
+        [Route("Questoes/{tarefaId}")]
+        public List<QuestaoViewModel> GetList(int tarefaId) {
+            List<QuestaoViewModel> lista = new List<QuestaoViewModel>();
+            List<Questao> questoes =  db.Questoes
+                .Where(d => d.TarefaId == tarefaId)
+                .OrderBy(d => d.Ordem)
+                .ToList();
+                
+            questoes.ForEach(d => lista.Add(new QuestaoViewModel {
+                Ordem = d.Ordem,
+                Titulo = d.Titulo,
+                Conteudo = d.Conteudo,
+                TarefaId = d.TarefaId
+            }));
+
+            return lista;
+        }
 
         public class RespostaViewModel
         {
@@ -86,7 +104,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpGet]
-        [Route("{tarefaId}/{ordem}/responder")]
+        [Route("Questao/{tarefaId}/{ordem}/responder")]
         public async Task<Resposta> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model)
         {
             var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;

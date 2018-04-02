@@ -38,20 +38,26 @@
                 android:value=".view.ForumActivity" />
         </activity>
 
-        <activity android:name=".view.PerguntasActivity"
+        <activity android:name=".view.TarefasActivity"
             android:parentActivityName=".view.ClassificacaoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".view.ClassificacaoActivity" />
         </activity>
 
-        <activity android:name=".view.PerguntaActivity"
-            android:parentActivityName=".view.PerguntasActivity">
+        <activity android:name=".view.QuestionariosActivity"
+            android:parentActivityName=".view.TarefasActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.PerguntasActivity" />
+                android:value=".view.TarefasActivity" />
         </activity>
 
+        <activity android:name=".view.AlternativasActivity"
+            android:parentActivityName=".view.QuestionariosActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.QuestionariosActivity" />
+        </activity>
 
     </application>
 

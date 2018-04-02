@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import br.senai.sp.informatica.ibmyoung.R;
 import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.lib.Alerta;
 import br.senai.sp.informatica.ibmyoung.model.Aprendiz;
-import br.senai.sp.informatica.ibmyoung.model.Usuario;
 import br.senai.sp.informatica.ibmyoung.repository.AprendizRepo;
 import br.senai.sp.informatica.ibmyoung.repository.LoginRepo;
 import br.senai.sp.informatica.ibmyoung.view.adapter.ClassificacaoAdapter;
@@ -44,7 +42,7 @@ public class ClassificacaoActivity extends AppCompatActivity implements View.OnC
         ivQuestoes = findViewById(R.id.ivQuestoes);
         ivQuestoes.setOnClickListener(this);
 
-        tvNome = findViewById(R.id.tvNome);
+        tvNome = findViewById(R.id.tvTitulo);
         tvNivel = findViewById(R.id.tvNivel);
     }
 
@@ -91,6 +89,6 @@ public class ClassificacaoActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this, PerguntasActivity.class));
+        startActivity(new Intent(this, TarefasActivity.class));
     }
 }

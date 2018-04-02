@@ -95,7 +95,7 @@ public class ClassificacaoAdapter extends BaseAdapter {
         //  https://opensource.googleblog.com/2014/09/glide-30-media-management-library-for.html
         //  https://inthecheesefactory.com/blog/get-to-know-glide-recommended-by-google/en
         //  ImageView ivFoto = layout.findViewById(R.id.ivFoto);
-        TextView tvNome = layout.findViewById(R.id.tvNome);
+        TextView tvNome = layout.findViewById(R.id.tvTitulo);
         tvNome.setText(String.format("%s %s", obj.getNome(), obj.getSobrenome()));
         TextView tvNivel = layout.findViewById(R.id.tvNivel);
         tvNivel.setText(String.format("Nível %d", obj.getNivel()));

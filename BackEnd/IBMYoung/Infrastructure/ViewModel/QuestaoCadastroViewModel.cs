@@ -11,4 +11,11 @@ namespace IBMYoung.Infrastructure.ViewModel
         public string Conteudo { get; set; }
         public int Ordem { get; set; }
     }
+
+    public class QuestaoViewModel {
+        public int Ordem { get; set; }
+        public string Titulo { get; set; }
+        public string Conteudo { get; set; }
+        public int TarefaId {get; set; }
+    }
 }

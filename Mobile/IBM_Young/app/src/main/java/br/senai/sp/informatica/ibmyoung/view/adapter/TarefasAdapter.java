@@ -1,5 +1,6 @@
 package br.senai.sp.informatica.ibmyoung.view.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -15,37 +16,39 @@ import java.util.List;
 import br.senai.sp.informatica.ibmyoung.R;
 import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.lib.Alerta;
-import br.senai.sp.informatica.ibmyoung.model.Topico;
-import br.senai.sp.informatica.ibmyoung.repository.TopicoRepo;
+import br.senai.sp.informatica.ibmyoung.model.Tarefa;
+import br.senai.sp.informatica.ibmyoung.repository.LoginRepo;
+import br.senai.sp.informatica.ibmyoung.repository.TarefaRepo;
 
 /**
  * Created by pena on 27/03/2018.
  */
 
-public class ForumAdapter extends BaseAdapter {
-    private TopicoRepo dao = TopicoRepo.dao;
-    private SparseArray<Topico> mapa;
+public class TarefasAdapter extends BaseAdapter {
+    private TarefaRepo dao = TarefaRepo.dao;
+    private SparseArray<Tarefa> mapa;
     private static final DateFormat fmt = DateFormat.getDateInstance(DateFormat.LONG);
 
-    public ForumAdapter() {
+    public TarefasAdapter() {
         criarMapa();
     }
 
     private void criarMapa() {
         mapa = new SparseArray<>();
-        dao.getTopicos(new WebServiceData<List<Topico>>() {
+        int id = LoginRepo.dao.obterAutorizacao().getId();
+        dao.getTarefas(id, new WebServiceData<List<Tarefa>>() {
             @Override
-            public void processaDados(List<Topico> dados) {
-                List<Topico> ids = dados;
+            public void processaDados(List<Tarefa> dados) {
+                List<Tarefa> ids = dados;
                 for (int linha = 0; linha < ids.size(); linha++) {
                     mapa.put(linha, ids.get(linha));
                 }
-                ForumAdapter.this.notifyDataSetChanged();
+                TarefasAdapter.this.notifyDataSetChanged();
             }
 
             @Override
             public void houveErro() {
-                Alerta.showToast("Falha ao carregar a lista dos Tópicos");
+                Alerta.showToast("Falha ao carregar a lista das Tarefa");
             }
         });
     }
@@ -65,6 +68,7 @@ public class ForumAdapter extends BaseAdapter {
         return mapa.get(linha).getId();
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public View getView(int linha, View view, ViewGroup viewGroup) {
         LinearLayout layout;
@@ -73,14 +77,16 @@ public class ForumAdapter extends BaseAdapter {
             Context ctx = viewGroup.getContext();
             LayoutInflater svc = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             layout = new LinearLayout(ctx);
-            svc.inflate(R.layout.forum_adapter, layout);
+            svc.inflate(R.layout.tarefas_adapter, layout);
         } else {
             layout = (LinearLayout)view;
         }
 
-        Topico obj = mapa.get(linha);
+        Tarefa obj = mapa.get(linha);
         TextView tvTitulo = layout.findViewById(R.id.tvTitulo);
         tvTitulo.setText(obj.getTitulo());
+        TextView tvNivel = layout.findViewById(R.id.tvNivel);
+        tvNivel.setText(String.format("Nível %d", obj.getNivel()));
         TextView tvCriacao = layout.findViewById(R.id.tvCriacao);
         tvCriacao.setText(fmt.format(obj.getDataCriacao()));
 

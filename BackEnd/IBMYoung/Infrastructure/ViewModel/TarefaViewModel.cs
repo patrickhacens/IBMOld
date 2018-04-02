@@ -5,31 +5,18 @@ using System.Threading.Tasks;
 
 namespace IBMYoung.Infrastructure.ViewModel
 {
-    public class TarefaViewModel
-    {
+    public class TarefaViewModel {
         public int Nivel { get; set; }
-
         public IEnumerable<QuestaoViewModel> Questoes { get; set; }
     }
-
-    public class QuestaoViewModel
-    {
-        public int TarefaId { get; set; }
-
-        public int Ordem { get; set; }
-
-        public string Descricao { get; set; }
-
-        public bool Respondida { get; set; }
-
-        public IEnumerable<AlternativaViewModel> Alternativas { get; set; }
-    }
-
-    public class AlternativaViewModel
-    {
+    /*
+        View Movel utilizado pelo App Mobile na TarefasActivity
+    */
+    public class TarefaAdapterViewModel {
         public int Id { get; set; }
-
-        public string Descricao { get; set; }
-
+        public string Titulo { get; set; }
+        public int Nivel { get; set; }
+        public DateTime DataCriacao { get; set; }
+        public bool Respondida { get; set; }
     }
 }

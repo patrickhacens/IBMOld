@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace IBMYoung.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Alternativa")]
+    [Route("api")]
     public class AlternativaController : Controller
     {
         private readonly Db db;
@@ -23,7 +23,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpPost]
-        [Route("/api/questao/{tarefaId}/{ordem}")]
+        [Route("Alternativa/{tarefaId}/{ordem}")]
         public async Task<Alternativa> PostAlternativa(int tarefaId, int ordem, [FromBody] AlternativaCadastroViewModel model)
         {
             var questao = await db.Questoes
@@ -49,7 +49,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("Alternativa/{id}")]
         public async Task<Alternativa> Get(int id)
         {
             var alternativa = await db.Alternativas
@@ -62,7 +62,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("Alternativa/{id}")]
         public async Task<Alternativa> Put(int id, AlternativaCadastroViewModel model)
         {
             var alternativa = await db.Alternativas

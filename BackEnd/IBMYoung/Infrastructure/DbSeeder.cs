@@ -40,7 +40,8 @@ namespace IBMYoung.Infrastructure {
                 Nome = "Antonio",
                 UserName = "adealmeida",
                 Sobrenome = "de Almeida",
-                Email = "adealmeida@gmail.com"
+                Email = "adealmeida@gmail.com",
+                Nivel = 0
             };
             aprendiz1.SetPassword("teste$132");
             db.Usuarios.Add(aprendiz1);
@@ -50,67 +51,126 @@ namespace IBMYoung.Infrastructure {
                 UserName = "jcamargo",
                 Sobrenome = "Lima Camargo",
                 Email = "jcamargo@hotmail.com",
+                Nivel = 2
             };
             aprendiz2.SetPassword("novo$132");
             db.Usuarios.Add(aprendiz2);
 
-            var tarefa = new Tarefa() {
+            var tarefa1 = new Tarefa() {
                 Active = true,
-                Conteudo = "Tarefa 1",
+                Conteudo = "Conhecimento da Lingua Inglêsa",
                 DataCriacao = DateTime.Now,
                 Nivel = 1,
-                Titulo = "Tarefa 1",
+                Titulo = "Atividade de Ingles - Tradução",
                 Usuario = user1,
                 Questoes = new List<Questao>() {
                             new Questao() {
-                                Titulo = "Questao 1",
+                                Titulo = "Selecione a alternativa correta",
                                 Ordem = 1,
-                                Conteudo = "Questao 1",
+                                Conteudo = "What does business mean?",
                                 Alternativas = new List<Alternativa>() {
                                     new Alternativa() {
-                                        TextoAlternativa = "Alternativa 1",
+                                        TextoAlternativa = "Necogiação",
                                         Correta = false,
                                     },
                                     new Alternativa() {
-                                        TextoAlternativa = "Alternativa Correta",
+                                        TextoAlternativa = "Negócio",
                                         Correta = true,
                                     },
                                     new Alternativa() {
-                                        TextoAlternativa = "Alternativa 3",
+                                        TextoAlternativa = "Empresa",
                                         Correta = false,
                                     },
                                     new Alternativa() {
-                                        TextoAlternativa = "Alternativa 4",
+                                        TextoAlternativa = "Nenhuma das anteriores",
                                         Correta = false,
                                     },
                                 }
                             },
                             new Questao() {
-                               Titulo = "Questao 2",
+                                Titulo = "Qual a correta tradução",
                                 Ordem = 2,
-                                 Conteudo = "Questao 2",
-                                  Alternativas = new List<Alternativa>() {
+                                Conteudo = "Google bans Chrome extensions",
+                                    Alternativas = new List<Alternativa>() {
                                       new Alternativa() {
-                                           TextoAlternativa = "Alternativa 1",
+                                           TextoAlternativa = "Google impede as extensões do Chrome",
                                            Correta = false,
                                       },
                                       new Alternativa() {
-                                           TextoAlternativa = "Alternativa 2",
+                                           TextoAlternativa = "Google impele o Chrome e extensões",
                                            Correta = false,
                                       },
                                       new Alternativa() {
-                                           TextoAlternativa = "Alternativa Correta",
+                                           TextoAlternativa = "Google proíbe extensões do Chrome",
                                            Correta = true,
                                       },
                                       new Alternativa() {
-                                           TextoAlternativa = "Alternativa 4",
+                                           TextoAlternativa = "Google maldiz as extensões do Chrome ",
                                            Correta = false,
                                       },
                                   }
                             }
                       }
             };
-            db.Tarefas.Add(tarefa);
+            db.Tarefas.Add(tarefa1);
+
+            var tarefa2 = new Tarefa() {
+                Active = true,
+                Conteudo = "Conhecimento da Lingua Inglêsa",
+                DataCriacao = DateTime.Now,
+                Nivel = 2,
+                Titulo = "Atividade de Ingles - Significado",
+                Usuario = user1,
+                Questoes = new List<Questao>() {
+                            new Questao() {
+                                Titulo = "Sobre o que é discutido",
+                                Ordem = 1,
+                                Conteudo = "As it pushes beyond the tech industry, artiticial intelligence could make workplaces fairer - os more oppressive",
+                                Alternativas = new List<Alternativa>() {
+                                    new Alternativa() {
+                                        TextoAlternativa = "Como as pessoas trabalham",
+                                        Correta = false,
+                                    },
+                                    new Alternativa() {
+                                        TextoAlternativa = "Como funciona as empresas",
+                                        Correta = false,
+                                    },
+                                    new Alternativa() {
+                                        TextoAlternativa = "A influência da IA no trabalho",
+                                        Correta = true,
+                                    },
+                                    new Alternativa() {
+                                        TextoAlternativa = "Nenhuma das anteriores",
+                                        Correta = false,
+                                    },
+                                }
+                            },
+                            new Questao() {
+                                Titulo = "Qual o sujeito na frase",
+                                Ordem = 2,
+                                Conteudo = "Accusations against a moderate presidential candidate could hand power to a left-wing populist",
+                                    Alternativas = new List<Alternativa>() {
+                                      new Alternativa() {
+                                           TextoAlternativa = "Presidente Populista",
+                                           Correta = false,
+                                      },
+                                      new Alternativa() {
+                                           TextoAlternativa = "Populista de esquerda",
+                                           Correta = false,
+                                      },
+                                      new Alternativa() {
+                                           TextoAlternativa = "Moderado Populista",
+                                           Correta = false,
+                                      },
+                                      new Alternativa() {
+                                           TextoAlternativa = "Candidato Presidencial",
+                                           Correta = true,
+                                      },
+                                  }
+                            }
+                      }
+            };
+            db.Tarefas.Add(tarefa2);
 
             var topico = new Topico {
                 Titulo = "Qual o melhor database?",

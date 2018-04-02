@@ -89,7 +89,7 @@ public class ForumChatAdapter extends BaseAdapter {
         tvReplica.setText(obj.getTexto());
         TextView tvData = layout.findViewById(R.id.tvData);
         tvData.setText(fmt.format(obj.getDataCriacao()));
-        TextView tvNome = layout.findViewById(R.id.tvNome);
+        TextView tvNome = layout.findViewById(R.id.tvTitulo);
         tvNome.setText(obj.getNomeAprendiz());
 
         return layout;

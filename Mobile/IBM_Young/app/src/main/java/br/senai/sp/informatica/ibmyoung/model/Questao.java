@@ -8,8 +8,18 @@ import java.util.List;
  */
 
 public class Questao {
+    private int ordem;
     private String titulo;
-    private List<Alternativa> alternativas;
+    private String conteudo;
+    private int tarefaId;
+
+    public int getOrdem() {
+        return ordem;
+    }
+
+    public void setOrdem(int ordem) {
+        this.ordem = ordem;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -19,11 +29,19 @@ public class Questao {
         this.titulo = titulo;
     }
 
-    public List<Alternativa> getAlternativas() {
-        return alternativas;
+    public String getConteudo() {
+        return conteudo;
     }
 
-    public void setAlternativas(List<Alternativa> alternativas) {
-        this.alternativas = alternativas;
+    public void setConteudo(String conteudo) {
+        this.conteudo = conteudo;
+    }
+
+    public int getTarefaId() {
+        return tarefaId;
+    }
+
+    public void setTarefaId(int tarefaId) {
+        this.tarefaId = tarefaId;
     }
 }
