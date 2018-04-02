@@ -41,7 +41,7 @@ namespace IBMYoung.Infrastructure {
                 UserName = "adealmeida",
                 Sobrenome = "de Almeida",
                 Email = "adealmeida@gmail.com",
-                Nivel = 0
+                Nivel = 1
             };
             aprendiz1.SetPassword("teste$132");
             db.Usuarios.Add(aprendiz1);

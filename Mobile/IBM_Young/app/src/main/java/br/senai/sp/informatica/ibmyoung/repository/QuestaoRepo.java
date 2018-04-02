@@ -7,6 +7,7 @@ import br.senai.sp.informatica.ibmyoung.config.CallBackImpl;
 import br.senai.sp.informatica.ibmyoung.config.RetrofitConfig;
 import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.model.Questao;
+import br.senai.sp.informatica.ibmyoung.model.Resposta;
 import br.senai.sp.informatica.ibmyoung.model.Tarefa;
 import br.senai.sp.informatica.ibmyoung.model.Topico;
 import br.senai.sp.informatica.ibmyoung.service.QuestaoService;
@@ -25,5 +26,11 @@ public class QuestaoRepo {
     public void localizar(int tarefaId, int questaoId, WebServiceData<Questao> data) {
         Call<Questao> call = svc.localizar(tarefaId, questaoId);
         call.enqueue(new CallBackImpl<Questao>(data));
+    }
+
+    public void responder(int tarefaId, int questaoId, Resposta resposta, WebServiceData<Void> data) {
+        Call<Void> call = svc.responder(tarefaId, questaoId, resposta);
+        call.enqueue(new CallBackImpl<Void>(data));
+
     }
 }

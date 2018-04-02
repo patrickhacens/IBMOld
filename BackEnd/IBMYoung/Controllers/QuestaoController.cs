@@ -62,6 +62,9 @@ namespace IBMYoung.Controllers {
             return questao;
         }
 
+        /*
+            End Point  utilizado pelo App Mobile na AlternativasActivity
+         */
         [HttpGet]
         [Route("Questao/{tarefaId}/{ordem}")]
         public async Task<QuestaoViewModel> Get(int tarefaId, int ordem) {
@@ -112,9 +115,9 @@ namespace IBMYoung.Controllers {
             public int AlternativaId { get; set; }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Questao/{tarefaId}/{ordem}/responder")]
-        public async Task<Resposta> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model) {
+        public async Task<IActionResult> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model) {
             var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
             if (aprendiz == null) throw new HttpException(401, new { Mensagem = "Não é aprendiz" });
 
@@ -151,7 +154,7 @@ namespace IBMYoung.Controllers {
 
             await db.SaveChangesAsync();
             
-            return resposta;
+            return Ok();
         }
     }
 }

@@ -13,6 +13,7 @@ import br.senai.sp.informatica.ibmyoung.R;
 import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.lib.Alerta;
 import br.senai.sp.informatica.ibmyoung.model.Questao;
+import br.senai.sp.informatica.ibmyoung.model.Resposta;
 import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 
 /**
@@ -29,6 +30,9 @@ public class AlternativasActivity extends AppCompatActivity {
     private RadioButton[] questoes;
 
     private QuestaoRepo dao = QuestaoRepo.dao;
+    private Questao questao;
+    private int tarefaId;
+    private int questaoId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,11 +63,12 @@ public class AlternativasActivity extends AppCompatActivity {
 
         Bundle extra = getIntent().getExtras();
         if(extra != null) {
-            int questaoId = extra.getInt("questaoId");
-            int tarefaId = extra.getInt("tarefaId");
+            questaoId = extra.getInt("questaoId");
+            tarefaId = extra.getInt("tarefaId");
             dao.localizar(tarefaId, questaoId, new WebServiceData<Questao>() {
                 @Override
                 public void processaDados(Questao dados) {
+                    questao = dados;
                     tvTitulo.setText(dados.getTitulo());
                     tvQuestao.setText(dados.getConteudo());
                     for (int i = 0; i < questoes.length; i++) {
@@ -90,7 +95,28 @@ public class AlternativasActivity extends AppCompatActivity {
     }
 
     public void enviarClick(View view) {
-        // TODO: salvar a resposta e retornar para a lista de questões
+        int alternativaId = -1;
+        for (int i = 0; i < questoes.length; i++) {
+            if(questoes[i].isChecked()) {
+                alternativaId = questao.getAlternativas().get(i).getId();
+                break;
+            }
+        }
+        if(alternativaId != -1) {
+            dao.responder(tarefaId, questaoId, new Resposta(alternativaId), new WebServiceData<Void>() {
+                @Override
+                public void processaDados(Void dados) {
+                    Alerta.showToast("Resposta enviada");
+                }
+
+                @Override
+                public void houveErro() {
+                    Alerta.showToast("Falha ao enviar a Resposta");
+                }
+            });
+        } else {
+            Alerta.showToast("Nenhuma alternativa foi selecionada");
+        }
         finish();
     }
 }
