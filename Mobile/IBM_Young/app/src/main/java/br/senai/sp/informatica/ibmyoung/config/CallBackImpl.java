@@ -19,11 +19,13 @@ public class CallBackImpl<T> implements Callback<T> {
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
+        Log.e("CallBackImpl", response.body().toString());
         data.processaDados(response.body());
     }
 
     @Override
     public void onFailure(Call<T> call, Throwable t) {
+        Log.e("CallBackImpl", "Erro: " + t.getMessage());
         data.houveErro();
     }
 }

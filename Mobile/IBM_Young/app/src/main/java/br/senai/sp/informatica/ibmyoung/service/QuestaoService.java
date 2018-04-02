@@ -12,6 +12,6 @@ public interface QuestaoService {
     @GET("Questoes/{id}")
     Call<List<Questao>> listaQuestionario(@Path("id") int tarefaId);
 
-    @GET("Questao/{id}")
-    Call<Questao> localizar(@Path("id") int id);
+    @GET("Questao/{tarefaId}/{questaoId}")
+    Call<Questao> localizar(@Path("tarefaId") int tarefaId, @Path("questaoId") int questaoId);
 }

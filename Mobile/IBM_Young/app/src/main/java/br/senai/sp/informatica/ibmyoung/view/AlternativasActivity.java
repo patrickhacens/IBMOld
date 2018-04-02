@@ -4,14 +4,15 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import br.senai.sp.informatica.ibmyoung.R;
+import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
+import br.senai.sp.informatica.ibmyoung.lib.Alerta;
 import br.senai.sp.informatica.ibmyoung.model.Questao;
-import br.senai.sp.informatica.ibmyoung.model.Replica;
 import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 
 /**
@@ -19,6 +20,7 @@ import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
  */
 
 public class AlternativasActivity extends AppCompatActivity {
+    private TextView tvTitulo;
     private TextView tvQuestao;
     private RadioButton rbResp1;
     private RadioButton rbResp2;
@@ -31,8 +33,9 @@ public class AlternativasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pergunta_activity);
+        setContentView(R.layout.alternativa_activity);
 
+        tvTitulo = findViewById(R.id.tvTitulo);
         tvQuestao = findViewById(R.id.tvQuestao);
 
         RadioButton[] qts = {
@@ -43,24 +46,47 @@ public class AlternativasActivity extends AppCompatActivity {
         };
         questoes = qts;
 
-//        Bundle extra = getIntent().getExtras();
-//        if(extra != null) {
-//            int id = extra.getInt("id");
-//            Questao obj = dao.localizar(id);
-//            tvQuestao.setText(obj.getTitulo());
-//            for(int i = 0;i < questoes.length;i++) {
-//                String alternativa = obj.getAlternativas().get(i).getTextoAlternativa();
-//                questoes[i].setText(alternativa);
-//            }
-//        } else {
-//            Toast.makeText(this, "Problema ao carregar a Questão", Toast.LENGTH_LONG).show();
-//        }
-
         ActionBar bar = getActionBar();
         if(bar != null) {
             bar.setHomeButtonEnabled(true);
             bar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Bundle extra = getIntent().getExtras();
+        if(extra != null) {
+            int questaoId = extra.getInt("questaoId");
+            int tarefaId = extra.getInt("tarefaId");
+            dao.localizar(tarefaId, questaoId, new WebServiceData<Questao>() {
+                @Override
+                public void processaDados(Questao dados) {
+                    tvTitulo.setText(dados.getTitulo());
+                    tvQuestao.setText(dados.getConteudo());
+                    for (int i = 0; i < questoes.length; i++) {
+                        String alternativa = dados.getAlternativas().get(i).getTextoAlternativa();
+                        questoes[i].setText(alternativa);
+                    }
+                }
+
+                @Override
+                public void houveErro() {
+                    Alerta.showToast("Problema ao carregar a Questão");
+                }
+            });
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            setResult(RESULT_CANCELED);
+            finish();
+        }
+        return true;
     }
 
     public void enviarClick(View view) {

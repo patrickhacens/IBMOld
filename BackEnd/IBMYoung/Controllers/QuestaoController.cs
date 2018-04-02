@@ -11,34 +11,29 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace IBMYoung.Controllers
-{
+namespace IBMYoung.Controllers {
     //[JWTAuth]
     [Produces("application/json")]
     [Route("api")]
-    public class QuestaoController : Controller
-    {
+    public class QuestaoController : Controller {
         private readonly Db db;
         private readonly UserManager<Usuario> userManager;
 
-        public QuestaoController(Db db, UserManager<Usuario> userManager)
-        {
+        public QuestaoController(Db db, UserManager<Usuario> userManager) {
             this.db = db;
             this.userManager = userManager;
         }
 
         [HttpPost]
         [Route("Questao/{tarefaId}")]
-        public async Task<Questao> Post(int tarefaId, [FromBody] QuestaoCadastroViewModel model)
-        {
+        public async Task<Questao> Post(int tarefaId, [FromBody] QuestaoCadastroViewModel model) {
             var tarefa = await db.Tarefas
                 .Include(d => d.Questoes)
                 .FirstOrDefaultAsync(d => d.Id == tarefaId);
 
             if (tarefa == null) throw new HttpException(404);
 
-            var questao = new Questao()
-            {
+            var questao = new Questao() {
                 Conteudo = model.Conteudo,
                 Ordem = model.Ordem,
                 Titulo = model.Titulo,
@@ -54,11 +49,10 @@ namespace IBMYoung.Controllers
 
         [HttpPut]
         [Route("Questao/{tarefaId}/{ordem}")]
-        public async Task<Questao> Put(int tarefaId, int ordem, [FromBody] QuestaoCadastroViewModel model)
-        {
+        public async Task<Questao> Put(int tarefaId, int ordem, [FromBody] QuestaoCadastroViewModel model) {
             var questao = await db.Questoes
                 .Include(d => d.Tarefa)
-                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && ordem == ordem);
+                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && d.Ordem == ordem);
             if (questao == null) throw new HttpException(404);
 
             questao.Conteudo = model.Conteudo;
@@ -70,15 +64,31 @@ namespace IBMYoung.Controllers
 
         [HttpGet]
         [Route("Questao/{tarefaId}/{ordem}")]
-        public async Task<Questao> Get(int tarefaId, int ordem)
-        {
+        public async Task<QuestaoViewModel> Get(int tarefaId, int ordem) {
             var result = await db.Questoes
                 .Include(d => d.Alternativas)
-                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && ordem == ordem);
+                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && d.Ordem == ordem);
             if (result == null) throw new HttpException(404);
-            return result;
+            else {
+                return new QuestaoViewModel {
+                    Ordem = result.Ordem,
+                    Titulo = result.Titulo,
+                    Conteudo = result.Conteudo,
+                    TarefaId = result.TarefaId,
+                    Alternativas = result.Alternativas
+                        .OrderBy(f => Guid.NewGuid())
+                        .Select(f => new AlternativaViewModel {
+                            Id = f.Id,
+                            TextoAlternativa = f.TextoAlternativa,
+                            Correta = f.Correta
+                        }).ToList()
+                };
+            }
         }
 
+        /*
+            End Point  utilizado pelo App Mobile na QuestionariosActivity
+         */
         [HttpGet]
         [Route("Questoes/{tarefaId}")]
         public List<QuestaoViewModel> GetList(int tarefaId) {
@@ -98,15 +108,13 @@ namespace IBMYoung.Controllers
             return lista;
         }
 
-        public class RespostaViewModel
-        {
+        public class RespostaViewModel {
             public int AlternativaId { get; set; }
         }
 
         [HttpGet]
         [Route("Questao/{tarefaId}/{ordem}/responder")]
-        public async Task<Resposta> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model)
-        {
+        public async Task<Resposta> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model) {
             var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
             if (aprendiz == null) throw new HttpException(401, new { Mensagem = "Não é aprendiz" });
 

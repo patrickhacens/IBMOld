@@ -3,6 +3,7 @@ package br.senai.sp.informatica.ibmyoung.view;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,13 +22,15 @@ import br.senai.sp.informatica.ibmyoung.view.adapter.TarefasAdapter;
 public class QuestionariosActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private ListView listView;
     private QuestionariosAdapter adapter;
+    private Integer tarefaId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.questionarios_activity);
 
-        int tarefaId = getIntent().getExtras().getInt("id");
+        if(tarefaId == null)
+            tarefaId = getIntent().getExtras().getInt("id");
         adapter = new QuestionariosAdapter(tarefaId);
 
         listView = findViewById(R.id.listView);
@@ -45,7 +48,20 @@ public class QuestionariosActivity extends AppCompatActivity implements AdapterV
     public void onItemClick(AdapterView<?> viewGroup, View view, int linha, long id) {
         Integer questaoId = ((Questao)adapter.getItem(linha)).getOrdem();
         Intent intent = new Intent(this, AlternativasActivity.class);
-        intent.putExtra("id", questaoId);
+        intent.putExtra("questaoId", questaoId);
+        intent.putExtra("tarefaId", tarefaId);
         startActivity(intent);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt("tarefaId", tarefaId);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        tarefaId = savedInstanceState.getInt("tarefaId");
     }
 }

@@ -22,8 +22,8 @@ public class QuestaoRepo {
         call.enqueue(new CallBackImpl<List<Questao>>(data));
     }
 
-    public void localizar(int tarefaId, WebServiceData<Questao> data) {
-        Call<Questao> call = svc.localizar(tarefaId);
+    public void localizar(int tarefaId, int questaoId, WebServiceData<Questao> data) {
+        Call<Questao> call = svc.localizar(tarefaId, questaoId);
         call.enqueue(new CallBackImpl<Questao>(data));
     }
 }
