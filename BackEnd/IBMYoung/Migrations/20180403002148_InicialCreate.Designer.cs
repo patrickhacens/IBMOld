@@ -12,9 +12,10 @@ using System;
 namespace IBMYoung.Migrations
 {
     [DbContext(typeof(Db))]
-    partial class DbModelSnapshot : ModelSnapshot
+    [Migration("20180403002148_20180302212126_InicialCreate")]
+    partial class _20180302212126_InicialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -379,18 +380,15 @@ namespace IBMYoung.Migrations
                 {
                     b.HasOne("IBMYoung.Model.Alternativa", "Alternativa")
                         .WithMany("Respostas")
-                        .HasForeignKey("AlternativaId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AlternativaId");
 
                     b.HasOne("IBMYoung.Model.Aprendiz", "Aprendiz")
                         .WithMany("Respostas")
-                        .HasForeignKey("AprendizId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AprendizId");
 
                     b.HasOne("IBMYoung.Model.Questao", "Questao")
                         .WithMany("Respostas")
-                        .HasForeignKey("TarefaId", "Ordem")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TarefaId", "Ordem");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Tarefa", b =>

@@ -17,17 +17,14 @@ namespace IBMYoung
         public static void Main(string[] args)
         {
             bool runSeed = false;
-            bool runDrop = false;
+      
             if (args.Contains("seed")){
                 runSeed = true;
                 args = args.Where(d => d != "seed").ToArray();
-            } else if(args.Contains("drop")) {
-                runDrop = true;
-                args = args.Where(d => d != "drop").ToArray();
             }
             var host = BuildWebHost(args);
             if (runSeed) RunSeed(host);
-            else if(runDrop) RunDrop(host).Wait();
+
             host.Run();
         }
 
@@ -41,20 +38,6 @@ namespace IBMYoung
                     Console.WriteLine(ex.GetBaseException().Message);
                 } finally {
                     Console.WriteLine("Seed ended");
-                    Console.ReadKey();
-                }
-            }
-        }
-        private static async Task RunDrop(IWebHost host) {
-            Console.WriteLine("Droping...");
-            using (var scope = host.Services.CreateScope()) {
-                var context = scope.ServiceProvider.GetService<Db>();
-                try {
-                    await DbSeeder.ClearDb(context);
-                } catch (Exception ex) {
-                    Console.WriteLine(ex.GetBaseException().Message);
-                } finally {
-                    Console.WriteLine("Drop ended");
                     Console.ReadKey();
                 }
             }

@@ -195,7 +195,7 @@ namespace IBMYoung.Infrastructure {
             await db.SaveChangesAsync();
         }
 
-        public static async Task ClearDb(Db db) {
+        private static async Task ClearDb(Db db) {
             db.Replicas.RemoveRange(db.Replicas.ToArray());
             db.Topicos.RemoveRange(db.Topicos.ToArray());
             db.Alternativas.RemoveRange(db.Alternativas.ToArray());
