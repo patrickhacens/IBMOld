@@ -149,6 +149,7 @@ namespace IBMYoung.Controllers {
             };
             aprendiz.Respostas.Add(resposta);
             db.Aprendizes.Update(aprendiz);
+            db.Respostas.Add(resposta);
 
             //TODO Verify completion of answers
             //await db.Tarefas

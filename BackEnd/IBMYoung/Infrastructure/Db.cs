@@ -25,9 +25,9 @@ namespace IBMYoung.Infrastructure
         public DbSet<User_Role> User_Roles { get; set; }
         public DbSet<UserClaim> UserClaims { get; set; }
         public DbSet<Aprendiz> Aprendizes { get; set; }
+        public DbSet<Resposta> Respostas { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder m)
-        {
+        protected override void OnModelCreating(ModelBuilder m) {
             m.Entity<Usuario>().ToTable("Usuarios");
             m.Entity<Tarefa>().ToTable("Tarefas");
             m.Entity<Instituicao>().ToTable("Instituicoes");
@@ -37,6 +37,7 @@ namespace IBMYoung.Infrastructure
             m.Entity<Topico>().ToTable("Topicos");
             m.Entity<Replica>().ToTable("Replicas");
             m.Entity<Aprendiz>().ToTable("Apredizes");
+            m.Entity<Resposta>().ToTable("Respostas");
 
             m.Entity<RecursosHumano>();
             m.Entity<Aprendiz>();
@@ -53,8 +54,7 @@ namespace IBMYoung.Infrastructure
             base.OnModelCreating(m);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.EnableSensitiveDataLogging();
             base.OnConfiguring(optionsBuilder);
         }
