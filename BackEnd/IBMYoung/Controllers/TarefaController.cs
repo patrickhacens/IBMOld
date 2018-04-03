@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
-    [JWTAuth]
+    //[JWTAuth]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class TarefaController : Controller
@@ -49,27 +49,27 @@ namespace IBMYoung.Controllers
         /// Retorna as tarefas criadas
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<IEnumerable<Tarefa>> Get() => await db.Tarefas.ToListAsync();
+        //[HttpGet]
+        //public async Task<IEnumerable<Tarefa>> Get() => await db.Tarefas.ToListAsync();
 
         /// <summary>
         /// Retorna a tarefa especifica
         /// </summary>
         /// <param name="id">id da tarefa</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<Tarefa> GetById(int id)
-        {
-            var tarefa = await db.Tarefas
-                .Include(d => d.Questoes)
-                .Include(d => d.Usuario)
-                .FirstOrDefaultAsync(d => d.Id == id);
+        //[HttpGet]
+        //[Route("{id}")]
+        //public async Task<Tarefa> GetById(int id)
+        //{
+        //    var tarefa = await db.Tarefas
+        //        .Include(d => d.Questoes)
+        //        .Include(d => d.Usuario)
+        //        .FirstOrDefaultAsync(d => d.Id == id);
 
-            if (tarefa == null) throw new HttpException(404);
+        //    if (tarefa == null) throw new HttpException(404);
 
-            return tarefa;
-        }
+        //    return tarefa;
+        //}
 
         /// <summary>
         /// Retorna a tarefa atual que o usuário esteja fazendo
@@ -93,7 +93,6 @@ namespace IBMYoung.Controllers
                 .Where(d => d.Questoes.Any(f => f.Respostas.All(g => g.Aprendiz != aprendiz)))
                 .OrderBy(d => d.Nivel)
                 .FirstOrDefaultAsync();
-
             if (tarefa == null) throw new HttpException(404, new { Message = "Nenhuma tarefa disponivel" });
 
             return new TarefaViewModel()
@@ -102,17 +101,56 @@ namespace IBMYoung.Controllers
                 Questoes = tarefa.Questoes.OrderBy(d => d.Ordem).Select(d => new QuestaoViewModel()
                 {
                     TarefaId = tarefa.Id,
-                    Descricao = d.Titulo,
+                    Titulo = d.Titulo,
                     Ordem = d.Ordem,
                     Respondida = d.Respostas.Any(g => g.Aprendiz == aprendiz),
                     Alternativas = d.Alternativas.OrderBy(f => Guid.NewGuid()).Select(f => new AlternativaViewModel()
                     {
-                        Descricao = f.TextoAlternativa,
+                        TextoAlternativa = f.TextoAlternativa,
                         Id = f.Id
                     }).ToArray()
                 }).ToArray()
             };
         }
+
+
+
+
+        [Route("{id}")]
+        public List<TarefaAdapterViewModel> GetById2(int id)
+        {
+            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == id);
+            List<TarefaAdapterViewModel> lista = new List<TarefaAdapterViewModel>();
+            db.Tarefas
+                .Include(d => d.Questoes)
+
+
+                .OrderBy(d => d.DataCriacao)
+                .ToList().ForEach(t => lista.Add(new TarefaAdapterViewModel
+                {
+                    Id = t.Id,
+                    Titulo = t.Titulo,
+                    Nivel = t.Nivel,
+                    DataCriacao = t.DataCriacao,
+                    Respondida = t.Questoes.All(q => q.Respostas.Any(r => r.Aprendiz == aprendiz))
+                }));
+            return lista;
+        }
+
+        [HttpGet]
+        public List<TarefaAdapterViewModel> Get()
+        {
+            List<TarefaAdapterViewModel> lista = new List<TarefaAdapterViewModel>();
+            db.Tarefas.ToList().ForEach(t => lista.Add(new TarefaAdapterViewModel
+            {
+                Id = t.Id,
+                Titulo = t.Titulo,
+                Nivel = t.Nivel,
+                DataCriacao = t.DataCriacao
+            }));
+            return lista;
+        }
+
 
         [HttpPut]
         [Route("{id}")]

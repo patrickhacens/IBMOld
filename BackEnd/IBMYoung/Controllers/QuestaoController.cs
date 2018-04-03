@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,9 +13,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
-    [JWTAuth]
+    //[JWTAuth]
     [Produces("application/json")]
-    [Route("api/Questao")]
+    [Route("api")]
     public class QuestaoController : Controller
     {
         private readonly Db db;
@@ -27,7 +28,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpPost]
-        [Route("/api/tarefa/{tarefaId}")]
+        [Route("Questao/{tarefaId}")]
         public async Task<Questao> Post(int tarefaId, [FromBody] QuestaoCadastroViewModel model)
         {
             var tarefa = await db.Tarefas
@@ -52,12 +53,12 @@ namespace IBMYoung.Controllers
         }
 
         [HttpPut]
-        [Route("{tarefaId}/{ordem}")]
+        [Route("Questao/{tarefaId}/{ordem}")]
         public async Task<Questao> Put(int tarefaId, int ordem, [FromBody] QuestaoCadastroViewModel model)
         {
             var questao = await db.Questoes
                 .Include(d => d.Tarefa)
-                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && ordem == ordem);
+                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && d.Ordem == ordem);
             if (questao == null) throw new HttpException(404);
 
             questao.Conteudo = model.Conteudo;
@@ -67,37 +68,70 @@ namespace IBMYoung.Controllers
             return questao;
         }
 
+        /*
+            End Point  utilizado pelo App Mobile na AlternativasActivity
+         */
         [HttpGet]
-        [Route("{tarefaId}/{ordem}")]
-        public async Task<Questao> Get(int tarefaId, int ordem)
+        [Route("Questao/{tarefaId}/{ordem}")]
+        public async Task<QuestaoViewModel> Get(int tarefaId, int ordem)
         {
             var result = await db.Questoes
                 .Include(d => d.Alternativas)
-                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && ordem == ordem);
+                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && d.Ordem == ordem);
             if (result == null) throw new HttpException(404);
-            return result;
+            else
+            {
+                return new QuestaoViewModel
+                {
+                    Ordem = result.Ordem,
+                    Titulo = result.Titulo,
+                    Conteudo = result.Conteudo,
+                    TarefaId = result.TarefaId,
+                    Alternativas = result.Alternativas
+                        .OrderBy(f => Guid.NewGuid())
+                        .Select(f => new AlternativaViewModel
+                        {
+                            Id = f.Id,
+                            TextoAlternativa = f.TextoAlternativa,
+                            Correta = f.Correta
+                        }).ToList()
+                };
+            }
         }
 
+        /*
+            End Point  utilizado pelo App Mobile na QuestionariosActivity
+         */
+        [HttpGet]
+        [Route("Questoes/{tarefaId}")]
+        public List<QuestaoViewModel> GetList(int tarefaId)
+        {
+            List<QuestaoViewModel> lista = new List<QuestaoViewModel>();
+            List<Questao> questoes = db.Questoes
+                .Where(d => d.TarefaId == tarefaId)
+                .OrderBy(d => d.Ordem)
+                .ToList();
+
+            questoes.ForEach(d => lista.Add(new QuestaoViewModel
+            {
+                Ordem = d.Ordem,
+                Titulo = d.Titulo,
+                Conteudo = d.Conteudo,
+                TarefaId = d.TarefaId
+            }));
+
+            return lista;
+        }
 
         public class RespostaViewModel
         {
             public int AlternativaId { get; set; }
         }
 
-        public class RespostaRetornoViewModel
-        {
-            public int AlternativaId { get; set; }
-
-            public bool Correta { get; set; }
-
-            public int Nivel { get; set; }
-
-            public bool LastAnswer { get; set; }
-        }
 
         [HttpGet]
         [Route("{tarefaId}/{ordem}/responder")]
-        public async Task<RespostaRetornoViewModel> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model)
+        public async Task<IActionResult> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model)
         {
             var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
             if (aprendiz == null) throw new HttpException(401, new { Mensagem = "Não é aprendiz" });
@@ -147,13 +181,7 @@ namespace IBMYoung.Controllers
 
             await db.SaveChangesAsync();
 
-            return new RespostaRetornoViewModel()
-            {
-                AlternativaId = alternativa.Id,
-                Correta = alternativa.Correta,
-                Nivel = aprendiz.Nivel,
-                LastAnswer = isLastAnswer,
-            };
+            return Ok();
         }
     }
 }

@@ -1,5 +1,6 @@
 package br.senai.sp.informatica.ibmyoung.view;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import br.senai.sp.informatica.ibmyoung.R;
-import br.senai.sp.informatica.ibmyoung.model.Questao;
+import br.senai.sp.informatica.ibmyoung.model.Replica;
 import br.senai.sp.informatica.ibmyoung.view.adapter.PerguntasAdapter;
 
 /**
@@ -30,22 +31,26 @@ public class PerguntasActivity extends AppCompatActivity implements AdapterView.
         listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+
+        ActionBar bar = getActionBar();
+        if(bar != null) {
+            bar.setHomeButtonEnabled(true);
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
     public void onItemClick(AdapterView<?> viewGroup, View view, int linha, long id) {
-        Integer questaoId = ((Questao)adapter.getItem(linha)).getId();
-        Intent intent = new Intent(this, PerguntasAdapter.class);
+        Integer questaoId = ((Replica)adapter.getItem(linha)).getId();
+        Intent intent = new Intent(this, PerguntaActivity.class);
         intent.putExtra("id", questaoId);
         startActivityForResult(intent, RESPONDE_QUESTAO);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO: verificar como identificar se a questão foi respondida para que o item da lista seja pintado com outra cor e/ou bloqueado de edição
-
         // URI: /api/Tarefa/current
-        // será construido um endpoint que retornará a tarefa e uma listas de questoes e cada questao indicará se já foi respondida
+        // TODO: será construido um endpoint que retornará a tarefa e uma listas de questoes e cada questao indicará se já foi respondida
 
         super.onActivityResult(requestCode, resultCode, data);
     }

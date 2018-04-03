@@ -1,20 +1,25 @@
 package br.senai.sp.informatica.ibmyoung.model;
 
+import java.security.PrivateKey;
 import java.util.List;
 
+/**
+ * Created by pena on 31/03/2018.
+ */
+
 public class Questao {
-    private Integer Id;
+    private int ordem;
     private String titulo;
     private String conteudo;
+    private int tarefaId;
     private List<Alternativa> alternativas;
-    private Tarefa tarefa;
 
-    public Integer getId() {
-        return Id;
+    public int getOrdem() {
+        return ordem;
     }
 
-    public void setId(Integer id) {
-        Id = id;
+    public void setOrdem(int ordem) {
+        this.ordem = ordem;
     }
 
     public String getTitulo() {
@@ -33,19 +38,19 @@ public class Questao {
         this.conteudo = conteudo;
     }
 
+    public int getTarefaId() {
+        return tarefaId;
+    }
+
+    public void setTarefaId(int tarefaId) {
+        this.tarefaId = tarefaId;
+    }
+
     public List<Alternativa> getAlternativas() {
         return alternativas;
     }
 
     public void setAlternativas(List<Alternativa> alternativas) {
         this.alternativas = alternativas;
-    }
-
-    public Tarefa getTarefa() {
-        return tarefa;
-    }
-
-    public void setTarefa(Tarefa tarefa) {
-        this.tarefa = tarefa;
     }
 }

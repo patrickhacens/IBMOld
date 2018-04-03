@@ -27,6 +27,11 @@ namespace IBMYoung.Model
         public virtual ICollection<Resposta> Respostas { get; set; }
 
         public Aprendiz(){ /*as is*/ }
+        public Aprendiz(DateTime nascimento, DateTime entrada)
+        {
+            this.DataNascimento = nascimento;
+            this.DataEntrada = entrada;
+         }
         public Aprendiz(DateTime nascimento, DateTime entrada, DateTime saida, Instituicao instituicao, Gestor gestor)
         {
             this.DataNascimento = nascimento;
@@ -34,7 +39,7 @@ namespace IBMYoung.Model
             this.DataSaida = saida;
             this.Instituicao = instituicao;
             this.Responsavel = gestor;
-        }
+         }
 
     }
 }

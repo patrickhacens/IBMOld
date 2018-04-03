@@ -1,7 +1,11 @@
 package br.senai.sp.informatica.ibmyoung.config;
 
+import br.senai.sp.informatica.ibmyoung.service.AprendizService;
 import br.senai.sp.informatica.ibmyoung.service.LoginService;
+import br.senai.sp.informatica.ibmyoung.service.QuestaoService;
+import br.senai.sp.informatica.ibmyoung.service.ReplicaService;
 import br.senai.sp.informatica.ibmyoung.service.TarefaService;
+import br.senai.sp.informatica.ibmyoung.service.TopicoService;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -26,8 +30,24 @@ public class RetrofitConfig {
         return this.retrofit.create(LoginService.class);
     }
 
+    public AprendizService getAprendizService() {
+        return this.retrofit.create(AprendizService.class);
+    }
+
+    public TopicoService getTopicoService() {
+        return this.retrofit.create(TopicoService.class);
+    }
+
+    public ReplicaService getReplicaService() {
+        return this.retrofit.create(ReplicaService.class);
+    }
+
     public TarefaService getTarefaService() {
         return this.retrofit.create(TarefaService.class);
+    }
+
+    public QuestaoService getQuestaoService() {
+        return this.retrofit.create(QuestaoService.class);
     }
 
 }

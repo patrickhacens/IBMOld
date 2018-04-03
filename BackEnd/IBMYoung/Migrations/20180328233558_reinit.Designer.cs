@@ -234,111 +234,66 @@ namespace IBMYoung.Migrations
 
             modelBuilder.Entity("IBMYoung.Model.Usuario", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
+                    b.Property<int>("Id").ValueGeneratedOnAdd();
                     b.Property<int>("AccessFailedCount");
-
                     b.Property<string>("ConcurrencyStamp");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
+                    b.Property<string>("Discriminator").IsRequired();
                     b.Property<string>("Email");
-
                     b.Property<bool>("EmailConfirmed");
-
                     b.Property<bool>("LockoutEnabled");
-
                     b.Property<DateTimeOffset?>("LockoutEnd");
-
                     b.Property<string>("Nome");
-
                     b.Property<string>("NormalizedEmail");
-
                     b.Property<string>("NormalizedUserName");
-
                     b.Property<string>("PasswordHash");
-
                     b.Property<string>("PasswordSalt");
-
                     b.Property<string>("PhoneNumber");
-
                     b.Property<bool>("PhoneNumberConfirmed");
-
                     b.Property<string>("SecurityStamp");
-
                     b.Property<string>("Sobrenome");
-
                     b.Property<bool>("TwoFactorEnabled");
-
                     b.Property<string>("UserName");
-
                     b.HasKey("Id");
-
                     b.ToTable("Usuarios");
-
                     b.HasDiscriminator<string>("Discriminator").HasValue("Usuario");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Aprendiz", b =>
                 {
                     b.HasBaseType("IBMYoung.Model.Usuario");
-
                     b.Property<DateTime>("DataEntrada");
-
-                    b.Property<DateTime>("DataNascimento")
-                        .HasColumnName("DataNascimento");
-
+                    b.Property<DateTime>("DataNascimento").HasColumnName("DataNascimento");
                     b.Property<DateTime>("DataSaida");
-
                     b.Property<int?>("InstituicaoId");
-
                     b.Property<int>("Nivel");
-
                     b.Property<int?>("ResponsavelId");
-
                     b.HasIndex("InstituicaoId");
-
                     b.HasIndex("ResponsavelId");
-
                     b.ToTable("Aprendizes");
-
                     b.HasDiscriminator().HasValue("Aprendiz");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Gestor", b =>
                 {
                     b.HasBaseType("IBMYoung.Model.Usuario");
-
-                    b.Property<DateTime>("DataNascimento")
-                        .HasColumnName("DataNascimento");
-
+                    b.Property<DateTime>("DataNascimento").HasColumnName("DataNascimento");
                     b.ToTable("Gestor");
-
                     b.HasDiscriminator().HasValue("Gestor");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.Instituicao", b =>
                 {
                     b.HasBaseType("IBMYoung.Model.Usuario");
-
                     b.Property<DateTime>("DataFundacao");
-
                     b.ToTable("Instituicoes");
-
                     b.HasDiscriminator().HasValue("Instituicao");
                 });
 
             modelBuilder.Entity("IBMYoung.Model.RecursosHumano", b =>
                 {
                     b.HasBaseType("IBMYoung.Model.Usuario");
-
-                    b.Property<DateTime>("DataNascimento")
-                        .HasColumnName("DataNascimento");
-
+                    b.Property<DateTime>("DataNascimento").HasColumnName("DataNascimento");
                     b.ToTable("RecursosHumano");
-
                     b.HasDiscriminator().HasValue("RecursosHumano");
                 });
 

@@ -23,8 +23,8 @@ namespace IBMYoung
                 args = args.Where(d => d != "seed").ToArray();
             }
             var host = BuildWebHost(args);
-            if (runSeed) RunSeed(host).Wait();
-            else host.Run();
+            if (runSeed) RunSeed(host);
+            host.Run();
         }
 
         private static async Task RunSeed(IWebHost host)

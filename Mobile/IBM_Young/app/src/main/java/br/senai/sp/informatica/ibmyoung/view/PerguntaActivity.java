@@ -1,7 +1,7 @@
 package br.senai.sp.informatica.ibmyoung.view;
 
+import android.app.ActionBar;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import br.senai.sp.informatica.ibmyoung.R;
 import br.senai.sp.informatica.ibmyoung.model.Questao;
+import br.senai.sp.informatica.ibmyoung.model.Replica;
 import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 
 /**
@@ -54,9 +55,16 @@ public class PerguntaActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Problema ao carregar a Questão", Toast.LENGTH_LONG).show();
         }
+
+        ActionBar bar = getActionBar();
+        if(bar != null) {
+            bar.setHomeButtonEnabled(true);
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     public void enviarClick(View view) {
-        // TODO: determinar qual questão foi selecionada e mandar a resposta para o BackEnd
+        // TODO: salvar a resposta e retornar para a lista de questões
+        finish();
     }
 }

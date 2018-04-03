@@ -6,16 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import br.senai.sp.informatica.ibmyoung.R;
-import br.senai.sp.informatica.ibmyoung.model.Aprendiz;
 import br.senai.sp.informatica.ibmyoung.model.Questao;
-import br.senai.sp.informatica.ibmyoung.repository.AprendizRepo;
 import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 
 /**
@@ -73,7 +70,7 @@ public class PerguntasAdapter extends BaseAdapter {
         }
 
         Questao obj = dao.localizar(mapa.get(linha));
-        TextView tvTitulo = layout.findViewById(R.id.tvTitulo);
+        TextView tvTitulo = layout.findViewById(R.id.tvNome);
         tvTitulo.setText(obj.getTitulo());
 
         return layout;

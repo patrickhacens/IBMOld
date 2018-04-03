@@ -1,16 +1,23 @@
 package br.senai.sp.informatica.ibmyoung.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import br.senai.sp.informatica.ibmyoung.R;
+import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
+import br.senai.sp.informatica.ibmyoung.lib.Alerta;
+import br.senai.sp.informatica.ibmyoung.model.Aprendiz;
+import br.senai.sp.informatica.ibmyoung.repository.AprendizRepo;
+import br.senai.sp.informatica.ibmyoung.repository.LoginRepo;
 import br.senai.sp.informatica.ibmyoung.view.adapter.ClassificacaoAdapter;
 
 /**
@@ -20,6 +27,8 @@ import br.senai.sp.informatica.ibmyoung.view.adapter.ClassificacaoAdapter;
 public class ClassificacaoActivity extends AppCompatActivity implements View.OnClickListener {
     private ListView listView;
     private ImageView ivQuestoes;
+    private TextView tvNome;
+    private TextView tvNivel;
     private ClassificacaoAdapter adapter;
 
     @Override
@@ -33,6 +42,28 @@ public class ClassificacaoActivity extends AppCompatActivity implements View.OnC
 
         ivQuestoes = findViewById(R.id.ivQuestoes);
         ivQuestoes.setOnClickListener(this);
+
+        tvNome = findViewById(R.id.tvTitulo);
+        tvNivel = findViewById(R.id.tvNivel);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        int apendizId = LoginRepo.dao.obterAutorizacao().getId();
+        AprendizRepo.dao.localizar(apendizId, new WebServiceData<Aprendiz>() {
+            @SuppressLint("DefaultLocale")
+            @Override
+            public void processaDados(Aprendiz dados) {
+                tvNome.setText(String.format("%s %s", dados.getNome(), dados.getSobrenome()));
+                tvNivel.setText(String.format("Nível %d", dados.getNivel()));
+            }
+
+            @Override
+            public void houveErro() {
+                Alerta.showToast("Falha ao carregar aos dados Aprendiz Logado");
+            }
+        });
     }
 
     @Override
@@ -46,11 +77,9 @@ public class ClassificacaoActivity extends AppCompatActivity implements View.OnC
         int id = item.getItemId();
         switch (id) {
             case R.id.forum_action:
-                // TODO: chamar o ForumActivity;
                 startActivity(new Intent(this, ForumActivity.class));
                 break;
             case R.id.logout_action:
-                // TODO: executar o Logout e chamar o LoginActivity seguido
                 startActivity(new Intent(this, LoginActivity.class));
                 fileList();
                 break;
@@ -61,8 +90,6 @@ public class ClassificacaoActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View view) {
-        // TODO: chamar o PerguntasActivity
-        startActivity(new Intent(this, PerguntasActivity.class));
-
+        startActivity(new Intent(this, TarefasActivity.class));
     }
 }

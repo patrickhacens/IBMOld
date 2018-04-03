@@ -7,7 +7,7 @@
     <application
         android:name=".Main"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ibm_young"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ibm_young"
         android:supportsRtl="true"
@@ -22,13 +22,43 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.ClassificacaoActivity"/>
+        <activity android:name=".view.ClassificacaoActivity" />
 
-        <activity android:name=".view.ForumActivity"/>
+        <activity android:name=".view.ForumActivity"
+            android:parentActivityName=".view.ClassificacaoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.ClassificacaoActivity" />
+        </activity>
 
-        <activity android:name=".view.PerguntasActivity"/>
+        <activity android:name=".view.ForumChatActivity"
+            android:parentActivityName=".view.ForumActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.ForumActivity" />
+        </activity>
 
-        <activity android:name=".view.PerguntaActivity"/>
+        <activity android:name=".view.TarefasActivity"
+            android:parentActivityName=".view.ClassificacaoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.ClassificacaoActivity" />
+        </activity>
+
+        <activity android:name=".view.QuestionariosActivity"
+            android:parentActivityName=".view.TarefasActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.TarefasActivity" />
+        </activity>
+
+        <activity android:name=".view.AlternativasActivity"
+            android:parentActivityName=".view.QuestionariosActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.QuestionariosActivity" />
+        </activity>
+
     </application>
 
 </manifest>

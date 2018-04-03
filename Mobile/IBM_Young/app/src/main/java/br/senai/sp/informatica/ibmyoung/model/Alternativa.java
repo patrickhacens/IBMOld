@@ -1,17 +1,20 @@
 package br.senai.sp.informatica.ibmyoung.model;
 
+/**
+ * Created by pena on 31/03/2018.
+ */
 
 public class Alternativa {
-    private Integer Id;
+    private Integer id;
     private String textoAlternativa;
-    private Questao questao;
+    private boolean correta;
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getTextoAlternativa() {
@@ -22,11 +25,11 @@ public class Alternativa {
         this.textoAlternativa = textoAlternativa;
     }
 
-    public Questao getQuestao() {
-        return questao;
+    public boolean isCorreta() {
+        return correta;
     }
 
-    public void setQuestao(Questao questao) {
-        this.questao = questao;
+    public void setCorreta(boolean correta) {
+        this.correta = correta;
     }
 }
