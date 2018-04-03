@@ -50,6 +50,10 @@ public class ForumAdapter extends BaseAdapter {
         });
     }
 
+    public void recarrega() {
+        criarMapa();
+    }
+
     @Override
     public int getCount() {
         return mapa.size();

@@ -22,14 +22,21 @@ namespace IBMYoung.Controllers
             this.userManager = userManager;
         }
 
+        /*
+            End point utilizado pelo App Mobile na ForunActivity
+         */
         [HttpPost]
         [Route("Topico")]
-        public async Task<Topico> Post([FromBody] TopicoCadastroViewModel model){
-            Topico topico = new Topico();
-            topico.Titulo = model.Titulo;
-            topico.Texto = model.Texto;
-            topico.DataCriacao = DateTime.Now;
-            topico.Usuario = await userManager.GetUserAsync(this.User);
+        public async Task<Topico> Post([FromBody]  TopicoCadastroViewModel model) {
+            Aprendiz aprendiz = db.Aprendizes.SingleOrDefault(u => u.Id == model.AprendizId);
+            if (aprendiz == null) throw new HttpException(401, new { Mensagem = "Aprendiz não foi encontrado" });
+ 
+            Topico topico = new Topico {
+                Titulo = model.Titulo,
+                Texto = model.Texto,
+                DataCriacao = DateTime.Now,
+                Usuario = aprendiz
+            };
 
             db.Topicos.Add(topico);
             await db.SaveChangesAsync();

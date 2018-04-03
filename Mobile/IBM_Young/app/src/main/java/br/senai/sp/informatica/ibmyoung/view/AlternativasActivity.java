@@ -115,8 +115,6 @@ public class AlternativasActivity extends AppCompatActivity {
             resposta.setAlternativaId(alternativaId);
             resposta.setAprendizId(aprendizId);
 
-            Log.e("enviarClick: ", "alternativaId: " + alternativaId + " aprendizId: " + aprendizId);
-
             dao.responder(tarefaId, questaoId, resposta, new WebServiceData<Void>() {
                 @Override
                 public void processaDados(Void dados) {

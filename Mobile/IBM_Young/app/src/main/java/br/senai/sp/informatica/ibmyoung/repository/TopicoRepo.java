@@ -7,6 +7,8 @@ import br.senai.sp.informatica.ibmyoung.config.CallBackImpl;
 import br.senai.sp.informatica.ibmyoung.config.RetrofitConfig;
 import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.model.Aprendiz;
+import br.senai.sp.informatica.ibmyoung.model.NovoTopico;
+import br.senai.sp.informatica.ibmyoung.model.Resposta;
 import br.senai.sp.informatica.ibmyoung.model.Topico;
 import br.senai.sp.informatica.ibmyoung.service.AprendizService;
 import br.senai.sp.informatica.ibmyoung.service.TopicoService;
@@ -24,5 +26,10 @@ public class TopicoRepo {
     public void localizar(int topicoId, WebServiceData<Topico> data) {
         Call<Topico> call = svc.localizar(topicoId);
         call.enqueue(new CallBackImpl<Topico>(data));
+    }
+
+    public void novoTopico(NovoTopico topico, WebServiceData<Void> data) {
+        Call<Void> call = svc.novoTopico(topico);
+        call.enqueue(new CallBackImpl<Void>(data));
     }
 }

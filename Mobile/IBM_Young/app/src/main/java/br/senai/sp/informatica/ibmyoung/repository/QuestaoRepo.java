@@ -31,6 +31,5 @@ public class QuestaoRepo {
     public void responder(int tarefaId, int questaoId, Resposta resposta, WebServiceData<Void> data) {
         Call<Void> call = svc.responder(tarefaId, questaoId, resposta);
         call.enqueue(new CallBackImpl<Void>(data));
-
     }
 }
