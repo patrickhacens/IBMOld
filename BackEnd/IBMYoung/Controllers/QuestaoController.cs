@@ -84,9 +84,20 @@ namespace IBMYoung.Controllers
             public int AlternativaId { get; set; }
         }
 
+        public class RespostaRetornoViewModel
+        {
+            public int AlternativaId { get; set; }
+
+            public bool Correta { get; set; }
+
+            public int Nivel { get; set; }
+
+            public bool LastAnswer { get; set; }
+        }
+
         [HttpGet]
         [Route("{tarefaId}/{ordem}/responder")]
-        public async Task<Resposta> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model)
+        public async Task<RespostaRetornoViewModel> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model)
         {
             var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
             if (aprendiz == null) throw new HttpException(401, new { Mensagem = "Não é aprendiz" });
@@ -114,14 +125,35 @@ namespace IBMYoung.Controllers
                 Questao = questao
             });
 
+            bool isLastAnswer = await db.Tarefas
+                .Include(t => t.Questoes)
+                .ThenInclude(q => q.Respostas)
+                .Where(t => t.Id == tarefaId)
+                .Where(t => t.Questoes.All(q => q.Respostas.Any(r => r.Aprendiz == aprendiz)))
+                .AnyAsync();
 
-            //TODO Verify completion of answers
-            //await db.Tarefas
-            //    .Include(d => d.Questoes)
-            //    .ThenInclude(d => d.Respostas)
-            //    .All(d=>d.Questoes.All(f=>f.Respostas.Any(g=>g.Aprendiz == aprendiz)))
+            // verify if finished answering
+            if (isLastAnswer)
+            {
+                var tarefa = await db.Tarefas.Include(t => t.Questoes).ThenInclude(q => q.Respostas).FirstOrDefaultAsync(t => t.Id == tarefaId);
+                if (tarefa.Questoes
+                    .All(q => q.Respostas
+                        .Where(r => r.Aprendiz == aprendiz)
+                        .All(r => r.Alternativa.Correta)))
+                {
+                    aprendiz.Nivel = Math.Max(aprendiz.Nivel, questao.Tarefa.Nivel);
+                }
+            }
 
             await db.SaveChangesAsync();
+
+            return new RespostaRetornoViewModel()
+            {
+                AlternativaId = alternativa.Id,
+                Correta = alternativa.Correta,
+                Nivel = aprendiz.Nivel,
+                LastAnswer = isLastAnswer,
+            };
         }
     }
 }

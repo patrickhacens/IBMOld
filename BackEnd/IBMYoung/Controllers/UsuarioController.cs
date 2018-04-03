@@ -36,9 +36,17 @@ namespace IBMYoung.Controllers
             this.userManager = userManager;
         }
 
+        /// <summary>
+        /// Retorna todos os usuários
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public List<Usuario> Get() => db.Usuarios.ToList();
 
+        /// <summary>
+        /// Cria um novo usuário
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<Usuario> Post([FromBody]UsuarioCadastroViewModel model)
         {
@@ -71,6 +79,13 @@ namespace IBMYoung.Controllers
             return user;
         }
 
+        /// <summary>
+        /// Cria vários aprendizes
+        /// </summary>
+        /// <param name="id">Id do gestor</param>
+        /// <param name="instituicaoId">Id do instrutor</param>
+        /// <param name="file">Csv com formato especifico, para ver o formato vide GenerateFile()</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("{id}")]
         public async Task<IActionResult> BatchPost(int id, int instituicaoId, IFormFile file)
@@ -101,6 +116,10 @@ namespace IBMYoung.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Retorna o formato do formulário de aprendizes
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
         [Route("csv")]
@@ -119,6 +138,10 @@ namespace IBMYoung.Controllers
             return File(ms, "text/csv", "template.csv");
         }
 
+        /// <summary>
+        /// Visualiza o perfil do usuário logado
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("me")]
         public async Task<Usuario> Me()

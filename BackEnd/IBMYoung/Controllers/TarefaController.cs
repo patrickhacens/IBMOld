@@ -45,10 +45,18 @@ namespace IBMYoung.Controllers
             return tarefa;
         }
 
+        /// <summary>
+        /// Retorna as tarefas criadas
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IEnumerable<Tarefa>> Get() => await db.Tarefas.ToListAsync();
 
-
+        /// <summary>
+        /// Retorna a tarefa especifica
+        /// </summary>
+        /// <param name="id">id da tarefa</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
         public async Task<Tarefa> GetById(int id)
@@ -63,7 +71,10 @@ namespace IBMYoung.Controllers
             return tarefa;
         }
 
-
+        /// <summary>
+        /// Retorna a tarefa atual que o usuário esteja fazendo
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("current")]
         public async Task<TarefaViewModel> GetCurrent()
@@ -102,7 +113,6 @@ namespace IBMYoung.Controllers
                 }).ToArray()
             };
         }
-
 
         [HttpPut]
         [Route("{id}")]
