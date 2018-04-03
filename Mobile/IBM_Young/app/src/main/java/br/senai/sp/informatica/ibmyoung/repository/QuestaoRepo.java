@@ -18,8 +18,8 @@ public class QuestaoRepo {
     public static QuestaoRepo dao = new QuestaoRepo();
     private QuestaoService svc = RetrofitConfig.getInstance().getQuestaoService();
 
-    public void getTarefas(int tarefaId, WebServiceData<List<Questao>> data) {
-        Call<List<Questao>> call = svc.listaQuestionario(tarefaId);
+    public void getTarefas(int tarefaId, int aprendizId, WebServiceData<List<Questao>> data) {
+        Call<List<Questao>> call = svc.listaQuestionario(tarefaId, aprendizId);
         call.enqueue(new CallBackImpl<List<Questao>>(data));
     }
 

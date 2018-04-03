@@ -12,6 +12,7 @@ public class Questao {
     private String titulo;
     private String conteudo;
     private int tarefaId;
+    private boolean respondida;
     private List<Alternativa> alternativas;
 
     public int getOrdem() {
@@ -44,6 +45,14 @@ public class Questao {
 
     public void setTarefaId(int tarefaId) {
         this.tarefaId = tarefaId;
+    }
+
+    public boolean isRespondida() {
+        return respondida;
+    }
+
+    public void setRespondida(boolean respondida) {
+        this.respondida = respondida;
     }
 
     public List<Alternativa> getAlternativas() {

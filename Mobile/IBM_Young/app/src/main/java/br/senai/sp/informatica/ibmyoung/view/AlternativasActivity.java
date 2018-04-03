@@ -13,6 +13,8 @@ import android.widget.TextView;
 import br.senai.sp.informatica.ibmyoung.R;
 import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.lib.Alerta;
+import br.senai.sp.informatica.ibmyoung.lib.Messager;
+import br.senai.sp.informatica.ibmyoung.lib.OnComplete;
 import br.senai.sp.informatica.ibmyoung.model.Questao;
 import br.senai.sp.informatica.ibmyoung.model.Resposta;
 import br.senai.sp.informatica.ibmyoung.repository.LoginRepo;
@@ -21,6 +23,7 @@ import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 /**
  * Created by pena on 28/03/2018.
  */
+
 
 public class AlternativasActivity extends AppCompatActivity {
     private TextView tvTitulo;
@@ -35,6 +38,7 @@ public class AlternativasActivity extends AppCompatActivity {
     private Questao questao;
     private int tarefaId;
     private int questaoId;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,6 +121,8 @@ public class AlternativasActivity extends AppCompatActivity {
                 @Override
                 public void processaDados(Void dados) {
                     Alerta.showToast("Resposta enviada");
+                    OnComplete cliente = Messager.balcao.get();
+                    if(cliente != null) cliente.execute();
                 }
 
                 @Override

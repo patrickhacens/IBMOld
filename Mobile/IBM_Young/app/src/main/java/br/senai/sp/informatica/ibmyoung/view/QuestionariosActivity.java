@@ -10,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import br.senai.sp.informatica.ibmyoung.R;
+import br.senai.sp.informatica.ibmyoung.lib.Messager;
+import br.senai.sp.informatica.ibmyoung.lib.OnComplete;
 import br.senai.sp.informatica.ibmyoung.model.Questao;
 import br.senai.sp.informatica.ibmyoung.model.Tarefa;
 import br.senai.sp.informatica.ibmyoung.view.adapter.QuestionariosAdapter;
@@ -19,7 +21,9 @@ import br.senai.sp.informatica.ibmyoung.view.adapter.TarefasAdapter;
  * Created by CodeXP on 19/03/2018.
  */
 
-public class QuestionariosActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+public class QuestionariosActivity extends AppCompatActivity
+        implements AdapterView.OnItemClickListener, OnComplete {
     private ListView listView;
     private QuestionariosAdapter adapter;
     private Integer tarefaId;
@@ -50,7 +54,13 @@ public class QuestionariosActivity extends AppCompatActivity implements AdapterV
         Intent intent = new Intent(this, AlternativasActivity.class);
         intent.putExtra("questaoId", questaoId);
         intent.putExtra("tarefaId", tarefaId);
+        Messager.balcao.add(this);
         startActivity(intent);
+    }
+
+    @Override
+    public void execute() {
+        adapter.recarrega();
     }
 
     @Override

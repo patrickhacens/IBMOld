@@ -45,9 +45,9 @@ namespace IBMYoung.Controllers {
             End Point utilizado pelo App Mobile na TarefasActivity
          */
         [HttpGet]
-        [Route("Tarefas/{id}")]
-        public List<TarefaAdapterViewModel> Get(int id) {
-            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == id);
+        [Route("Tarefas/{aprendizId}")]
+        public List<TarefaAdapterViewModel> Get(int aprendizId) {
+            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == aprendizId);
             List<TarefaAdapterViewModel> lista = new List<TarefaAdapterViewModel>();
             db.Tarefas
                 .Include(d => d.Questoes)

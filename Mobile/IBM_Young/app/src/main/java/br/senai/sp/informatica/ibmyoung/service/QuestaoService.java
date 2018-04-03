@@ -12,8 +12,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface QuestaoService {
-    @GET("Questoes/{id}")
-    Call<List<Questao>> listaQuestionario(@Path("id") int tarefaId);
+    @GET("Questoes/{tarefaId}/{aprendizId}")
+    Call<List<Questao>> listaQuestionario(@Path("tarefaId") int tarefaId, @Path("aprendizId") int aprendizId);
 
     @GET("Questao/{tarefaId}/{questaoId}")
     Call<Questao> localizar(@Path("tarefaId") int tarefaId, @Path("questaoId") int questaoId);

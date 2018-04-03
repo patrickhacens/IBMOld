@@ -18,6 +18,7 @@ namespace IBMYoung.Infrastructure.ViewModel {
         public string Titulo { get; set; }
         public string Conteudo { get; set; }
         public int TarefaId {get; set; }
+        public bool Respondida { get; set; }
         public ICollection<AlternativaViewModel> Alternativas { get; set; }
     }
 }

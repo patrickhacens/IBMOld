@@ -93,10 +93,12 @@ namespace IBMYoung.Controllers {
             End Point  utilizado pelo App Mobile na QuestionariosActivity
          */
         [HttpGet]
-        [Route("Questoes/{tarefaId}")]
-        public List<QuestaoViewModel> GetList(int tarefaId) {
+        [Route("Questoes/{tarefaId}/{aprendizId}")]
+        public List<QuestaoViewModel> GetList(int tarefaId, int aprendizId) {
+            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == aprendizId);
             List<QuestaoViewModel> lista = new List<QuestaoViewModel>();
             List<Questao> questoes =  db.Questoes
+                .Include(d => d.Respostas)
                 .Where(d => d.TarefaId == tarefaId)
                 .OrderBy(d => d.Ordem)
                 .ToList();
@@ -105,7 +107,8 @@ namespace IBMYoung.Controllers {
                 Ordem = d.Ordem,
                 Titulo = d.Titulo,
                 Conteudo = d.Conteudo,
-                TarefaId = d.TarefaId
+                TarefaId = d.TarefaId,
+                Respondida = d.Respostas.Any(r => r.Aprendiz == aprendiz)
             }));
 
             return lista;
@@ -117,7 +120,7 @@ namespace IBMYoung.Controllers {
             Aprendiz aprendiz = db.Aprendizes
                 .Include(a => a.Respostas)
                 .SingleOrDefault(u => u.Id == model.AprendizId);
-            //var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
+
             if (aprendiz == null) throw new HttpException(401, new { Mensagem = "Não é aprendiz" });
 
             Questao questao = await db.Questoes
@@ -146,16 +149,6 @@ namespace IBMYoung.Controllers {
                 Alternativa = alternativa,
                 AlternativaId = alternativa.Id
             };
-
-            System.Console.WriteLine(
-                "Aprendiz = " + resposta.Aprendiz + 
-                " AprendizId = " + resposta.AprendizId +
-                " Questao = " + resposta.Questao +
-                " TarefaId = " + resposta.TarefaId +
-                " Ordem = " + resposta.Ordem +
-                " Alternativa = " + resposta.Alternativa +
-                " AlternativaId = " + resposta.AlternativaId
-            );
 
             aprendiz.Respostas.Add(resposta);
             db.Aprendizes.Update(aprendiz);
