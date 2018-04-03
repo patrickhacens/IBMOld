@@ -171,5 +171,28 @@ namespace IBMYoung.Controllers
 
             return tarefa;
         }
+
+        [HttpGet]
+        [Route("aprendiz/{aprendizId}")]
+        public List<TarefaAdapterViewModel> Get(int aprendizId)
+        {
+            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == aprendizId);
+            List<TarefaAdapterViewModel> lista = new List<TarefaAdapterViewModel>();
+            db.Tarefas
+                .Include(d => d.Questoes)
+                .ThenInclude(d => d.Respostas)
+                .Where(d => d.Nivel >= aprendiz.Nivel)
+                .OrderBy(d => d.Nivel)
+                .OrderBy(d => d.DataCriacao)
+                .ToList().ForEach(t => lista.Add(new TarefaAdapterViewModel
+                {
+                    Id = t.Id,
+                    Titulo = t.Titulo,
+                    Nivel = t.Nivel,
+                    DataCriacao = t.DataCriacao,
+                    Respondida = t.Questoes.All(q => q.Respostas.Any(r => r.Aprendiz == aprendiz))
+                }));
+            return lista;
+        }
     }
 }

@@ -2,6 +2,8 @@ package br.senai.sp.informatica.ibmyoung.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.util.List;
 
+import br.senai.sp.informatica.ibmyoung.Main;
 import br.senai.sp.informatica.ibmyoung.R;
 import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.lib.Alerta;
@@ -89,6 +92,11 @@ public class TarefasAdapter extends BaseAdapter {
         tvNivel.setText(String.format("Nível %d", obj.getNivel()));
         TextView tvCriacao = layout.findViewById(R.id.tvCriacao);
         tvCriacao.setText(fmt.format(obj.getDataCriacao()));
+
+        if(obj.isRespondida()) {
+            CardView cardView = layout.findViewById(R.id.cardView);
+            cardView.setCardBackgroundColor(ContextCompat.getColor(Main.context, R.color.cardRespondido));
+        }
 
         return layout;
     }

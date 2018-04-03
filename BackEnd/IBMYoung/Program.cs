@@ -17,38 +17,31 @@ namespace IBMYoung
         public static void Main(string[] args)
         {
             bool runSeed = false;
-            if (args.Contains("seed"))
-            {
+      
+            if (args.Contains("seed")){
                 runSeed = true;
                 args = args.Where(d => d != "seed").ToArray();
             }
             var host = BuildWebHost(args);
             if (runSeed) RunSeed(host);
+
             host.Run();
         }
 
-        private static async Task RunSeed(IWebHost host)
-        {
+        private static async Task RunSeed(IWebHost host) {
             Console.WriteLine("Seeding...");
-            using (var scope = host.Services.CreateScope())
-            {
+            using (var scope = host.Services.CreateScope()) {
                 var context = scope.ServiceProvider.GetService<Db>();
-                try
-                {
+                try {
                     await DbSeeder.Seed(context);
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     Console.WriteLine(ex.GetBaseException().Message);
-                }
-                finally
-                {
+                } finally {
                     Console.WriteLine("Seed ended");
                     Console.ReadKey();
                 }
             }
         }
-
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

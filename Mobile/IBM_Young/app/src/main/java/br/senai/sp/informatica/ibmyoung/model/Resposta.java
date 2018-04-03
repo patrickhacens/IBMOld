@@ -6,13 +6,7 @@ package br.senai.sp.informatica.ibmyoung.model;
 
 public class Resposta {
     private int alternativaId;
-
-    public Resposta() {
-    }
-
-    public Resposta(int alternativaId) {
-        this.alternativaId = alternativaId;
-    }
+    private int aprendizId;
 
     public int getAlternativaId() {
         return alternativaId;
@@ -20,5 +14,13 @@ public class Resposta {
 
     public void setAlternativaId(int alternativaId) {
         this.alternativaId = alternativaId;
+    }
+
+    public int getAprendizId() {
+        return aprendizId;
+    }
+
+    public void setAprendizId(int aprendizId) {
+        this.aprendizId = aprendizId;
     }
 }

@@ -183,5 +183,32 @@ namespace IBMYoung.Controllers
 
             return Ok();
         }
+
+        /*
+            End Point  utilizado pelo App Mobile na QuestionariosActivity
+         */
+        [HttpGet]
+        [Route("Questoes/{tarefaId}/{aprendizId}")]
+        public List<QuestaoViewModel> GetList(int tarefaId, int aprendizId)
+        {
+            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == aprendizId);
+            List<QuestaoViewModel> lista = new List<QuestaoViewModel>();
+            List<Questao> questoes = db.Questoes
+                .Include(d => d.Respostas)
+                .Where(d => d.TarefaId == tarefaId)
+                .OrderBy(d => d.Ordem)
+                .ToList();
+
+            questoes.ForEach(d => lista.Add(new QuestaoViewModel
+            {
+                Ordem = d.Ordem,
+                Titulo = d.Titulo,
+                Conteudo = d.Conteudo,
+                TarefaId = d.TarefaId,
+                Respondida = d.Respostas.Any(r => r.Aprendiz == aprendiz)
+            }));
+
+            return lista;
+        }
     }
 }
