@@ -111,14 +111,13 @@ namespace IBMYoung.Controllers {
             return lista;
         }
 
-        public class RespostaViewModel {
-            public int AlternativaId { get; set; }
-        }
-
         [HttpPost]
         [Route("Questao/{tarefaId}/{ordem}/responder")]
         public async Task<IActionResult> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model) {
-            var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
+            Aprendiz aprendiz = db.Aprendizes
+                .Include(a => a.Respostas)
+                .SingleOrDefault(u => u.Id == model.AprendizId);
+            //var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
             if (aprendiz == null) throw new HttpException(401, new { Mensagem = "Não é aprendiz" });
 
             Questao questao = await db.Questoes
@@ -147,6 +146,17 @@ namespace IBMYoung.Controllers {
                 Alternativa = alternativa,
                 AlternativaId = alternativa.Id
             };
+
+            System.Console.WriteLine(
+                "Aprendiz = " + resposta.Aprendiz + 
+                " AprendizId = " + resposta.AprendizId +
+                " Questao = " + resposta.Questao +
+                " TarefaId = " + resposta.TarefaId +
+                " Ordem = " + resposta.Ordem +
+                " Alternativa = " + resposta.Alternativa +
+                " AlternativaId = " + resposta.AlternativaId
+            );
+
             aprendiz.Respostas.Add(resposta);
             db.Aprendizes.Update(aprendiz);
             db.Respostas.Add(resposta);

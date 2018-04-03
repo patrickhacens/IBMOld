@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
@@ -14,6 +15,7 @@ import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.lib.Alerta;
 import br.senai.sp.informatica.ibmyoung.model.Questao;
 import br.senai.sp.informatica.ibmyoung.model.Resposta;
+import br.senai.sp.informatica.ibmyoung.repository.LoginRepo;
 import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 
 /**
@@ -103,7 +105,15 @@ public class AlternativasActivity extends AppCompatActivity {
             }
         }
         if(alternativaId != -1) {
-            dao.responder(tarefaId, questaoId, new Resposta(alternativaId), new WebServiceData<Void>() {
+            int aprendizId = LoginRepo.dao.obterAutorizacao().getId();
+
+            Resposta resposta = new Resposta();
+            resposta.setAlternativaId(alternativaId);
+            resposta.setAprendizId(aprendizId);
+
+            Log.e("enviarClick: ", "alternativaId: " + alternativaId + " aprendizId: " + aprendizId);
+
+            dao.responder(tarefaId, questaoId, resposta, new WebServiceData<Void>() {
                 @Override
                 public void processaDados(Void dados) {
                     Alerta.showToast("Resposta enviada");
