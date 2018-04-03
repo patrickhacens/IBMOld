@@ -10,7 +10,10 @@ using System.Threading.Tasks;
 
 namespace IBMYoung.Controllers
 {
-    public class BoletimController
+    [JWTAuth]
+    [Produces("application/json")]
+    [Route("api/[controller]")]
+        public class BoletimController
     {
         private readonly Db db;
         public BoletimController(Db db)

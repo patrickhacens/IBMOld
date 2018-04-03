@@ -39,7 +39,6 @@ public class AlternativasActivity extends AppCompatActivity {
     private int tarefaId;
     private int questaoId;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

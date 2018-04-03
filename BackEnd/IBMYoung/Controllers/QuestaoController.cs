@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
-    //[JWTAuth]
+    [JWTAuth]
     [Produces("application/json")]
     [Route("api")]
     public class QuestaoController : Controller

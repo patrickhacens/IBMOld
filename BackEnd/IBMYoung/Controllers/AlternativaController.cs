@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
+    [JWTAuth]
     [Produces("application/json")]
     [Route("api")]
     public class AlternativaController : Controller

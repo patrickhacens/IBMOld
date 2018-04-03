@@ -50,6 +50,8 @@ public class LoginRepo {
         editor.putString("DISCRIMINATOR", dados.getDiscriminator());
         editor.putInt("ID", dados.getId());
         editor.apply();
+
+        RetrofitConfig.getInstance().setToken(dados.getToken());
     }
 
     public Autorizacao obterAutorizacao() {

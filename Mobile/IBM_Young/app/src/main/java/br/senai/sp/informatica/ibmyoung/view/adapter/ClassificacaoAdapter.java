@@ -42,10 +42,12 @@ public class ClassificacaoAdapter extends BaseAdapter {
             @Override
             public void processaDados(List<Aprendiz> dados) {
                 List<Aprendiz> ids = dados;
-                for (int linha = 0; linha < ids.size(); linha++) {
-                    mapa.put(linha, ids.get(linha));
+                if(dados != null) {
+                    for (int linha = 0; linha < ids.size(); linha++) {
+                        mapa.put(linha, ids.get(linha));
+                    }
+                    ClassificacaoAdapter.this.notifyDataSetChanged();
                 }
-                ClassificacaoAdapter.this.notifyDataSetChanged();
             }
 
             @Override

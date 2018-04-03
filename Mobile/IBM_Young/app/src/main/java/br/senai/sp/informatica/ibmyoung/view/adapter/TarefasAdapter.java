@@ -43,10 +43,12 @@ public class TarefasAdapter extends BaseAdapter {
             @Override
             public void processaDados(List<Tarefa> dados) {
                 List<Tarefa> ids = dados;
-                for (int linha = 0; linha < ids.size(); linha++) {
-                    mapa.put(linha, ids.get(linha));
+                if(dados != null) {
+                    for (int linha = 0; linha < ids.size(); linha++) {
+                        mapa.put(linha, ids.get(linha));
+                    }
+                    TarefasAdapter.this.notifyDataSetChanged();
                 }
-                TarefasAdapter.this.notifyDataSetChanged();
             }
 
             @Override

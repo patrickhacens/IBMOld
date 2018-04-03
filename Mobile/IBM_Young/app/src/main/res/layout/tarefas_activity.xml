@@ -46,4 +46,20 @@
     </android.support.v7.widget.CardView>
 
 
+    <TextView
+        android:id="@+id/tvMsgFalha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="32dp"
+        android:elevation="6dp"
+        android:text="Sem comteúdo\nou\nfalha ao acesso à rede de dados"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IBMYoung.Controllers {
+    [JWTAuth]
     [Produces("application/json")]
     [Route("api")]
     public class ReplicaController : Controller {

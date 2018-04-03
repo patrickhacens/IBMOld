@@ -24,7 +24,7 @@ namespace IBMYoung.Controllers
 {
     [Produces("application/json")]
     [Route("api/Aprendiz")]
-    //[JWTAuth]
+    [JWTAuth]
     public class AprendizController : Controller {
         private readonly Db db;
         private readonly Configuration config;

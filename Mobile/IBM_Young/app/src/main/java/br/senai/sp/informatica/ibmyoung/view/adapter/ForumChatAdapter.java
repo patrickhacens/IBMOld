@@ -39,10 +39,12 @@ public class ForumChatAdapter extends BaseAdapter {
             @Override
             public void processaDados(List<Replica> dados) {
                 List<Replica> ids = dados;
-                for (int linha = 0; linha < ids.size(); linha++) {
-                    mapa.put(linha, ids.get(linha));
+                if(dados != null) {
+                    for (int linha = 0; linha < ids.size(); linha++) {
+                        mapa.put(linha, ids.get(linha));
+                    }
+                    ForumChatAdapter.this.notifyDataSetChanged();
                 }
-                ForumChatAdapter.this.notifyDataSetChanged();
             }
 
             @Override

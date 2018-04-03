@@ -47,10 +47,12 @@ public class QuestionariosAdapter extends BaseAdapter {
             @Override
             public void processaDados(List<Questao> dados) {
                 List<Questao> ids = dados;
-                for (int linha = 0; linha < ids.size(); linha++) {
-                    mapa.put(linha, ids.get(linha));
+                if(dados != null) {
+                    for (int linha = 0; linha < ids.size(); linha++) {
+                        mapa.put(linha, ids.get(linha));
+                    }
+                    QuestionariosAdapter.this.notifyDataSetChanged();
                 }
-                QuestionariosAdapter.this.notifyDataSetChanged();
             }
 
             @Override
