@@ -103,91 +103,6 @@ namespace IBMYoung.Controllers
             End Point  utilizado pelo App Mobile na QuestionariosActivity
          */
         [HttpGet]
-        [Route("Questoes/{tarefaId}")]
-        public List<QuestaoViewModel> GetList(int tarefaId)
-        {
-            List<QuestaoViewModel> lista = new List<QuestaoViewModel>();
-            List<Questao> questoes = db.Questoes
-                .Where(d => d.TarefaId == tarefaId)
-                .OrderBy(d => d.Ordem)
-                .ToList();
-
-            questoes.ForEach(d => lista.Add(new QuestaoViewModel
-            {
-                Ordem = d.Ordem,
-                Titulo = d.Titulo,
-                Conteudo = d.Conteudo,
-                TarefaId = d.TarefaId
-            }));
-
-            return lista;
-        }
-
-        public class RespostaViewModel
-        {
-            public int AlternativaId { get; set; }
-        }
-
-
-        [HttpGet]
-        [Route("{tarefaId}/{ordem}/responder")]
-        public async Task<IActionResult> Responder(int tarefaId, int ordem, [FromBody] RespostaViewModel model)
-        {
-            var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
-            if (aprendiz == null) throw new HttpException(401, new { Mensagem = "Não é aprendiz" });
-
-            Questao questao = await db.Questoes
-                .Include(d => d.Alternativas)
-                .Include(d => d.Respostas)
-                .Include(d => d.Tarefa)
-                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && d.Ordem == ordem);
-
-            if (questao.Respostas.Any(d => d.Aprendiz == aprendiz))
-                throw new HttpException(401, new { Mensagem = "Já respondido" });
-
-            if (questao == null)
-                throw new HttpException(404, new { Mensagem = "Questao não encontrada" });
-
-            var alternativa = questao.Alternativas.FirstOrDefault(d => d.Id == model.AlternativaId);
-
-            if (alternativa == null)
-                throw new HttpException(404, new { Mensagem = "Alternativa não encontrada" });
-
-            aprendiz.Respostas.Add(new Resposta()
-            {
-                Alternativa = alternativa,
-                Questao = questao
-            });
-
-            bool isLastAnswer = await db.Tarefas
-                .Include(t => t.Questoes)
-                .ThenInclude(q => q.Respostas)
-                .Where(t => t.Id == tarefaId)
-                .Where(t => t.Questoes.All(q => q.Respostas.Any(r => r.Aprendiz == aprendiz)))
-                .AnyAsync();
-
-            // verify if finished answering
-            if (isLastAnswer)
-            {
-                var tarefa = await db.Tarefas.Include(t => t.Questoes).ThenInclude(q => q.Respostas).FirstOrDefaultAsync(t => t.Id == tarefaId);
-                if (tarefa.Questoes
-                    .All(q => q.Respostas
-                        .Where(r => r.Aprendiz == aprendiz)
-                        .All(r => r.Alternativa.Correta)))
-                {
-                    aprendiz.Nivel = Math.Max(aprendiz.Nivel, questao.Tarefa.Nivel);
-                }
-            }
-
-            await db.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        /*
-            End Point  utilizado pelo App Mobile na QuestionariosActivity
-         */
-        [HttpGet]
         [Route("Questoes/{tarefaId}/{aprendizId}")]
         public List<QuestaoViewModel> GetList(int tarefaId, int aprendizId)
         {
@@ -210,5 +125,71 @@ namespace IBMYoung.Controllers
 
             return lista;
         }
+
+
+        [HttpPost]
+        [Route("Questao/{tarefaId}/{ordem}/responder")]
+        public async Task<IActionResult> Responder(int tarefaId, int ordem, [FromBody]  RespostaViewModel model)
+        {
+            Aprendiz aprendiz = db.Aprendizes
+                .Include(a => a.Respostas)
+                .SingleOrDefault(u => u.Id == model.AprendizId);
+            if (aprendiz == null) throw new HttpException(401, new { Mensagem = "Não é aprendiz" });
+
+            Questao questao = await db.Questoes
+                .Include(d => d.Alternativas)
+                .Include(d => d.Respostas)
+                .Include(d => d.Tarefa)
+                .FirstOrDefaultAsync(d => d.TarefaId == tarefaId && d.Ordem == ordem);
+
+            if (questao.Respostas.Any(d => d.Aprendiz == aprendiz))
+                throw new HttpException(401, new { Mensagem = "Já respondido" });
+
+            if (questao == null)
+                throw new HttpException(404, new { Mensagem = "Questao não encontrada" });
+
+            var alternativa = questao.Alternativas.FirstOrDefault(d => d.Id == model.AlternativaId);
+
+            if (alternativa == null)
+                throw new HttpException(404, new { Mensagem = "Alternativa não encontrada" });
+
+            Resposta resposta = new Resposta() {
+                Aprendiz = aprendiz,
+                AprendizId = aprendiz.Id,
+                Questao = questao,
+                TarefaId = tarefaId,
+                Ordem = ordem,
+                Alternativa = alternativa,
+                AlternativaId = alternativa.Id
+            };
+
+            aprendiz.Respostas.Add(resposta);
+            db.Respostas.Add(resposta);
+
+            bool isLastAnswer = await db.Tarefas
+                .Include(t => t.Questoes)
+                    .ThenInclude(q => q.Respostas)
+                .Where(t => t.Id == tarefaId)
+                .Where(t => t.Questoes.All(q => q.Respostas.Any(r => r.Aprendiz == aprendiz)))
+                .AnyAsync();
+
+            // verify if finished answering
+            if (isLastAnswer)
+            {
+                var tarefa = await db.Tarefas.Include(t => t.Questoes).ThenInclude(q => q.Respostas).FirstOrDefaultAsync(t => t.Id == tarefaId);
+                if (tarefa.Questoes
+                    .All(q => q.Respostas
+                        .Where(r => r.Aprendiz == aprendiz)
+                        .All(r => r.Alternativa.Correta)))
+                {
+                    aprendiz.Nivel = Math.Max(aprendiz.Nivel, questao.Tarefa.Nivel);
+                }
+            }
+
+            await db.SaveChangesAsync();
+
+            return Ok();
+        }
+
     }
 }

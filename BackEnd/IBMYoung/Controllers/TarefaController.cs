@@ -14,7 +14,7 @@ namespace IBMYoung.Controllers
 {
     //[JWTAuth]
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api")]
     public class TarefaController : Controller
     {
         private readonly Db db;
@@ -76,7 +76,7 @@ namespace IBMYoung.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("current")]
+        [Route("Tarefa/current")]
         public async Task<TarefaViewModel> GetCurrent()
         {
             var aprendiz = await userManager.GetUserAsync(this.User) as Aprendiz;
@@ -115,16 +115,17 @@ namespace IBMYoung.Controllers
 
 
 
-
-        [Route("{id}")]
+        [HttpGet]
+        [Route("Tarefas/{id}")]
         public List<TarefaAdapterViewModel> GetById2(int id)
         {
             Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == id);
             List<TarefaAdapterViewModel> lista = new List<TarefaAdapterViewModel>();
             db.Tarefas
                 .Include(d => d.Questoes)
-
-
+                .ThenInclude(d => d.Respostas)
+                .Where(d => d.Nivel >= aprendiz.Nivel)
+                .OrderBy(d => d.Nivel)
                 .OrderBy(d => d.DataCriacao)
                 .ToList().ForEach(t => lista.Add(new TarefaAdapterViewModel
                 {
@@ -138,6 +139,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpGet]
+        [Route("Tarefas")]
         public List<TarefaAdapterViewModel> Get()
         {
             List<TarefaAdapterViewModel> lista = new List<TarefaAdapterViewModel>();
@@ -173,7 +175,7 @@ namespace IBMYoung.Controllers
         }
 
         [HttpGet]
-        [Route("aprendiz/{aprendizId}")]
+        [Route("Tarefas/{aprendizId}")]
         public List<TarefaAdapterViewModel> Get(int aprendizId)
         {
             Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == aprendizId);
