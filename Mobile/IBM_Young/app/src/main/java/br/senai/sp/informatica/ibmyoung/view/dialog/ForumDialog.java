@@ -61,24 +61,31 @@ public class ForumDialog extends Dialog implements View.OnClickListener {
     }
 
     private void novoTopico() {
-        int aprendizId = LoginRepo.dao.obterAutorizacao().getId();
-        NovoTopico topico = new NovoTopico();
-        topico.setAprendizId(aprendizId);
-        topico.setTitulo(edTitulo.getText().toString());
-        topico.setTexto(edTexto.getText().toString());
-        TopicoRepo.dao.novoTopico(topico, new WebServiceData<Void>() {
-            @Override
-            public void processaDados(Void dados) {
-                Alerta.showToast("Tópico criado");
-                OnComplete obj = Messager.balcao.get();
-                if(obj != null) obj.execute();
-            }
+        String titulo = edTitulo.getText().toString().trim();
+        String texto = edTexto.getText().toString().trim();
 
-            @Override
-            public void houveErro() {
-                Alerta.showToast("Falha na criação do Tópico");
-            }
-        });
+        if(!titulo.isEmpty() && !texto.isEmpty()) {
+            int aprendizId = LoginRepo.dao.obterAutorizacao().getId();
+            NovoTopico topico = new NovoTopico();
+            topico.setAprendizId(aprendizId);
+            topico.setTitulo(titulo);
+            topico.setTexto(texto);
+            TopicoRepo.dao.novoTopico(topico, new WebServiceData<Void>() {
+                @Override
+                public void processaDados(Void dados) {
+                    Alerta.showToast("Tópico criado");
+                    OnComplete obj = Messager.balcao.get();
+                    if (obj != null) obj.execute();
+                }
+
+                @Override
+                public void houveErro() {
+                    Alerta.showToast("Falha na criação do Tópico");
+                }
+            });
+        } else {
+            Alerta.showToast("Titulo e/ou Texto inválidos");
+        }
     }
 
 }

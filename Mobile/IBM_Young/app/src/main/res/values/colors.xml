@@ -7,5 +7,6 @@
     <color name="cinza_escuro">#595959</color>
     <color name="azul">#172bae</color>
     <color name="cardCurrent">#eafaee</color>
-    <color name="cardRespondido">#8bffa8</color>
+    <color name="cardRespCorreta">#8bffa8</color>
+    <color name="cardRespErrada">#ff4952</color>
 </resources>

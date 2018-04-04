@@ -12,6 +12,7 @@ public class Tarefa {
     private int nivel;
     private Date dataCriacao;
     private boolean respondida;
+    private boolean correta;
 
     public Integer getId() {
         return id;
@@ -51,5 +52,13 @@ public class Tarefa {
 
     public void setRespondida(boolean respondida) {
         this.respondida = respondida;
+    }
+
+    public boolean isCorreta() {
+        return correta;
+    }
+
+    public void setCorreta(boolean correta) {
+        this.correta = correta;
     }
 }

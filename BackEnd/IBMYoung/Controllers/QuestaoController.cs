@@ -104,26 +104,21 @@ namespace IBMYoung.Controllers
          */
         [HttpGet]
         [Route("Questoes/{tarefaId}/{aprendizId}")]
-        public List<QuestaoViewModel> GetList(int tarefaId, int aprendizId)
+        public async Task<IEnumerable<QuestaoViewModel>> GetList(int tarefaId, int aprendizId)
         {
             Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == aprendizId);
-            List<QuestaoViewModel> lista = new List<QuestaoViewModel>();
-            List<Questao> questoes = db.Questoes
+            return await db.Questoes
                 .Include(d => d.Respostas)
                 .Where(d => d.TarefaId == tarefaId)
                 .OrderBy(d => d.Ordem)
-                .ToList();
-
-            questoes.ForEach(d => lista.Add(new QuestaoViewModel
-            {
-                Ordem = d.Ordem,
-                Titulo = d.Titulo,
-                Conteudo = d.Conteudo,
-                TarefaId = d.TarefaId,
-                Respondida = d.Respostas.Any(r => r.Aprendiz == aprendiz)
-            }));
-
-            return lista;
+                .Select(d => new QuestaoViewModel {
+                    Ordem = d.Ordem,
+                    Titulo = d.Titulo,
+                    Conteudo = d.Conteudo,
+                    TarefaId = d.TarefaId,
+                    Respondida = d.Respostas.Any(r => r.Aprendiz == aprendiz),
+                    Correta = d.Respostas.Where(r => r.Aprendiz == aprendiz).All(a => a.Alternativa.Correta)
+                }).ToListAsync();
         }
 
 
@@ -174,14 +169,15 @@ namespace IBMYoung.Controllers
                 .AnyAsync();
 
             // verify if finished answering
-            if (isLastAnswer)
-            {
-                var tarefa = await db.Tarefas.Include(t => t.Questoes).ThenInclude(q => q.Respostas).FirstOrDefaultAsync(t => t.Id == tarefaId);
+            if (isLastAnswer) {
+                var tarefa = await db.Tarefas
+                    .Include(t => t.Questoes)
+                        .ThenInclude(q => q.Respostas)
+                    .FirstOrDefaultAsync(t => t.Id == tarefaId);
                 if (tarefa.Questoes
                     .All(q => q.Respostas
                         .Where(r => r.Aprendiz == aprendiz)
-                        .All(r => r.Alternativa.Correta)))
-                {
+                        .All(r => r.Alternativa.Correta))) {
                     aprendiz.Nivel = Math.Max(aprendiz.Nivel, questao.Tarefa.Nivel);
                 }
             }

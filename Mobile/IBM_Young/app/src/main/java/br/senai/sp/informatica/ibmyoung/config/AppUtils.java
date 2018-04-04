@@ -1,7 +1,7 @@
 package br.senai.sp.informatica.ibmyoung.config;
 
 public class AppUtils {
-   public static final String API_BASE_URL = "http://192.168.10.2:8080/api/";
+   public static final String API_BASE_URL = "http://192.168.10.3:8080/api/";
    //"http://localhost:8080/api/"
    //"http://localhost:51609"
    //"http://private-be0ae-exemplologin.apiary-mock.com";

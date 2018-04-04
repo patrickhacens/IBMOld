@@ -10,7 +10,4 @@ import retrofit2.http.Path;
 public interface TarefaService {
     @GET("Tarefas/{id}")
     Call<List<Tarefa>> listaTarefas(@Path("id") int usuarioId);
-
-    @GET("Tarefa/{id}")
-    Call<Tarefa> localizar(@Path("id") int id);
 }

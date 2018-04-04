@@ -19,9 +19,4 @@ public class TarefaRepo {
         Call<List<Tarefa>> call = svc.listaTarefas(aprendizId);
         call.enqueue(new CallBackImpl<List<Tarefa>>(data));
     }
-
-//    public void localizar(int tarefaId, WebServiceData<Tarefa> data) {
-//        Call<Tarefa> call = svc.localizar(tarefaId);
-//        call.enqueue(new CallBackImpl<Tarefa>(data));
-//    }
 }

@@ -77,22 +77,27 @@ public class ForumChatActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View view) {
-        NovaReplica replica = new NovaReplica();
-        replica.setTexto(edMsg.getText().toString());
-        replica.setTopicoId(topico.getId());
-        replica.setAprendizId(LoginRepo.dao.obterAutorizacao().getId());
+        String msg = edMsg.getText().toString().trim();
+        if(!msg.isEmpty()) {
+            NovaReplica replica = new NovaReplica();
+            replica.setTexto(msg);
+            replica.setTopicoId(topico.getId());
+            replica.setAprendizId(LoginRepo.dao.obterAutorizacao().getId());
 
-        ReplicaRepo.dao.novaReplica(replica, new WebServiceData<Void>() {
-            @Override
-            public void processaDados(Void dados) {
-                adapter.recarrega();
-                edMsg.setText("");
-            }
+            ReplicaRepo.dao.novaReplica(replica, new WebServiceData<Void>() {
+                @Override
+                public void processaDados(Void dados) {
+                    adapter.recarrega();
+                    edMsg.setText("");
+                }
 
-            @Override
-            public void houveErro() {
-                Alerta.showToast("Falha ao enviar a Réplica");
-            }
-        });
+                @Override
+                public void houveErro() {
+                    Alerta.showToast("Falha ao enviar a Réplica");
+                }
+            });
+        } else {
+            edMsg.setText("");
+        }
     }
 }

@@ -40,4 +40,11 @@ public class Autorizacao {
     public void setId(int id) {
         this.id = id;
     }
+
+    public boolean isValid() {
+        return token != null &&
+           discriminator != null &&
+           id != -1 &&
+           expiration.after(new Date(0l));
+    }
 }

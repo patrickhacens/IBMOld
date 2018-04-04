@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import br.senai.sp.informatica.ibmyoung.R;
 import br.senai.sp.informatica.ibmyoung.config.WebServiceData;
 import br.senai.sp.informatica.ibmyoung.model.Autorizacao;
@@ -25,6 +27,11 @@ public class LoginActivity extends AppCompatActivity {
 
         edLogin = findViewById(R.id.edLogin);
         edSenha = findViewById(R.id.edSenha);
+
+        Autorizacao auth = LoginRepo.dao.obterAutorizacao();
+        if(auth.isValid() && auth.getExpiration().after(new Date())) {
+            abreTelaPrincipal();
+        }
     }
 
     public void abreTelaPrincipal() {

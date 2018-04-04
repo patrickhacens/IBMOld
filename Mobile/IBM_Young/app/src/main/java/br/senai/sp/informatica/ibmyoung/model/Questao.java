@@ -13,6 +13,7 @@ public class Questao {
     private String conteudo;
     private int tarefaId;
     private boolean respondida;
+    private boolean correta;
     private List<Alternativa> alternativas;
 
     public int getOrdem() {
@@ -53,6 +54,14 @@ public class Questao {
 
     public void setRespondida(boolean respondida) {
         this.respondida = respondida;
+    }
+
+    public boolean isCorreta() {
+        return correta;
+    }
+
+    public void setCorreta(boolean correta) {
+        this.correta = correta;
     }
 
     public List<Alternativa> getAlternativas() {

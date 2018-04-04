@@ -116,26 +116,25 @@ namespace IBMYoung.Controllers
 
 
         [HttpGet]
-        [Route("Tarefas/{id}")]
-        public List<TarefaAdapterViewModel> GetById2(int id)
+        [Route("Tarefas/{aprendizId}")]
+        public async Task<List<TarefaAdapterViewModel>> GetById(int aprendizId)
         {
-            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == id);
-            List<TarefaAdapterViewModel> lista = new List<TarefaAdapterViewModel>();
-            db.Tarefas
+            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == aprendizId);
+            return await db.Tarefas
                 .Include(d => d.Questoes)
-                .ThenInclude(d => d.Respostas)
+                    .ThenInclude(d => d.Respostas)
+                        .ThenInclude(d => d.Alternativa)
                 .Where(d => d.Nivel >= aprendiz.Nivel)
                 .OrderBy(d => d.Nivel)
                 .OrderBy(d => d.DataCriacao)
-                .ToList().ForEach(t => lista.Add(new TarefaAdapterViewModel
-                {
+                .Select(t => new TarefaAdapterViewModel {
                     Id = t.Id,
                     Titulo = t.Titulo,
                     Nivel = t.Nivel,
                     DataCriacao = t.DataCriacao,
-                    Respondida = t.Questoes.All(q => q.Respostas.Any(r => r.Aprendiz == aprendiz))
-                }));
-            return lista;
+                    Respondida = t.Questoes.All(q => q.Respostas.Any(r => r.Aprendiz == aprendiz)),
+                    Correta = t.Questoes.All(q => q.Respostas.Where(r => r.Aprendiz == aprendiz).All(r => r.Alternativa.Correta))
+                }).ToListAsync();
         }
 
         [HttpGet]
@@ -172,29 +171,6 @@ namespace IBMYoung.Controllers
             await db.SaveChangesAsync();
 
             return tarefa;
-        }
-
-        [HttpGet]
-        [Route("Tarefas/{aprendizId}")]
-        public List<TarefaAdapterViewModel> Get(int aprendizId)
-        {
-            Aprendiz aprendiz = db.Aprendizes.OfType<Aprendiz>().FirstOrDefault(d => d.Id == aprendizId);
-            List<TarefaAdapterViewModel> lista = new List<TarefaAdapterViewModel>();
-            db.Tarefas
-                .Include(d => d.Questoes)
-                .ThenInclude(d => d.Respostas)
-                .Where(d => d.Nivel >= aprendiz.Nivel)
-                .OrderBy(d => d.Nivel)
-                .OrderBy(d => d.DataCriacao)
-                .ToList().ForEach(t => lista.Add(new TarefaAdapterViewModel
-                {
-                    Id = t.Id,
-                    Titulo = t.Titulo,
-                    Nivel = t.Nivel,
-                    DataCriacao = t.DataCriacao,
-                    Respondida = t.Questoes.All(q => q.Respostas.Any(r => r.Aprendiz == aprendiz))
-                }));
-            return lista;
         }
     }
 }

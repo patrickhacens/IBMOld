@@ -58,9 +58,13 @@ public class LoginRepo {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Main.context);
         Autorizacao auth = new Autorizacao();
         auth.setToken(preferences.getString("TOKEN", null));
-        auth.setExpiration(new Date(preferences.getLong("EXPIRATION", new Date().getTime())));
+        auth.setExpiration(new Date(preferences.getLong("EXPIRATION", 0l)));
         auth.setDiscriminator(preferences.getString("DISCRIMINATOR", null));
         auth.setId(preferences.getInt("ID", -1));
+
+        if(auth.getToken() != null)
+            RetrofitConfig.getInstance().setToken(auth.getToken());
+
         return auth;
     }
 }

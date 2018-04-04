@@ -18,5 +18,6 @@ namespace IBMYoung.Infrastructure.ViewModel
         public int Nivel { get; set; }
         public DateTime DataCriacao { get; set; }
         public bool Respondida { get; set; }
+        public bool Correta { get; set; }
     }
 }

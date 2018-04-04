@@ -97,7 +97,8 @@ public class TarefasAdapter extends BaseAdapter {
 
         if(obj.isRespondida()) {
             CardView cardView = layout.findViewById(R.id.cardView);
-            cardView.setCardBackgroundColor(ContextCompat.getColor(Main.context, R.color.cardRespondido));
+            cardView.setCardBackgroundColor(ContextCompat.getColor(Main.context,
+                    obj.isCorreta() ? R.color.cardRespCorreta : R.color.cardRespErrada));
         }
 
         return layout;
