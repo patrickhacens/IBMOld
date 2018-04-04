@@ -175,6 +175,7 @@ namespace IBMYoung.Controllers
                 var tarefa = await db.Tarefas
                     .Include(t => t.Questoes)
                         .ThenInclude(q => q.Respostas)
+                            .ThenInclude(q => q.Alternativa)
                     .FirstOrDefaultAsync(t => t.Id == tarefaId);
 
                 if (tarefa.Questoes
@@ -182,7 +183,7 @@ namespace IBMYoung.Controllers
                         .Where(r => r.Aprendiz == aprendiz)
                         .All(r => r.Alternativa.Correta))) 
                 {
-                    aprendiz.Nivel = Math.Max(aprendiz.Nivel, questao.Tarefa.Nivel);
+                    aprendiz.Nivel = Math.Max(aprendiz.Nivel, questao.Tarefa.Nivel + 1);
                 }
             }
 

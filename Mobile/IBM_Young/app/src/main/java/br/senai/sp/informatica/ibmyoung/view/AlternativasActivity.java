@@ -119,7 +119,9 @@ public class AlternativasActivity extends AppCompatActivity {
                 public void processaDados(Void dados) {
                     Alerta.showToast("Resposta enviada");
                     OnComplete cliente = Messager.balcao.get();
-                    if(cliente != null) cliente.execute();
+                    if(cliente != null) {
+                        cliente.execute();
+                    }
                 }
 
                 @Override

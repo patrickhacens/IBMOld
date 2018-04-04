@@ -124,7 +124,7 @@ namespace IBMYoung.Controllers
                 .Include(d => d.Questoes)
                     .ThenInclude(d => d.Respostas)
                         .ThenInclude(d => d.Alternativa)
-                .Where(d => d.Nivel >= aprendiz.Nivel)
+                .Where(d => d.Nivel == aprendiz.Nivel)
                 .OrderBy(d => d.Nivel)
                 .OrderBy(d => d.DataCriacao)
                 .Select(t => new TarefaAdapterViewModel {
