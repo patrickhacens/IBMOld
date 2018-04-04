@@ -161,6 +161,8 @@ namespace IBMYoung.Controllers
             aprendiz.Respostas.Add(resposta);
             db.Respostas.Add(resposta);
 
+            await db.SaveChangesAsync();
+
             bool isLastAnswer = await db.Tarefas
                 .Include(t => t.Questoes)
                     .ThenInclude(q => q.Respostas)
@@ -174,10 +176,12 @@ namespace IBMYoung.Controllers
                     .Include(t => t.Questoes)
                         .ThenInclude(q => q.Respostas)
                     .FirstOrDefaultAsync(t => t.Id == tarefaId);
+
                 if (tarefa.Questoes
                     .All(q => q.Respostas
                         .Where(r => r.Aprendiz == aprendiz)
-                        .All(r => r.Alternativa.Correta))) {
+                        .All(r => r.Alternativa.Correta))) 
+                {
                     aprendiz.Nivel = Math.Max(aprendiz.Nivel, questao.Tarefa.Nivel);
                 }
             }
