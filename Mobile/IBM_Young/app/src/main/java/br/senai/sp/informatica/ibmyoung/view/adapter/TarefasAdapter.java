@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,8 @@ public class TarefasAdapter extends BaseAdapter {
                         mapa.put(linha, ids.get(linha));
                     }
                     TarefasAdapter.this.notifyDataSetChanged();
+                } else {
+                    Log.e("processaDados: ", "dados: " + dados);
                 }
             }
 

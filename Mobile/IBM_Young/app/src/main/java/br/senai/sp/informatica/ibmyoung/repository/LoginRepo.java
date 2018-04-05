@@ -42,6 +42,18 @@ public class LoginRepo {
         });
     }
 
+    public void resetAutorizacao() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Main.context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("TOKEN", null);
+        editor.putLong("EXPIRATION", 0l);
+        editor.putString("DISCRIMINATOR", null);
+        editor.putInt("ID", -1);
+        editor.apply();
+
+        RetrofitConfig.getInstance().setToken(null);
+    }
+
     public void salvarAutorizacao(Autorizacao dados) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Main.context);
         SharedPreferences.Editor editor = preferences.edit();

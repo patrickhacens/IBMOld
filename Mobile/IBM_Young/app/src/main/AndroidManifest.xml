@@ -3,6 +3,7 @@
     package="br.senai.sp.informatica.ibmyoung">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.screen.portrait" />
 
     <application
         android:name=".Main"
@@ -14,7 +15,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.LoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,9 +24,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.ClassificacaoActivity" />
+        <activity android:name=".view.ClassificacaoActivity"
+            android:screenOrientation="portrait" />
 
         <activity android:name=".view.ForumActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".view.ClassificacaoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -32,6 +36,7 @@
         </activity>
 
         <activity android:name=".view.ForumChatActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".view.ForumActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -39,6 +44,7 @@
         </activity>
 
         <activity android:name=".view.TarefasActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".view.ClassificacaoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -46,6 +52,7 @@
         </activity>
 
         <activity android:name=".view.QuestionariosActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".view.TarefasActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -53,6 +60,7 @@
         </activity>
 
         <activity android:name=".view.AlternativasActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".view.QuestionariosActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

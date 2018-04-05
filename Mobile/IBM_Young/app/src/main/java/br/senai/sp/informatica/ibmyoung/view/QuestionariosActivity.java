@@ -50,9 +50,11 @@ public class QuestionariosActivity extends AppCompatActivity
 
     @Override
     public void onItemClick(AdapterView<?> viewGroup, View view, int linha, long id) {
-        Integer questaoId = ((Questao)adapter.getItem(linha)).getOrdem();
+        Questao questao = (Questao)adapter.getItem(linha);
+
         Intent intent = new Intent(this, AlternativasActivity.class);
-        intent.putExtra("questaoId", questaoId);
+        intent.putExtra("questaoId", questao.getOrdem());
+        intent.putExtra("respondida", questao.isRespondida());
         intent.putExtra("tarefaId", tarefaId);
         Messager.balcao.add(this);
         startActivity(intent);

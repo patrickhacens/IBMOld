@@ -1,5 +1,6 @@
 package br.senai.sp.informatica.ibmyoung.view;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ import br.senai.sp.informatica.ibmyoung.repository.QuestaoRepo;
 public class AlternativasActivity extends AppCompatActivity {
     private TextView tvTitulo;
     private TextView tvQuestao;
+    private Button btEnviar;
     private RadioButton rbResp1;
     private RadioButton rbResp2;
     private RadioButton rbResp3;
@@ -46,6 +49,7 @@ public class AlternativasActivity extends AppCompatActivity {
 
         tvTitulo = findViewById(R.id.tvTitulo);
         tvQuestao = findViewById(R.id.tvQuestao);
+        btEnviar = findViewById(R.id.btEnviar);
 
         RadioButton[] qts = {
             rbResp1 = findViewById(R.id.rbResp1),
@@ -70,12 +74,22 @@ public class AlternativasActivity extends AppCompatActivity {
         if(extra != null) {
             questaoId = extra.getInt("questaoId");
             tarefaId = extra.getInt("tarefaId");
+            final boolean respondida = extra.getBoolean("respondida");
             dao.localizar(tarefaId, questaoId, new WebServiceData<Questao>() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void processaDados(Questao dados) {
                     questao = dados;
                     tvTitulo.setText(dados.getTitulo());
                     tvQuestao.setText(dados.getConteudo());
+                    if(respondida) {
+                        btEnviar.setEnabled(false);
+                        btEnviar.setText("Questão Respondida");
+                    } else {
+                        btEnviar.setEnabled(true);
+                        btEnviar.setText("Enviar");
+                    }
+
                     for (int i = 0; i < questoes.length; i++) {
                         String alternativa = dados.getAlternativas().get(i).getTextoAlternativa();
                         questoes[i].setText(alternativa);
@@ -119,9 +133,7 @@ public class AlternativasActivity extends AppCompatActivity {
                 public void processaDados(Void dados) {
                     Alerta.showToast("Resposta enviada");
                     OnComplete cliente = Messager.balcao.get();
-                    if(cliente != null) {
-                        cliente.execute();
-                    }
+                    if(cliente != null) cliente.execute();
                 }
 
                 @Override

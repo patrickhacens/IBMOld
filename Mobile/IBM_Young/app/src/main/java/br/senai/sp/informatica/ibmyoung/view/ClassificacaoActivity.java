@@ -80,8 +80,9 @@ public class ClassificacaoActivity extends AppCompatActivity implements View.OnC
                 startActivity(new Intent(this, ForumActivity.class));
                 break;
             case R.id.logout_action:
+                LoginRepo.dao.resetAutorizacao();
                 startActivity(new Intent(this, LoginActivity.class));
-                fileList();
+                finish();
                 break;
         }
 

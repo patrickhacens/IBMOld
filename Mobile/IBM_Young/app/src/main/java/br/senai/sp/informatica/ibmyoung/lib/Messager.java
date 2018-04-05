@@ -14,6 +14,7 @@ public class Messager {
     private Messager() {}
 
     public void add(OnComplete reference) {
+        lista.clear();
         lista.add(reference);
     }
 
