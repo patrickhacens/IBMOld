@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Cadastrar Boletim | IBM YOUNG</title>
+    <title>Desempenho do Aprendiz | IBM YOUNG</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -64,7 +64,7 @@
     <nav class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
-                
+
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand" href="../../index.html"><b>IBM</b><i>Young</i></a>
             </div>
@@ -157,98 +157,113 @@
                     &copy; 2016 - 2017 IBMYoung
 
                     <!-- #Footer -->
-        </aside>
-        <!-- #END# Left Sidebar -->
+                </aside>
+                <!-- #END# Left Sidebar -->
 
-    </section>
+            </section>
 
-    <section class="content">
-        <div class="container-fluid">
-            <div class="block-header">
-                <h2>Bem-vindo, {Nome}!</h2>
-            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>Bem-vindo, {Nome}!</h2>
 
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <form class="card">
-                        <div class="header">
-                            <h2>
-                                <strong>Cadastro de boletim mensal</strong>
 
-                            </h2>
+                    </div>
+
+
+
+
+
+
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h2>
+                                        <strong>Desempenho de Aprendiz</strong>
+
+                                    </h2>
+
+                                </div>
+                                <div class="body">
+                                    <div class="row clearfix">
+
+                                        <div class="col-sm-12">
+                                            <select class="form-control show-tick">
+                                                <option value=""><b>SELECIONE O ALUNO</b></option>
+                                                <option value="10">Nina Chrispim</option>
+                                                <option value="20">Alex Fontoura</option>
+                                                <option value="30">Rhayssa Marciano</option>
+                                                <option value="40">Eduardo Ribeiro</option>
+
+                                                <option value="50">Não encontrei aprendiz</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-6">
+                                            <div class="card" style="box-shadow: none; border-bottom: none;">
+                                                <!-- <div class="header" style="box-shadow: none; border-bottom: none;">
+                                                    <h2 style="font-size: 14px;">Desempenho por nível - </h2>
+
+                                                </div> -->
+
+                                                <div class="info-box-4" style="margin: 20px;">
+                                                    <div class="icon">
+                                                       <i class="material-icons col-blue">bookmark</i>
+                                                   </div>
+                                                   <div class="content">
+                                                    <div class="text">STATUS</div>
+                                                    <div class="number">Nível 12</div>
+                                                </div>
+                                            </div>
+                                            <div class="body">
+                                                <div class="sparkline" data-type="line" data-spot-Radius="3" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#222"
+                                                data-min-Spot-Color="rgb(233, 30, 99)" data-max-Spot-Color="rgb(0, 150, 136)" data-spot-Color="rgb(0, 188, 212)"
+                                                data-offset="90" data-width="100%" data-height="200px" data-line-Width="3" data-line-Color="#7683ff"
+                                                data-fill-Color="rgba(0, 188, 212, 0.3)">
+                                                1,4,7,8,4,3,2,2,5,6,7,4,5,5,7,9,9,8,7,6
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- #END# Line Chart -->
+
+
+                                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                                    <div class="card" style="box-shadow: none; border: 1px dotted #f2f2f2">
+                                        <div class="header bg-blue">
+                                            <h2>
+                                                Nina Chrispim <small>Aprendiz de Tecnonologia</small>
+                                            </h2>
+                                            
+                                        </div>
+                                        <div class="body">
+                                           Data de entrada 23/06/17 <br>
+                                           Data de saída: - 
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                          
+
 
                         </div>
-                        <div class="body">
-                            <div class="row clearfix">
-                                <div class="col-sm-6">
-                                    <select id="boletim-instituicao" class="form-control show-tick">
-                                        <option value=""><b>SELECIONE A INSTITUIÇÃO</b></option>
-                                        <option value="10">Instituição Bradesco</option>
-                                        <option value="20">Caixa Econômica Ensino</option>
-                                        <option value="30">Instituto Banco do Brasil</option>
-                                        <option value="40">Santander Escola</option>
-                                        <option value="50">Banco Real Escola</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6">
-                                    <select id="boletim-aluno" class="form-control show-tick">
-                                        <option value=""><b>SELECIONE O ALUNO</b></option>
-                                        <option value="10">Nina Chrispim</option>
-                                        <option value="20">Alex Fontoura</option>
-                                        <option value="30">Rhayssa Marciano</option>
-                                        <option value="40">Eduardo Ribeiro</option>
-                                        <option value="50">Taís Nana</option>
-                                        <option value="50">Não encontrei aprendiz</option>
-                                    </select>
-                                </div>
-
-                            </div>
-
-                            <div class="row clearfix">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input id="boletim-media" type="text" class="form-control" placeholder="Média de Notas" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input id="boletim-frequencia" type="text" class="form-control" placeholder="Frequência" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input id="boletim-dataFechamento" type="text" class="datepicker form-control" placeholder="Selecione a data de fechamento">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row clearfix">
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <textarea id="boletim-observacoes" rows="4" class="form-control no-resize" placeholder="Observações"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
 
-                            <div class="demo-button">
-                                <button type="submit" class="btn btn-block btn-lg btn-success waves-effect ">ENVIAR BOLETIM</button>
-                            </div>
-                        </div>
-                    </form>
+
+
+                    </div>
                 </div>
             </div>
             <!-- #END# Select -->
         </div>
     </section>
+
+
 
     <!-- Jquery Core Js -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -265,21 +280,18 @@
     <!-- Waves Effect Plugin Js -->
     <script src="../../plugins/node-waves/waves.js"></script>
 
-    <!-- Autosize Plugin Js -->
-    <script src="../../plugins/autosize/autosize.js"></script>
-
-    <!-- Moment Plugin Js -->
-    <script src="../../plugins/momentjs/moment.js"></script>
-
-    <!-- Bootstrap Material Datetime Picker Plugin Js -->
-    <script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+    <!-- Sparkline Plugin Js -->
+    <script src="../../plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
     <!-- Custom Js -->
     <script src="../../js/admin.js"></script>
+    <script src="../../js/helpers.js"></script>
+
+    <!-- <script src="../../../js/pages/widgets/infobox/infobox-5.js"></script> -->
+    <script src="../../js/pages/charts/sparkline.js"></script>
 
     <!-- Demo Js -->
     <script src="../../js/demo.js"></script>
-    <script src="../../js/script.js"></script>
 </body>
 
 </html>

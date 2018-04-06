@@ -30,7 +30,7 @@
               crossorigin="anonymous">
 </head>
 
-<body class="login-page">
+<body class="login-page theme-blue" >
     <div class="login-box">
         <div class="logo">
             <a href="javascript:void(0);"><b>IBM</b>Young</a>
@@ -112,10 +112,11 @@
                 dataType: 'json'
             });
 
-            request.done(function( msg ) {
+            request.done(function( response ) {
                 $("#usuario").val("");
                 $("#senha").val("");
-                alert( "Request OK: " + msg["token"] );
+                localStorage.token = response.token;
+                window.location.href = 'desempenho.html';
             });
 
             request.fail(function( jqXHR, textStatus ) {
