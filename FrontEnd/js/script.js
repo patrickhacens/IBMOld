@@ -1,24 +1,22 @@
-﻿const apiUrl = 'http://192.168.2.152:8080/api';function getRequestConfig(config) {
+﻿const apiUrl = 'http://192.168.2.152:8080/api';
 
-
-const defaultConfig = {
+function getRequestConfig(config, method) {
+  const defaultConfig = {
 		contentType : "application/json",
 		accept: "application/json",
-		type: 'POST',
+		type: method || 'POST',
     dataType: 'json',
     headers: {
       Authorization: 'Bearer '+localStorage.token,
     }
 	};
   
-  // const apiUrl = 'http://codexphelp.azurewebsites.net/api/Usuario'
-  
 	const customConfig = {
 		url: apiUrl + config.url,
 		data: JSON.stringify(config.data),
   }
   
-  const a = Object.assign({}, defaultConfig, customConfig);
+  const a = Object.assign({}, defaultConfig, config, customConfig);
   
   console.log(a);
   return a;
@@ -155,12 +153,13 @@ $('#cadastro-gestor').submit(function(e) {
 $('#cadastro-boletim').submit(function(e) {
 	e.preventDefault();
 	const data = {
-		instituicao: $('#boletim-instituicao').val(),
-		aluno: $('#boletim-aluno').val(),
-		media: $('#boletim-media').val(),
+		// instituicao: $('#boletim-instituicao').val(),
+    // aluno: $('#boletim-aluno').val(),
+    aluno: 3,
+		nota: $('#boletim-media').val(),
 		frequencia: $('#boletim-frequencia').val(),
 		dataFechamento: $('#boletim-dataFechamento').val(),
-		observacoes: $('#boletim-observacoes').val(),
+		observacao: $('#boletim-observacoes').val(),
 	};
 
 	$.ajax(getRequestConfig({
@@ -172,7 +171,23 @@ $('#cadastro-boletim').submit(function(e) {
 	}));
 });
 
+var aprendiz = [];
+var aprendizOptions = null;
+function loadAprendiz() {
+  $.ajax(getRequestConfig({
+    url: '/aprendiz',
+    success: function(response) {
+      aprendizOptions = ['<option value="">SELECIONE O APRENDIZ</option>'];
+      aprendizOptions.push(response.map(item => '<option value="'+item.id+'">'+item.nome+' '+item.sobrenome+'</option>'));
+      aprendizOptions = aprendizOptions.join('');
+      console.log(aprendizOptions);
+      $('.loadAprendiz select').html(aprendizOptions);
+      $('select:not(.ms)').selectpicker('refresh');
+    }
+  }, 'get'));
+}
 
+loadAprendiz();
 
 
 $('#sign_in').submit(function(e) {
