@@ -38,12 +38,32 @@ $('#cadastrar-tarefa select').change(function() {
 });
 
 $('#add-pergunta').click(function() {
-	const pergunta = $('.pergunta').last().clone();
+  const pergunta = $('.pergunta').last().clone();
+  $('input, textarea', pergunta).val('');
 	$('#cadastrar-tarefa .body #perguntas').append(pergunta);
 })
 
-$('#cadastrar-tarefa').submit(function() {
-	const titulo = $('#tarefa-titulo').val();
+
+/*************************************
+ * TAREFA
+ ************************************/
+$('#cadastrar-tarefa').submit(function(e) {
+  e.preventDefault();
+  const perguntas = $('#perguntas .pergunta');
+  const perguntasData = [];
+  $(perguntas).each(function(pergunta) {
+    const perguntaInfos = {
+      titulo: $('.tarefa-titulo', this).val(),
+      descricao: $('.tarefa-conteudo', this).val(),
+    }
+    perguntasData.push(perguntaInfos);
+  });
+
+  const data = {
+    questoes: perguntasData,
+  };
+
+  console.log(data);
 	const conteudo = $('#tarefa-conteudo').val();
 	const alternativas = $('.alternativas');
 	const titulo = $('#tarefa-titulo').val();
@@ -179,7 +199,6 @@ function loadAprendiz() {
       aprendizOptions = ['<option value="">SELECIONE O APRENDIZ</option>'];
       aprendizOptions.push(response.map(item => '<option value="'+item.id+'">'+item.nome+' '+item.sobrenome+'</option>'));
       aprendizOptions = aprendizOptions.join('');
-      console.log(aprendizOptions);
       $('.loadAprendiz select').html(aprendizOptions);
       $('select:not(.ms)').selectpicker('refresh');
     }
