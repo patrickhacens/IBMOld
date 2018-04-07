@@ -206,10 +206,11 @@ $('#cadastro-boletim').submit(function(e) {
 	e.preventDefault();
 	const data = {
 		// instituicao: $('#boletim-instituicao').val(),
-    aluno: $('#boletim-aluno').val(),
+    aprendizId: Number($('#boletim-aluno').val()),
 		nota: $('#boletim-media').val(),
 		frequencia: $('#boletim-frequencia').val(),
-		dataFechamento: $('#boletim-dataFechamento').val(),
+		mesReferencia: $('#boletim-mesReferencia').val(),
+		anoReferencia: $('#boletim-mesReferencia').val(),
 		observacao: $('#boletim-observacoes').val(),
 	};
 
