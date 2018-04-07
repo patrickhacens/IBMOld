@@ -13,7 +13,7 @@ namespace IBMYoung.Controllers
     [JWTAuth]
     [Produces("application/json")]
     [Route("api/[controller]")]
-        public class BoletimController
+    public class BoletimController
     {
         private readonly Db db;
         public BoletimController(Db db)
@@ -34,6 +34,8 @@ namespace IBMYoung.Controllers
                 Frequencia = model.Frequencia,
                 MesReferencia = model.MesReferencia,
                 AnoReferencia = model.AnoReferencia,
+                DataCadastro = DateTime.Now,
+                Observacao = model.Observacao
             };
 
             db.Boletins.Add(boletim);
