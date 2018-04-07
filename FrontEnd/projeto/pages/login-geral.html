@@ -30,7 +30,7 @@
               crossorigin="anonymous">
 </head>
 
-<body class="login-page">
+<body class="login-page theme-blue" >
     <div class="login-box">
         <div class="logo">
             <a href="javascript:void(0);"><b>IBM</b>Young</a>
@@ -62,7 +62,7 @@
                             <label for="rememberme">Lembre de mim</label>
                         </div>
                         <div class="col-xs-4">
-                            <button class="btn btn-block bg-pink waves-effect" type="button" onclick="login();">ENTRAR</button>
+                            <button class="btn btn-block bg-pink waves-effect" type="submit">ENTRAR</button>
                         </div>
                     </div>
                     <div class="row m-t-15 m-b--20">
@@ -94,35 +94,7 @@
 
     <!-- Custom Js -->
     <script src="../../js/admin.js"></script>
-    <script src="../../js/pages/examples/sign-in.js"></script>
-
-    <script type="text/javascript">
-        function login() {
-            var site = "https://private-be0ae-exemplologin.apiary-mock.com";
-
-            var usuario = $("#usuario").val();
-            var senha = $("#senha").val();
-
-            var request = $.ajax({
-                contentType : "application/json",
-                accept: "application/json",
-                url: site + "/Usuario/login",
-                type: 'POST',
-                data: JSON.stringify({ "login" : usuario, "senha" : senha }),
-                dataType: 'json'
-            });
-
-            request.done(function( msg ) {
-                $("#usuario").val("");
-                $("#senha").val("");
-                alert( "Request OK: " + msg["token"] );
-            });
-
-            request.fail(function( jqXHR, textStatus ) {
-                alert( "Request Error: " + jqXHR.status + " - " + textStatus );
-            });
-        }
-    </script>
+    <script src="../../js/script.js"></script>
 </body>
 
 </html>

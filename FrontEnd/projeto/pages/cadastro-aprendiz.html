@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Upload tarefa | IBM YOUNG</title>
+    <title>Cadastrar Aprendiz | IBM YOUNG</title>
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
@@ -37,14 +37,8 @@
     <!-- Dropzone Css -->
     <link href="../../plugins/dropzone/dropzone.css" rel="stylesheet">
 
-    <!-- Multi Select Css -->
-    <link href="../../plugins/multi-select/css/multi-select.css" rel="stylesheet">
-
     <!-- Bootstrap Spinner Css -->
     <link href="../../plugins/jquery-spinner/css/bootstrap-spinner.css" rel="stylesheet">
-
-    <!-- Bootstrap Tagsinput Css -->
-    <link href="../../plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
 
     <!-- Bootstrap Select Css -->
     <link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
@@ -83,7 +77,7 @@
     <nav class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
-                
+
                 <a href="javascript:void(0);" class="bars"></a>
                 <a class="navbar-brand" href="../../projeto/pages/index.html"><b>IBM</b><i>Young</i></a>
             </div>
@@ -176,101 +170,142 @@
                     &copy; 2016 - 2017 IBMYoung
 
                     <!-- #Footer -->
-        </aside>
-        <!-- #END# Left Sidebar -->
+                </aside>
+                <!-- #END# Left Sidebar -->
 
-    </section>
+            </section>
 
-    <section class="content">
-        <div class="container-fluid">
-            <div class="block-header">
-                <h2>Bem-vindo, {Nome}!</h2>
-
-
-            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="block-header">
+                        <h2>Bem-vindo, {Nome}!</h2>
 
 
+                    </div>
 
 
 
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                Entregar tarefa referente ao nível {nível number}
 
-                            </h2>
 
-                        </div>
-                        <div class="body">
-                            <form action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/form-data">
-                                <div class="dz-message">
-                                    <div class="drag-icon-cph">
-                                        <i class="material-icons">touch_app</i>
-                                    </div>
-                                    <h3>Drop files here or click to upload.</h3>
-                                    <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <form id="cadastro-aprendiz" class="card">
+                                <div class="header">
+                                    <h2>
+                                        <strong>Cadastro de Aprendiz</strong>
+
+                                    </h2>
+
                                 </div>
-                                <div class="fallback">
-                                    <input name="file" type="file" multiple />
+                                <div class="body">
+
+                                    <div class="row clearfix">
+
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="aprendiz-nome" type="text" class="form-control" placeholder="Nome" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="aprendiz-sobrenome" type="text" class="form-control" placeholder="Sobrenome" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-6">
+                                            <select id="aprendiz-instituicao" class="form-control show-tick">
+                                                <option value=""><b>SELECIONE A INSTITUIÇÃO</b></option>
+                                                <option value="10">Instituição Bradesco</option>
+                                                <option value="20">Caixa Econômica Ensino</option>
+                                                <option value="30">Instituto Banco do Brasil</option>
+                                                <option value="40">Santander Escola</option>
+                                                <option value="50">Banco Real Escola</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-sm-6">
+
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="aprendiz-senha" type="password" class="form-control" placeholder="Insira uma senha provisória" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="aprendiz-dataEntrada" type="text" class="datepicker form-control" placeholder="Selecione data de entrada">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input id="aprendiz-dataSaida" type="text" class="datepicker form-control" placeholder="Selecione data de saída">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="demo-button">
+                                        <button type="submit" class="btn btn-block btn-lg btn-success waves-effect">REGISTRAR APRENDIZ</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
                     </div>
+                    <!-- #END# Select -->
                 </div>
-            </div>
-            <!-- #END# Select -->
-        </div>
-    </section>
+            </section>
 
-    <!-- Jquery Core Js -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+            <!-- Jquery Core Js -->
+            <script src="../../plugins/jquery/jquery.min.js"></script>
 
-    <!-- Bootstrap Core Js -->
-    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+            <!-- Bootstrap Core Js -->
+            <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
 
-    <!-- Select Plugin Js -->
-    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+            <!-- Select Plugin Js -->
+            <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
-    <!-- Slimscroll Plugin Js -->
-    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+            <!-- Slimscroll Plugin Js -->
+            <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
-    <!-- Waves Effect Plugin Js -->
-    <script src="../../plugins/node-waves/waves.js"></script>
+            <!-- Waves Effect Plugin Js -->
+            <script src="../../plugins/node-waves/waves.js"></script>
 
-    <!-- Autosize Plugin Js -->
-    <script src="../../plugins/autosize/autosize.js"></script>
+            <!-- Autosize Plugin Js -->
+            <script src="../../plugins/autosize/autosize.js"></script>
 
-    <!-- Moment Plugin Js -->
-    <script src="../../plugins/momentjs/moment.js"></script>
+            <!-- Moment Plugin Js -->
+            <script src="../../plugins/momentjs/moment.js"></script>
 
-    <!-- Bootstrap Material Datetime Picker Plugin Js -->
-    <script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+            <!-- Bootstrap Material Datetime Picker Plugin Js -->
+            <script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
-    <!-- Custom Js -->
-    <script src="../../js/admin.js"></script>
+            <!-- Custom Js -->
+            <script src="../../js/admin.js"></script>
 
-    <!-- Demo Js -->
-    <script src="../../js/demo.js"></script>
+            <!-- Demo Js -->
+            <script src="../../js/demo.js"></script>
 
-    <!-- Dropzone Plugin Js -->
+            <!-- Demo Js -->
+            <script src="../../js/demo.js"></script>
+            <script src="../../js/script.js"></script>
+            <script src="../../plugins/dropzone/dropzone.js"></script>
+        </body>
 
-    <!-- Jquery Spinner Plugin Js -->
-    <script src="../../plugins/jquery-spinner/js/jquery.spinner.js"></script>
-
-    <!-- noUISlider Plugin Js -->
-    <script src="../../plugins/nouislider/nouislider.js"></script>
-
-    <!-- Waves Effect Plugin Js -->
-    <script src="../../plugins/node-waves/waves.js"></script>
-
-    <!-- Custom Js -->
-    <script src="../../js/admin.js"></script>
-
-    <!-- Demo Js -->
-    <script src="../../js/demo.js"></script>
-    <script src="../../plugins/dropzone/dropzone.js"></script>
-</body>
-
-</html>
+        </html>
