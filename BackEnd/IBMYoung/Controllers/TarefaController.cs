@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IBMYoung.Controllers
 {
-    [JWTAuth]
+    //[JWTAuth]
     [Produces("application/json")]
     [Route("api")]
     public class TarefaController : Controller
@@ -25,18 +25,43 @@ namespace IBMYoung.Controllers
             this.userManager = userManager;
         }
 
+        [Route("Tarefa")]
         [HttpPost]
-        public async Task<Tarefa> Post([FromBody] TarefaCadastroViewModel model)
+        public async Task<Tarefa> Post([FromBody] TarefaCadastroViewModelFront model)
         {
             Tarefa tarefa = new Tarefa()
             {
                 Titulo = model.Titulo,
-                Conteudo = model.Conteudo,
+                Conteudo = "",
                 Nivel = model.Nivel,
                 DataCriacao = DateTime.Now,
                 Active = true,
-                Usuario = await userManager.GetUserAsync(this.User)
+                Questoes = new List<Questao>(),
+                Usuario = await userManager.GetUserAsync(this.User),
             };
+
+            int ordem = 0;
+            foreach (var q in model.Questoes)
+            {
+                Questao questao = new Questao()
+                {
+                    Conteudo = q.Descricao,
+                    Ordem = ordem++,
+                    Tarefa = tarefa,
+                    Titulo = q.Titulo,
+                    Alternativas = new List<Alternativa>(),
+                };
+                tarefa.Questoes.Add(questao);
+
+                for (int i = 0; i < q.Alternativas.Length; i++)
+                {
+                    questao.Alternativas.Add(new Alternativa()
+                    {
+                        TextoAlternativa = q.Alternativas[i],
+                        Correta = i == q.AlternativaCorreta
+                    });
+                }
+            }
 
             db.Tarefas.Add(tarefa);
 
@@ -127,7 +152,8 @@ namespace IBMYoung.Controllers
                 .Where(d => d.Nivel == aprendiz.Nivel)
                 .OrderBy(d => d.Nivel)
                 .OrderBy(d => d.DataCriacao)
-                .Select(t => new TarefaAdapterViewModel {
+                .Select(t => new TarefaAdapterViewModel
+                {
                     Id = t.Id,
                     Titulo = t.Titulo,
                     Nivel = t.Nivel,
