@@ -1,4 +1,4 @@
-﻿const apiUrl = 'http://localhost:8080/api';
+﻿const apiUrl = 'http://192.168.2.152:8080/api';
 
 function getRequestConfig(config, method) {
   const defaultConfig = {
@@ -13,7 +13,7 @@ function getRequestConfig(config, method) {
   
 	const customConfig = {
 		url: apiUrl + config.url,
-		data: JSON.stringify(config.data),
+		data: config.dataRaw || JSON.stringify(config.data),
   }
   
 	const a = Object.assign({}, defaultConfig, config, customConfig);
@@ -121,15 +121,15 @@ $('#cadastro-aprendiz').submit(function(e) {
 	};
 
 	const formData = new FormData();
-	formData.append('id', data.gestor);
-  formData.append('instituicaoId', data.instituicaoId);
+	// formData.append('id', data.gestor);
+  // formData.append('instituicaoId', data.instituicaoId);
   formData.append('file', aprendizCsv);
 
 	
 	
 	$.ajax(getRequestConfig({
-		url: '/usuario/csv', 
-		data: formData,
+		url: '/usuario/'+data.gestor+'/'+data.instituicaoId, 
+		dataRaw: formData,
 		success: successFeedback,
 		cache: false,
 		contentType: false,
