@@ -109,7 +109,7 @@ $('#cadastrar-tarefa').submit(function(e) {
 	}));
 });
 
-
+var aprendizCsv;
 /*************************************
  * APRENDIZ
  ************************************/
@@ -122,13 +122,14 @@ $('#cadastro-aprendiz').submit(function(e) {
 
 	const formData = new FormData();
 	formData.append('id', data.gestor);
-	formData.append('instituicaoId', data.instituicaoId);
+  formData.append('instituicaoId', data.instituicaoId);
+  formData.append('file', aprendizCsv);
 
 	
 	
 	$.ajax(getRequestConfig({
 		url: '/usuario/csv', 
-		data: data,
+		data: formData,
 		success: successFeedback,
 		cache: false,
 		contentType: false,
@@ -136,6 +137,11 @@ $('#cadastro-aprendiz').submit(function(e) {
 
 	}));
 });
+
+
+$('#aprendiz-csv').change(function(e) {
+  aprendizCsv = this.files[0];
+})
 
 
 
