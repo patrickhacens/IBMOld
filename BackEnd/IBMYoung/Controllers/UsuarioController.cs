@@ -87,7 +87,7 @@ namespace IBMYoung.Controllers
         /// <param name="file">Csv com formato especifico, para ver o formato vide GenerateFile()</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("{id}")]
+        [Route("{id}/{instituicaoId}")]
         public async Task<IActionResult> BatchPost(int id, int instituicaoId, IFormFile file)
         {
             Gestor gestor = await db.Usuarios.OfType<Gestor>().FirstOrDefaultAsync(d => d.Id == id);
