@@ -154,8 +154,7 @@ $('#cadastro-boletim').submit(function(e) {
 	e.preventDefault();
 	const data = {
 		// instituicao: $('#boletim-instituicao').val(),
-    // aluno: $('#boletim-aluno').val(),
-    aluno: 3,
+    aluno: $('#boletim-aluno').val(),
 		nota: $('#boletim-media').val(),
 		frequencia: $('#boletim-frequencia').val(),
 		dataFechamento: $('#boletim-dataFechamento').val(),
