@@ -1,4 +1,4 @@
-﻿const apiUrl = 'http://localhost:5000/api';
+﻿const apiUrl = 'http://localhost:8080/api';
 
 function getRequestConfig(config, method) {
   const defaultConfig = {
@@ -244,20 +244,36 @@ function loadAprendiz() {
   }, 'get'));
 }
 
+var instituicaoOptions = null;
 function loadInstituicao() {
   $.ajax(getRequestConfig({
-    url: '/usuario',
+    url: '/instituicao',
     success: function(response) {
-      aprendizOptions = ['<option value="">SELECIONE A INSTITUIÇÃO</option>'];
-      aprendizOptions.push(response.map(item => '<option value="'+item.id+'">'+item.nome+'</option>'));
-      aprendizOptions = aprendizOptions.join('');
-      $('.loadInstituicao select').html(aprendizOptions);
+      instituicaoOptions = ['<option value="">SELECIONE A INSTITUIÇÃO</option>'];
+      instituicaoOptions.push(response.map(item => '<option value="'+item.id+'">'+item.nome+'</option>'));
+      instituicaoOptions = instituicaoOptions.join('');
+      $('.loadInstituicao select').html(instituicaoOptions);
+      $('select:not(.ms)').selectpicker('refresh');
+    }
+  }, 'get'));
+}
+
+var gestorOptions = null;
+function loadGestor() {
+  $.ajax(getRequestConfig({
+    url: '/gestor',
+    success: function(response) {
+      gestorOptions = ['<option value="">SELECIONE O GESTOR</option>'];
+      gestorOptions.push(response.map(item => '<option value="'+item.id+'">'+item.nome+'</option>'));
+      gestorOptions = gestorOptions.join('');
+      $('.loadGestor select').html(gestorOptions);
       $('select:not(.ms)').selectpicker('refresh');
     }
   }, 'get'));
 }
 loadInstituicao();
 loadAprendiz();
+loadGestor();
 
 
 $('#sign_in').submit(function(e) {

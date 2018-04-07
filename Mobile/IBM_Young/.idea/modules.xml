@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IBM_Young.iml" filepath="$PROJECT_DIR$/IBM_Young.iml" />
-      <module fileurl="file://C:\Users\CodeXP\AndroidStudioProjects\IBMOld\Mobile\IBM_Young\IBM_Young.iml" filepath="C:\Users\CodeXP\AndroidStudioProjects\IBMOld\Mobile\IBM_Young\IBM_Young.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../../../CodeXP/AndroidStudioProjects/IBMOld/Mobile/IBM_Young/IBM_Young.iml" filepath="$PROJECT_DIR$/../../../../../CodeXP/AndroidStudioProjects/IBMOld/Mobile/IBM_Young/IBM_Young.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\CodeXP\AndroidStudioProjects\IBMOld\Mobile\IBM_Young\app\app.iml" filepath="C:\Users\CodeXP\AndroidStudioProjects\IBMOld\Mobile\IBM_Young\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../../../CodeXP/AndroidStudioProjects/IBMOld/Mobile/IBM_Young/app/app.iml" filepath="$PROJECT_DIR$/../../../../../CodeXP/AndroidStudioProjects/IBMOld/Mobile/IBM_Young/app/app.iml" />
     </modules>
   </component>
 </project>

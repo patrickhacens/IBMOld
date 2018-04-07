@@ -24,7 +24,7 @@ namespace IBMYoung.Controllers
 {
     [Produces("application/json")]
     [Route("api/Aprendiz")]
-    [JWTAuth]
+    // [JWTAuth]
     public class AprendizController : Controller {
         private readonly Db db;
         private readonly Configuration config;
@@ -51,6 +51,38 @@ namespace IBMYoung.Controllers
                 Entrada = aprendiz.DataEntrada,
                 Saida = aprendiz.DataSaida,
                 Nivel = aprendiz.Nivel
+            }));
+
+            return lista;
+        }
+
+
+        [HttpGet]
+        [Route("/api/instituicao")]
+        public List<AprendizViewModel> GetInstituicao() {
+            List<AprendizViewModel> lista = new List<AprendizViewModel>();
+            db.Usuarios.OfType<Instituicao>().ToList().ForEach(aprendiz => lista.Add(new AprendizViewModel {
+                Id = aprendiz.Id,
+                Email = aprendiz.Email,
+                Username = aprendiz.UserName,
+                Nome = aprendiz.Nome,
+                Sobrenome = aprendiz.Sobrenome,
+            }));
+
+            return lista;
+        }
+
+
+        [HttpGet]
+        [Route("/api/gestor")]
+        public List<AprendizViewModel> GetGestor() {
+            List<AprendizViewModel> lista = new List<AprendizViewModel>();
+            db.Usuarios.OfType<Gestor>().ToList().ForEach(aprendiz => lista.Add(new AprendizViewModel {
+                Id = aprendiz.Id,
+                Email = aprendiz.Email,
+                Username = aprendiz.UserName,
+                Nome = aprendiz.Nome,
+                Sobrenome = aprendiz.Sobrenome,
             }));
 
             return lista;
