@@ -95,7 +95,7 @@
             <!-- #User Info -->
             <!-- Menu -->
             <div class="menu">
-<ul class="list">
+                <ul class="list">
                     <li class="header">O que você quer fazer hoje? :)</li>
                     <li>
                         <a href="../../index.html">
@@ -180,138 +180,149 @@
 
                                 </div>
                                 <div class="body">
-                                    <div id="perguntas">
-                                        <div class="pergunta">
-                                            <div class="row clearfix">
-                                                <div class="col-sm-12">
-                                                    <select class="form-control show-tick">
-                                                        <option value=""><b>SELECIONE O TIPO DE QUESTÃO</b></option>
-                                                        <option value="1">Múltipla escolha</option>
-                                                        <option value="2">Entregável</option>
-                                                    </select>
-                                                </div>
+
+                                   <div class="alert bg-green alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    Cadastro realizado com sucesso!
+                                </div>
+
+
+                                <div class="alert bg-pink alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    Erro ao cadastrar. Por favor, tente novamente! 
+                                </div>
+                                <div id="perguntas">
+                                    <div class="pergunta">
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <select class="form-control show-tick">
+                                                    <option value=""><b>SELECIONE O TIPO DE QUESTÃO</b></option>
+                                                    <option value="1">Múltipla escolha</option>
+                                                    <option value="2">Entregável</option>
+                                                </select>
                                             </div>
-                                            <div class="row clearfix">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <div class="form-line">
-                                                            <input type="text" class="form-control" placeholder="Título" id="tarefa-titulo" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="row clearfix">
-                                                <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <div class="form-line">
-                                                            <textarea rows="4" class="form-control no-resize" placeholder="Descrição da tarefa" id="tarefa-conteudo" ></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="alternativas" style="display: none;">
-                                                <div class="row clearfix">
-
-                                                    <div class="col-sm-12">
-                                                        <p>
-                                                            <strong>Insira as alternativas (caso aplicáveis)</strong>
-
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <div class="form-line">
-                                                                <input type="text" class="form-control" placeholder="a)" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <div class="form-line">
-                                                                <input type="text" class="form-control" placeholder="b)" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <div class="form-line">
-                                                                <input type="text" class="form-control" placeholder="c)" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <div class="form-line">
-                                                                <input type="text" class="form-control" placeholder="d)" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row clearfix">
-
-                                                    <div class="col-sm-12">
-                                                        <p>
-                                                            <strong>Selecione a resposta correta</strong>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div class="demo-radio-button">
-                                                    <input name="group1" type="radio" id="radio_1" class="with-gap" checked />
-                                                    <label for="radio_1">ALTERNATIVA A</label>
-                                                    <input name="group1" type="radio" class="with-gap" id="radio_2" />
-                                                    <label for="radio_2">ALTERNATIVA B</label>
-                                                    <input name="group1" type="radio" class="with-gap" id="radio_3" />
-                                                    <label for="radio_3">ALTERNATIVA C</label>
-                                                    <input name="group1" type="radio" class="with-gap" id="radio_4" />
-                                                    <label for="radio_4">ALTERNATIVA D</label>
-
-                                                </div>
-                                            </div>
-                                            <hr>
                                         </div>
-                                    </div>
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <input type="text" class="form-control" placeholder="Título" id="tarefa-titulo" />
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                    <button id="add-pergunta" type="button" class="btn btn-block">Adicionar pergunta</button>
-                                    <div class="demo-button">
-                                        <button type="button" class="btn btn-block btn-lg btn-success waves-effect">Cadastrar nova tarefa</button>
+                                        </div>
+                                        <div class="row clearfix">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="form-line">
+                                                        <textarea rows="4" class="form-control no-resize" placeholder="Descrição da tarefa" id="tarefa-conteudo" ></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="alternativas" style="display: none;">
+                                            <div class="row clearfix">
+
+                                                <div class="col-sm-12">
+                                                    <p>
+                                                        <strong>Insira as alternativas (caso aplicáveis)</strong>
+
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <input type="text" class="form-control" placeholder="a)" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <input type="text" class="form-control" placeholder="b)" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <input type="text" class="form-control" placeholder="c)" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <div class="form-line">
+                                                            <input type="text" class="form-control" placeholder="d)" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row clearfix">
+
+                                                <div class="col-sm-12">
+                                                    <p>
+                                                        <strong>Selecione a resposta correta</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="demo-radio-button">
+                                                <input name="group1" type="radio" id="radio_1" class="with-gap" checked />
+                                                <label for="radio_1">ALTERNATIVA A</label>
+                                                <input name="group1" type="radio" class="with-gap" id="radio_2" />
+                                                <label for="radio_2">ALTERNATIVA B</label>
+                                                <input name="group1" type="radio" class="with-gap" id="radio_3" />
+                                                <label for="radio_3">ALTERNATIVA C</label>
+                                                <input name="group1" type="radio" class="with-gap" id="radio_4" />
+                                                <label for="radio_4">ALTERNATIVA D</label>
+
+                                            </div>
+                                        </div>
+                                        <hr>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+
+                                <button id="add-pergunta" type="button" class="btn btn-block" style="margin-bottom: 40px;">Acrescentar pergunta</button>
+                                <div class="demo-button">
+                                    <button type="button" class="btn btn-block btn-lg btn-success waves-effect">Cadastrar nova tarefa</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <!-- #END# Select -->
                 </div>
-            </section>
+                <!-- #END# Select -->
+            </div>
+        </section>
 
-            <!-- Jquery Core Js -->
-            <script src="../../plugins/jquery/jquery.min.js"></script>
+        <!-- Jquery Core Js -->
+        <script src="../../plugins/jquery/jquery.min.js"></script>
 
-            <!-- Bootstrap Core Js -->
-            <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+        <!-- Bootstrap Core Js -->
+        <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
 
-            <!-- Select Plugin Js -->
-            <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+        <!-- Select Plugin Js -->
+        <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
-            <!-- Slimscroll Plugin Js -->
-            <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+        <!-- Slimscroll Plugin Js -->
+        <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
-            <!-- Waves Effect Plugin Js -->
-            <script src="../../plugins/node-waves/waves.js"></script>
+        <!-- Waves Effect Plugin Js -->
+        <script src="../../plugins/node-waves/waves.js"></script>
 
-            <!-- Autosize Plugin Js -->
-            <script src="../../plugins/autosize/autosize.js"></script>
+        <!-- Autosize Plugin Js -->
+        <script src="../../plugins/autosize/autosize.js"></script>
 
-            <!-- Moment Plugin Js -->
-            <script src="../../plugins/momentjs/moment.js"></script>
+        <!-- Moment Plugin Js -->
+        <script src="../../plugins/momentjs/moment.js"></script>
 
-            <!-- Custom Js -->
-            <script src="../../js/admin.js"></script>
+        <!-- Custom Js -->
+        <script src="../../js/admin.js"></script>
 
-            <!-- Demo Js -->
-            <script src="../../js/demo.js"></script>
+        <!-- Demo Js -->
+        <script src="../../js/demo.js"></script>
 
-            <script src="../../js/script.js"></script>
-        </body>
+        <script src="../../js/script.js"></script>
+    </body>
 
-        </html>
+    </html>
