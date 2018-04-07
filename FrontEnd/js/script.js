@@ -265,3 +265,23 @@ $('#sign_in').submit(function(e) {
       console.error( "Request Error: " + jqXHR.status + " - " + textStatus );
   });
 })
+
+
+function loadDesempenho() {
+	
+}
+
+if($('#desempenho-aprendiz').length > 0) {
+	$('.loadAprendiz').change(function() {
+		$.ajax(getRequestConfig({
+			url: '/aprendiz/'+this.value, 
+			success: function(response) {
+				$('.nivel').text('Nível '+response.nivel);
+				$('.nome').text(response.nome+' '+response.sobrenome);
+				$('.dataEntrada').text(moment(response.entrada).format('DD/MM/YYYY'));
+				$('.dataSaida').text(moment(response.saida).format('DD/MM/YYYY'));
+			},
+		}, 'get'));
+	})
+	
+}
