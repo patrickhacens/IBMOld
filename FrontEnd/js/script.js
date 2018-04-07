@@ -46,6 +46,7 @@ $('#add-pergunta').click(function() {
 
 /*************************************
  * TAREFA
+ * Falta titulo, nivel
  ************************************/
 $('#cadastrar-tarefa').submit(function(e) {
   e.preventDefault();
@@ -64,9 +65,6 @@ $('#cadastrar-tarefa').submit(function(e) {
   };
 
   console.log(data);
-	const conteudo = $('#tarefa-conteudo').val();
-	const alternativas = $('.alternativas');
-	const titulo = $('#tarefa-titulo').val();
 });
 
 
@@ -212,7 +210,6 @@ $('#sign_in').submit(function(e) {
   e.preventDefault();
   var usuario = $("#usuario").val();
   var senha = $("#senha").val();
-console.log(usuario);
   var request = $.ajax({
       contentType : "application/json",
       accept: "application/json",
@@ -226,7 +223,7 @@ console.log(usuario);
       $("#usuario").val("");
       $("#senha").val("");
       localStorage.token = response.token;
-      window.location.href = 'desempenho.html';
+      window.location.href = 'index.html';
   });
 
   request.fail(function( jqXHR, textStatus ) {
