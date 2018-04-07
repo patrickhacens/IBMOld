@@ -116,18 +116,24 @@ $('#cadastrar-tarefa').submit(function(e) {
 $('#cadastro-aprendiz').submit(function(e) {
 	e.preventDefault();
 	const data = {
-		nome: $('#aprendiz-nome').val(),
-		sobrenome: $('#aprendiz-sobrenome').val(),
-		instituicao: $('#aprendiz-instituicao').val(),
-		senha: $('#aprendiz-senha').val(),
-		beginDate: $('#aprendiz-dataEntrada').val(),
-		dataSaida: $('#aprendiz-dataSaida').val(),
+		gestor: $('#aprendiz-gestor').val(),
+		instituicaoId: $('#aprendiz-instituicao').val(),
 	};
+
+	const formData = new FormData();
+	formData.append('id', data.gestor);
+	formData.append('instituicaoId', data.instituicaoId);
+
+	
 	
 	$.ajax(getRequestConfig({
-		url: '/usuario', 
+		url: '/usuario/csv', 
 		data: data,
 		success: successFeedback,
+		cache: false,
+		contentType: false,
+		processData: false,
+
 	}));
 });
 
@@ -238,6 +244,19 @@ function loadAprendiz() {
   }, 'get'));
 }
 
+function loadInstituicao() {
+  $.ajax(getRequestConfig({
+    url: '/usuario',
+    success: function(response) {
+      aprendizOptions = ['<option value="">SELECIONE A INSTITUIÇÃO</option>'];
+      aprendizOptions.push(response.map(item => '<option value="'+item.id+'">'+item.nome+'</option>'));
+      aprendizOptions = aprendizOptions.join('');
+      $('.loadInstituicao select').html(aprendizOptions);
+      $('select:not(.ms)').selectpicker('refresh');
+    }
+  }, 'get'));
+}
+loadInstituicao();
 loadAprendiz();
 
 

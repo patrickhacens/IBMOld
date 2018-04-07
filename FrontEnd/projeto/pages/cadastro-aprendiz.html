@@ -189,7 +189,7 @@
 
                     <div class="row clearfix">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <form id="cadastro-aprendiz" class="card">
+                            <form id="cadastro-aprendiz" class="card" enctype="multipart/form-data">
                                 <div class="header">
                                     <h2>
                                         <strong>Cadastro de Aprendiz</strong>
@@ -200,64 +200,32 @@
                                 <div class="body">
 
                                     <div class="row clearfix">
-
-
                                         <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input id="aprendiz-nome" type="text" class="form-control" placeholder="Nome" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input id="aprendiz-sobrenome" type="text" class="form-control" placeholder="Sobrenome" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="row clearfix">
-                                        <div class="col-sm-6">
-                                            <select id="aprendiz-instituicao" class="form-control show-tick">
+                                            <select id="aprendiz-instituicao" class="form-control show-tick loadInstituicao">
                                                 <option value=""><b>SELECIONE A INSTITUIÇÃO</b></option>
-                                                <option value="10">Instituição Bradesco</option>
-                                                <option value="20">Caixa Econômica Ensino</option>
-                                                <option value="30">Instituto Banco do Brasil</option>
-                                                <option value="40">Santander Escola</option>
-                                                <option value="50">Banco Real Escola</option>
                                             </select>
                                         </div>
 
                                         <div class="col-sm-6">
-
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input id="aprendiz-senha" type="password" class="form-control" placeholder="Insira uma senha provisória" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row clearfix">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input id="aprendiz-dataEntrada" type="text" class="datepicker form-control" placeholder="Selecione data de entrada">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <div class="form-line">
-                                                    <input id="aprendiz-dataSaida" type="text" class="datepicker form-control" placeholder="Selecione data de saída">
-                                                </div>
-                                            </div>
+                                            <select id="aprendiz-gestor" class="form-control show-tick loadGestor">
+                                                <option value=""><b>SELECIONE O GESTOR</b></option>
+                                            </select>
                                         </div>
                                     </div>
 
+                                    <div action="/" id="frmFileUpload" class="dropzone" method="post" enctype="multipart/div-data">
+                                        <div class="dz-message">
+                                            <div class="drag-icon-cph">
+                                                <i class="material-icons">touch_app</i>
+                                            </div>
+                                            <h3>Drop files here or click to upload.</h3>
+                                            <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+                                        </div>
+                                        <div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                        </div>
+                                    </div>
+                       
 
 
 
