@@ -16,7 +16,9 @@ function getRequestConfig(config, method) {
 		data: JSON.stringify(config.data),
   }
   
-  return Object.assign({}, defaultConfig, config, customConfig);
+	const a = Object.assign({}, defaultConfig, config, customConfig);
+	console.log(a)
+	return a;
 }
 
 
@@ -30,7 +32,7 @@ function successFeedback() {
 
 	$('form .body').prepend(alertHtml);
 	$('form input, textarea').val('');
-
+	console.log('Success');
 }
 
 
@@ -103,7 +105,7 @@ $('#cadastrar-tarefa').submit(function(e) {
 	$.ajax(getRequestConfig({
 		url: '/tarefa', 
 		data: data,
-		sucess: successFeedback,
+		success: successFeedback,
 	}));
 });
 
@@ -125,7 +127,7 @@ $('#cadastro-aprendiz').submit(function(e) {
 	$.ajax(getRequestConfig({
 		url: '/usuario', 
 		data: data,
-		sucess: successFeedback,
+		success: successFeedback,
 	}));
 });
 
@@ -170,7 +172,7 @@ $('#cadastro-instituicao').submit(function(e) {
 	$.ajax(getRequestConfig({
 		url: '/usuario', 
 		data: data,
-		sucess: successFeedback,
+		success: successFeedback,
 	}));
 });
 
@@ -193,7 +195,7 @@ $('#cadastro-gestor').submit(function(e) {
 	$.ajax(getRequestConfig({
 		url: '/usuario', 
 		data: data,
-		sucess: successFeedback
+		success: successFeedback
 	}));
 });
 
@@ -210,14 +212,14 @@ $('#cadastro-boletim').submit(function(e) {
 		nota: $('#boletim-media').val(),
 		frequencia: $('#boletim-frequencia').val(),
 		mesReferencia: $('#boletim-mesReferencia').val(),
-		anoReferencia: $('#boletim-mesReferencia').val(),
+		anoReferencia: $('#boletim-anoReferencia').val(),
 		observacao: $('#boletim-observacoes').val(),
 	};
 
 	$.ajax(getRequestConfig({
 		url: '/boletim', 
 		data: data,
-		sucess: successFeedback,
+		success: successFeedback,
 	}));
 });
 
