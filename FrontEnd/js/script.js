@@ -16,10 +16,33 @@ function getRequestConfig(config, method) {
 		data: JSON.stringify(config.data),
   }
   
-  const a = Object.assign({}, defaultConfig, config, customConfig);
-  
-  console.log(a);
-  return a;
+  return Object.assign({}, defaultConfig, config, customConfig);
+}
+
+
+function successFeedback() {
+	const alertHtml = `<div class="alert bg-green alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+		</button>
+		Cadastro realizado com sucesso!
+	</div>`;
+
+	$('form .body').prepend(alertHtml);
+	$('form input, textarea').val('');
+
+}
+
+
+function failFeedback() {
+	const alertHtml = `<div class="alert bg-pink alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+		</button>
+		Erro ao cadastrar. Por favor, tente novamente!
+	</div>`;
+
+	$('form .body').prepend(alertHtml);
 }
 
 
@@ -64,7 +87,6 @@ $('#cadastrar-tarefa').submit(function(e) {
     questoes: perguntasData,
   };
 
-  console.log(data);
 });
 
 
@@ -85,9 +107,7 @@ $('#cadastro-aprendiz').submit(function(e) {
 	$.ajax(getRequestConfig({
 		url: '/usuario', 
 		data: data,
-		sucess: function(response) {
-			console.log(response);
-		}
+		sucess: successFeedback,
 	}));
 });
 
@@ -132,9 +152,7 @@ $('#cadastro-instituicao').submit(function(e) {
 	$.ajax(getRequestConfig({
 		url: '/usuario', 
 		data: data,
-		sucess: function(response) {
-			console.log(response);
-		}
+		sucess: successFeedback,
 	}));
 });
 
@@ -157,9 +175,7 @@ $('#cadastro-gestor').submit(function(e) {
 	$.ajax(getRequestConfig({
 		url: '/usuario', 
 		data: data,
-		sucess: function(response) {
-			console.log(response);
-		}
+		sucess: successFeedback
 	}));
 });
 
@@ -182,9 +198,7 @@ $('#cadastro-boletim').submit(function(e) {
 	$.ajax(getRequestConfig({
 		url: '/boletim', 
 		data: data,
-		sucess: function(response) {
-			console.log(response);
-		}
+		sucess: successFeedback,
 	}));
 });
 
