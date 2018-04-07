@@ -61,7 +61,9 @@ $('#cadastrar-tarefa select').change(function() {
 });
 
 $('#add-pergunta').click(function() {
-  const pergunta = $('.pergunta').last().clone();
+	const pergunta = $('.pergunta').last().clone();
+	$('input[type="radio"]',  pergunta).attr('name', 'pergunta'+$('.pergunta').length+1);
+	// $('.demo-radio-button label')
   $('input, textarea', pergunta).val('');
 	$('#cadastrar-tarefa .body #perguntas').append(pergunta);
 })
@@ -76,17 +78,33 @@ $('#cadastrar-tarefa').submit(function(e) {
   const perguntas = $('#perguntas .pergunta');
   const perguntasData = [];
   $(perguntas).each(function(pergunta) {
+		const alternativas = [];
+		$('.alternativas input[type="text"]', pergunta).each(function () {
+			alternativas.push(this.value);
+		});
+		const alternativasRadio = $('.alternativas input[type="radio"]');
+		const alternativaCorreta = alternativasRadio.index(alternativasRadio.filter(':checked'));
+
     const perguntaInfos = {
-      titulo: $('.tarefa-titulo', this).val(),
-      descricao: $('.tarefa-conteudo', this).val(),
+      titulo: $('.pergunta-titulo', $(this)).val(),
+			descricao: $('.pergunta-conteudo', $(this)).val(),
+			alternativas: alternativas,
+			alternativaCorreta: alternativaCorreta,
     }
     perguntasData.push(perguntaInfos);
   });
 
   const data = {
+		titulo: $('.tarefa-titulo').val(),
+		nivel: $('.tarefa-nivel').val(),
     questoes: perguntasData,
   };
-
+	console.log(data);
+	$.ajax(getRequestConfig({
+		url: '/tarefa', 
+		data: data,
+		sucess: successFeedback,
+	}));
 });
 
 
