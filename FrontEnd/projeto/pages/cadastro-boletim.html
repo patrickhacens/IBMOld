@@ -181,31 +181,22 @@
                         <div class="body">
                             <div class="row clearfix">
                                 <div class="col-sm-6">
-                                    <select id="boletim-instituicao" class="form-control show-tick">
-                                        <option value=""><b>SELECIONE A INSTITUIÇÃO</b></option>
-                                        <option value="10">Instituição Bradesco</option>
-                                        <option value="20">Caixa Econômica Ensino</option>
-                                        <option value="30">Instituto Banco do Brasil</option>
-                                        <option value="40">Santander Escola</option>
-                                        <option value="50">Banco Real Escola</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6">
                                     <select id="boletim-aluno" class="form-control show-tick loadAprendiz">
                                         <option value=""><b>SELECIONE O APRENDIZ</b></option>
                                     </select>
                                 </div>
 
-                            </div>
-
-                            <div class="row clearfix">
-                                <div class="col-sm-4">
+                                <div class="col-sm-6">
                                     <div class="form-group">
                                         <div class="form-line">
                                             <input id="boletim-media" type="text" class="form-control" placeholder="Média de Notas" />
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="form-line">
@@ -213,10 +204,33 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="form-line">
-                                            <input id="boletim-dataFechamento" type="text" class="datepicker form-control" placeholder="Selecione a data de fechamento">
+                                            <select id="boletim-instituicao" class="form-control show-tick">
+                                                <option value=""><b>SELECIONE O MÊS REFERÊNCIA</b></option>
+                                                <option value="janeiro">Janeiro</option>
+                                                <option value="fevereiro">fevereiro</option>
+                                                <option value="marco">março</option>
+                                                <option value="abril">abril</option>
+                                                <option value="maio">maio</option>
+                                                <option value="junho">junho</option>
+                                                <option value="julho">julho</option>
+                                                <option value="agosto">agosto</option>
+                                                <option value="setembro">setembro</option>
+                                                <option value="outubro">outubro</option>
+                                                <option value="novembro">novembro</option>
+                                                <option value="dezembro">dezembro</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input id="boletim-dataFechamento" type="number" class="datepicker form-control" placeholder="Selecione o ano de referência">
                                         </div>
                                     </div>
                                 </div>

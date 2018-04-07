@@ -1,4 +1,4 @@
-﻿const apiUrl = 'http://192.168.2.152:8080/api';
+﻿const apiUrl = 'http://localhost:5000/api';
 
 function getRequestConfig(config, method) {
   const defaultConfig = {
